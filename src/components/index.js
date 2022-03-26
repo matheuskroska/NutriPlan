@@ -1,1 +1,1 @@
-export {GlobalStyle} from "./globalStyle.css";
+export {GlobalStyle, Container} from "./globalStyle.css";

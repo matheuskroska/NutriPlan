@@ -2,8 +2,27 @@ import {createGlobalStyle} from "styled-components";
 import styled from "styled-components";
 import "../assets/fonts/stylesheet.css";
 
-
+export const Container = styled.div`
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 70vh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+`
 export const GlobalStyle = createGlobalStyle`
+
+    :root {
+    --primary: #9FD948;
+    --secundary: #6F8C43;
+    --tertiary: #4A4D26;
+    --font-dark: #4A4D26;
+    --font-soft: #ffffff;
+    }
+
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
