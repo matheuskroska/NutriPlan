@@ -1,5 +1,6 @@
 import {createGlobalStyle} from "styled-components";
 import styled from "styled-components";
+import bgImg from '../assets/images/home-bg.png';
 import "../assets/fonts/stylesheet.css";
 
 export const Container = styled.div`
@@ -49,8 +50,13 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     body {
+        backdrop-filter: brightness(0.9);
+        background-image: url(${bgImg});
         font-family: 'Raleway', sans-serif;
         line-height: 1;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: bottom;
     }
     ol, ul {
         list-style: none;

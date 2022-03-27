@@ -5,7 +5,6 @@ export const FooterContainer = styled.div`
     width: 100%;
     margin: 0 auto;
     background-color: var(--primary);
-    position: absolute;
     bottom: 0;
 `
 
