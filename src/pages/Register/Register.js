@@ -13,8 +13,8 @@ export const Register = () => {
                     <CardInput type="mail" placeholder="Email" inputWidth="100%"></CardInput>
                 </CardItem>
                 <CardItem>
-                    <CardInput placeholder="DDD" inputWidth="10%"></CardInput>
-                    <CardInput  placeholder="Telefone" inputWidth="90%"></CardInput>
+                    <CardInput placeholder="DDD" inputWidth="11%"></CardInput>
+                    <CardInput  placeholder="Telefone" inputWidth="89%"></CardInput>
                 </CardItem>
                 <CardItem>
                     <CardInput  placeholder="Endereço" inputWidth="100%"></CardInput>
@@ -25,7 +25,7 @@ export const Register = () => {
                 <CardItem>
                     <CardInput placeholder="Repita sua senha" inputWidth="100%"></CardInput>
                 </CardItem>
-                <CardButton>Cadastrar</CardButton>
+                <CardButton>cadastrar</CardButton>
             </Card>
         </> 
     )

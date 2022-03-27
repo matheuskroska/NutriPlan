@@ -6,7 +6,7 @@ import "../assets/fonts/stylesheet.css";
 export const Container = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    height: 70vh;
+    height: calc(100vh - 100px);
     padding: 20px;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const GlobalStyle = createGlobalStyle`
 
     :root {
-    --primary: #9FD948;
+    --primary: #AAD76C;
     --secundary: #6F8C43;
     --tertiary: #4A4D26;
     --font-dark: #4A4D26;
@@ -52,6 +52,7 @@ export const GlobalStyle = createGlobalStyle`
     body {
         backdrop-filter: brightness(0.9);
         background-image: url(${bgImg});
+        font-size:62.5%;
         font-family: 'Raleway', sans-serif;
         line-height: 1;
         background-size: cover;
