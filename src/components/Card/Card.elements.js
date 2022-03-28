@@ -73,6 +73,7 @@ export const CardItemContainer = styled.div`
 
 export const CardTitle = styled.h1`
     font-weight: bold;
+    text-transform: uppercase;
     font-size: 2.6em;
     color: var(--font-dark);
     text-align: center;
