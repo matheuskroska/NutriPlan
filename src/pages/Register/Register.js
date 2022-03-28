@@ -9,7 +9,8 @@ export const Register = () => {
     const [userCategory, setUserCategory] = useState(null);
     //userCategory determina o tipo de cadastro (paciente/nutricionista)
 
-    const displayForm = (userCategory) => {
+    const swapForm = (userCategory) => {
+        Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
         setVisibility(true)
         setUserCategory(userCategory)
     }
@@ -20,8 +21,8 @@ export const Register = () => {
                 <CardItem>
                     <CardDescription>Eu sou um:</CardDescription>   
                     <StyledRadixToggleGroup type="single" aria-label="usuario">
-                        <StyledRadixItem onClick={ () => displayForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixItem>
-                        <StyledRadixItem onClick={ () => displayForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixItem>
+                        <StyledRadixItem onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixItem>
+                        <StyledRadixItem onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixItem>
                     </StyledRadixToggleGroup>
                 </CardItem> 
                 <CardItemContainer show={visibility}>
