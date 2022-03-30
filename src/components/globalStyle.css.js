@@ -6,7 +6,7 @@ import "../assets/fonts/stylesheet.css";
 export const Container = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    height: calc(100vh - 100px);
+    height: 100vh;
     padding: 20px;
     display: flex;
     align-items: center;

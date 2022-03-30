@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { CardItem, CardInput, CardButton, CardItemContainer, CardDescription, StyledRadixItem, StyledRadixToggleGroup } from '../../components/Card/Card.elements';
+import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
+import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements';
 import { Card } from '../../components/index';
 
 
@@ -21,8 +22,8 @@ export const Register = () => {
                 <CardItem>
                     <CardDescription>Eu sou um:</CardDescription>   
                     <StyledRadixToggleGroup type="single" aria-label="usuario">
-                        <StyledRadixItem onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixItem>
-                        <StyledRadixItem onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixItem>
+                        <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
+                        <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
                     </StyledRadixToggleGroup>
                 </CardItem> 
                 <CardItemContainer show={visibility}>
@@ -43,9 +44,6 @@ export const Register = () => {
                     <CardItem>
                         <CardInput placeholder="CPF"></CardInput>
                     </CardItem>
-                    <CardItem>
-                        <CardInput  placeholder="Endereço" inputWidth="100%"></CardInput>
-                    </CardItem>
                     {userCategory ? (
                         <>
                             <CardItem>
@@ -62,7 +60,7 @@ export const Register = () => {
                     <CardItem>
                         <CardInput placeholder="Repita sua senha" inputWidth="100%"></CardInput>
                     </CardItem>
-                    <CardButton>cadastrar</CardButton>
+                    <StyledButton primary>cadastrar</StyledButton>
                 </CardItemContainer>  
             </Card>
         </> 
