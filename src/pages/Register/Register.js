@@ -1,20 +1,74 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
 import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements';
 import { Card } from '../../components/index';
-import {ArrowRightIcon} from '@radix-ui/react-icons'
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import Patients from '../../db/Patients'
 
 
 export const Register = () => {
 
     const [visibility, setVisibility] = useState(false);
     const [userCategory, setUserCategory] = useState(null);
+    const [patient, setPatient] = useState({
+        uuid: null,
+        name: null,
+        surname: null,
+        email: null,
+        ddd: null,
+        phone: null,
+        cpf: null,
+        password: null,
+        conf_password: null,
+    });
     //userCategory determina o tipo de cadastro (paciente/nutricionista)
 
     const swapForm = (userCategory) => {
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
         setVisibility(true)
         setUserCategory(userCategory)
+    }
+
+    const handleSubmit = () => {
+        let _password = null
+        console.log(patient)
+        for (let column in patient) {
+            if (column === 'password') {
+                if (patient[column] !== null) {
+                    _password = patient[column]
+                } else {
+                    alert('Campo "Senha" não pode estar vazio')
+                    return
+                }
+            }
+
+            if (column === 'conf_password') {
+                if (patient[column] !== null) {
+                    if (_password === patient[column]) {
+                        if (Patients.hasPatient(patient)) {
+                            alert('Já existe um paciente com esse CPF')
+                        } else {
+                            alert('Tá liberado pra fazer o cadastro')
+                        }
+                    } else {
+                        alert('Senhas não são iguais')
+                        return
+                    }
+                } else {
+                    alert('Campo "Confirme sua senha" não pode estar vazio')
+                    return
+                }
+            }
+        }
+        
+    }
+    
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setPatient(prev => ({
+            ...prev,
+            [name]: value
+        }))
     }
     
     return (
@@ -32,23 +86,23 @@ export const Register = () => {
                         <CardDescription>Para concluir o cadastro, preencha o formulário abaixo</CardDescription>   
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="Nome" inputWidth="50%"></CardInput>
-                        <CardInput placeholder="Sobrenome" inputWidth="50%"></CardInput>
+                        <CardInput placeholder="Nome" inputWidth="50%" name="name" onChange={handleChange}></CardInput>
+                        <CardInput placeholder="Sobrenome" inputWidth="50%" name="surname" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput type="mail" placeholder="Email" inputWidth="100%"></CardInput>
+                        <CardInput type="mail" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="DDD" inputWidth="11%"></CardInput>
-                        <CardInput  placeholder="Telefone" inputWidth="89%"></CardInput>
+                        <CardInput placeholder="DDD" inputWidth="11%" name="ddd" onChange={handleChange}></CardInput>
+                        <CardInput  placeholder="Telefone" inputWidth="89%" name="phone" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="CPF"></CardInput>
+                        <CardInput placeholder="CPF" name="cpf" onChange={handleChange}></CardInput>
                     </CardItem>
                     {userCategory ? (
                         <>
                             <CardItem>
-                                <CardInput  placeholder="CRN" inputWidth="100%"></CardInput>
+                                <CardInput  placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
                             </CardItem>
                         </>
                     ): 
@@ -56,12 +110,12 @@ export const Register = () => {
                     </>
                     }     
                     <CardItem>
-                        <CardInput type="password" placeholder="Senha" inputWidth="100%"></CardInput>
+                        <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="Repita sua senha" inputWidth="100%"></CardInput>
+                        <CardInput placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={handleChange}></CardInput>
                     </CardItem>
-                    <StyledButton primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
+                    <StyledButton onClick={handleSubmit} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                 </CardItemContainer>  
             </Card>
         </> 
