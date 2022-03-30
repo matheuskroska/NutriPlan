@@ -46,10 +46,11 @@ const Patients = {
     // Recupera todos os pacientes da base
     async getPatients() {
         const data = await getDocs(collection(db, "patients"))
-        console.log(data.docs)
-        // data.forEach((doc) => {
-        //     console.log(doc.id, doc.data())
-        // })
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+        return dataResult
     },
 
 }

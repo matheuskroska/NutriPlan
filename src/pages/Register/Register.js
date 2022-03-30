@@ -5,11 +5,11 @@ import { Card } from '../../components/index';
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import Patients from '../../db/Patients'
 
-
 export const Register = () => {
 
     const [visibility, setVisibility] = useState(false);
     const [userCategory, setUserCategory] = useState(null);
+    const [tempPwd, setTempPwd] = useState(null);
     const [patient, setPatient] = useState({
         uuid: null,
         name: null,
@@ -29,9 +29,8 @@ export const Register = () => {
         setUserCategory(userCategory)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         let _password = null
-        console.log(patient)
         for (let column in patient) {
             if (column === 'password') {
                 if (patient[column] !== null) {
@@ -45,9 +44,11 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
-                        if (Patients.hasPatient(patient)) {
+                        let retorno = await Patients.hasPatient(patient)
+                        if (retorno) {
                             alert('Já existe um paciente com esse CPF')
                         } else {
+                            Patients.addPatient(patient)
                             alert('Tá liberado pra fazer o cadastro')
                         }
                     } else {
@@ -69,6 +70,19 @@ export const Register = () => {
             ...prev,
             [name]: value
         }))
+    }
+    const handleChangePwd = (e) => {
+        setTempPwd(e.target.value)
+    }
+
+    const verifyPassword = (e) => {
+        let cpassword = e.target.value
+        console.log(tempPwd, cpassword)
+        if (tempPwd) {
+            if ((tempPwd.length <= cpassword.length) && (tempPwd !== cpassword)) {
+                alert('as senhas tão diferentes')
+            }
+        }
     }
     
     return (
@@ -110,10 +124,10 @@ export const Register = () => {
                     </>
                     }     
                     <CardItem>
-                        <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChange}></CardInput>
+                        <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={handleChange}></CardInput>
+                        <CardInput placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
                     </CardItem>
                     <StyledButton onClick={handleSubmit} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                 </CardItemContainer>  
