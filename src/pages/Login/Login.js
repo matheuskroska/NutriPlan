@@ -16,7 +16,7 @@ export const Login = () => {
                     <CardInput type="password" placeholder="Senha" inputWidth="100%"></CardInput>
                 </CardItem>
                 <CardItem>
-                    <Link to="/cadastro" css="forgotpwd">esqueci minha senha</Link>
+                    <Link to="/cadastro" forgotpwd>esqueci minha senha</Link>
                 </CardItem>
                 <CardItem>
                     <StyledButton primary hasIcon>entrar<EnterIcon/></StyledButton>

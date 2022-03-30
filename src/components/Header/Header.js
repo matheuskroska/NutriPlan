@@ -3,6 +3,7 @@ import logo from '../../assets/images/logo.png';
 import { StyledButton } from '../Button/Button.elements';
 import {ExitIcon, EnterIcon} from '@radix-ui/react-icons'
 import { Link } from '../Link/Link';
+import { StyledLink } from '../Link/Link.elements';
 
 
 
@@ -17,7 +18,7 @@ export const Header = () => {
                     <NavRight>
                         {/* <StyledButton secundary>paciente</StyledButton> 
                         <StyledButton secundary>nutricionista</StyledButton> */}
-                        <Link to="/cadastro" css="header">login/cadastre-se<EnterIcon/></Link>
+                        <StyledLink header to="/cadastro">login/cadastre-se<EnterIcon/></StyledLink>
                     </NavRight>  
                 </NavWrapper>
             </NavContainer>
