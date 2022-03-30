@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
-import { CardItem, CardInput, CardButton, CardItemContainer, CardDescription, StyledRadixItem, StyledRadixToggleGroup } from '../../components/Card/Card.elements';
+import React from 'react';
+import { StyledButton } from '../../components/Button/Button.elements';
+import { CardItem, CardInput, CardItemContainer } from '../../components/Card/Card.elements';
 import { Card } from '../../components/index';
+import {EnterIcon} from '@radix-ui/react-icons'
+import { Link } from '../../components/Link/Link';
 
 export const Login = () => {
     return (
@@ -13,7 +16,10 @@ export const Login = () => {
                     <CardInput type="password" placeholder="Senha" inputWidth="100%"></CardInput>
                 </CardItem>
                 <CardItem>
-                    <a href="#">Esqueci minha senha</a>
+                    <Link to="/cadastro" css="forgotpwd">esqueci minha senha</Link>
+                </CardItem>
+                <CardItem>
+                    <StyledButton primary hasIcon>entrar<EnterIcon/></StyledButton>
                 </CardItem>
             </CardItemContainer>  
         </Card>

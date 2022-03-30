@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
 import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements';
 import { Card } from '../../components/index';
+import {ArrowRightIcon} from '@radix-ui/react-icons'
 
 
 export const Register = () => {
@@ -60,7 +61,7 @@ export const Register = () => {
                     <CardItem>
                         <CardInput placeholder="Repita sua senha" inputWidth="100%"></CardInput>
                     </CardItem>
-                    <StyledButton primary>cadastrar</StyledButton>
+                    <StyledButton primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                 </CardItemContainer>  
             </Card>
         </> 

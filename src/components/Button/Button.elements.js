@@ -15,7 +15,8 @@ const cssButon = css`
     appearance: none;
     outline: 0;
     border: 0;
-    padding: 0;
+    gap: 0 10px;
+    padding: ${props => props.hasIcon ? "0 5px 0 15px" : "0 15px"};
     width: 100%;
     font-family: inherit;
     margin: 0 auto;
