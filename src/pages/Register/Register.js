@@ -44,12 +44,12 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
-                        let retorno = await Patients.hasPatient(patient)
-                        if (retorno) {
+                        let ret = await Patients.hasPatient(patient)
+                        if (ret) {
                             alert('Já existe um paciente com esse CPF')
                         } else {
-                            Patients.addPatient(patient)
-                            alert('Tá liberado pra fazer o cadastro')
+                            let retAdd = await Patients.addPatient(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                            alert(retAdd)
                         }
                     } else {
                         alert('Senhas não são iguais')
@@ -71,16 +71,19 @@ export const Register = () => {
             [name]: value
         }))
     }
+
     const handleChangePwd = (e) => {
         setTempPwd(e.target.value)
+        handleChange(e)
     }
 
     const verifyPassword = (e) => {
         let cpassword = e.target.value
-        console.log(tempPwd, cpassword)
         if (tempPwd) {
             if ((tempPwd.length <= cpassword.length) && (tempPwd !== cpassword)) {
                 alert('as senhas tão diferentes')
+            } else {
+                handleChange(e)
             }
         }
     }

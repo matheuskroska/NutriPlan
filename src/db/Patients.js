@@ -1,25 +1,31 @@
 import { db } from '../firebase'
 import { collection, addDoc, getDocs, Timestamp, query, where } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
+import Abstract from './Abstract'
 
 const Patients = {
     // Adiciona paciente na base
     async addPatient(patient) {
         try {
-            const docRef = await addDoc(collection(db, "patients"), {
-                uuid: uuidv4(),
-                name: patient.name,
-                surname: patient.surname,
-                email: patient.email,
-                ddd: patient.ddd,
-                phone: patient.phone,
-                cpf: patient.cpf,
-                password: patient.password,
-                nutritionist_uuid: '',
-                created_at: Timestamp.now(),
-                updated_at: Timestamp.now(),
-            })
-            console.log("Document written with ID: ", docRef.id)
+            const retUser = await Abstract.createUserWithEmailPassword(patient.email, patient.password)
+            if (typeof(retUser) === 'object') {
+                const docRef = await addDoc(collection(db, "patients"), {
+                    uuid: retUser.uid,
+                    name: patient.name,
+                    surname: patient.surname,
+                    email: patient.email,
+                    ddd: patient.ddd,
+                    phone: patient.phone,
+                    cpf: patient.cpf,
+                    password: patient.password,
+                    nutritionist_uuid: '',
+                    created_at: Timestamp.now(),
+                    updated_at: Timestamp.now(),
+                })
+                return docRef.id
+            } else {
+                return retUser
+            }
         } catch (e) {
             console.error("Error adding document: ", e)
         }
