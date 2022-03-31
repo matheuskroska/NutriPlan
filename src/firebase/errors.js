@@ -1,4 +1,4 @@
-export const errors = {
+export const Errors = {
     'auth/app-deleted': 'O banco de dados não foi localizado.',
     'auth/expired-action-code': 'O código da ação o ou link expirou.',
     'auth/invalid-action-code': 'O código da ação é inválido. Isso pode acontecer se o código estiver malformado ou já tiver sido usado.',

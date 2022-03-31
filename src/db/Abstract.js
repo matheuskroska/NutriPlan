@@ -1,6 +1,6 @@
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
-import { errors } from "../firebase/errors"
+import { Errors } from "../firebase/Errors"
 
 const Abstract = {
     async createUserWithEmailPassword(email, password) {
@@ -11,7 +11,7 @@ const Abstract = {
             })
             .catch((error) => {
                 const errorCode = error.code
-                const errorMessage = !!errors[errorCode] ? errors[errorCode] : error.message
+                const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
                 return errorMessage
             })
     },
