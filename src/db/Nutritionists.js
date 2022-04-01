@@ -4,30 +4,9 @@ import Abstract from './Abstract'
 
 const Nutritionists = {
     // Adiciona nutricionista na base
-    async addNutritionist(nutritionist) {
-        try {
-            const retUser = await Abstract.createUserWithEmailPassword(nutritionist.email, nutritionist.password)
-            if (typeof(retUser) === 'object') {
-                const docRef = await addDoc(collection(db, "nutritionists"), {
-                    uuid: retUser.uid,
-                    name: nutritionist.name,
-                    surname: nutritionist.surname,
-                    email: nutritionist.email,
-                    ddd: nutritionist.ddd,
-                    phone: nutritionist.phone,
-                    cpf: nutritionist.cpf,
-                    password: nutritionist.password,
-                    crn: nutritionist.crn,
-                    created_at: Timestamp.now(),
-                    updated_at: Timestamp.now(),
-                })
-                return docRef.id
-            } else {
-                return retUser
-            }
-        } catch (e) {
-            console.error("Error adding document: ", e)
-        }
+    async addUser(patient, userCategory) {
+        const retUser = await Abstract.addUser(patient, userCategory)
+        return retUser
     },
 
     // Verifica se já existe um nutricionista com esse CPF

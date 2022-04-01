@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
-import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements';
-import { Card } from '../../components/index';
+import React, { useContext, useState } from 'react'
+import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements'
+import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements'
+import { Card } from '../../components/index'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import Patients from '../../db/Patients'
+import { AuthContext } from '../../firebase/Auth'
+import { Navigate } from "react-router-dom"
 
 export const Register = () => {
 
-    const [visibility, setVisibility] = useState(false);
-    const [userCategory, setUserCategory] = useState(null);
-    const [tempPwd, setTempPwd] = useState(null);
+    const [visibility, setVisibility] = useState(false)
+    const [userCategory, setUserCategory] = useState(null)
+    const [tempPwd, setTempPwd] = useState(null)
     const [patient, setPatient] = useState({
         uuid: null,
         name: null,
@@ -20,11 +22,11 @@ export const Register = () => {
         cpf: null,
         password: null,
         conf_password: null,
-    });
+    })
     //userCategory determina o tipo de cadastro (paciente/nutricionista)
 
     const swapForm = (userCategory) => {
-        Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+        Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
         setVisibility(true)
         setUserCategory(userCategory)
     }
@@ -48,8 +50,7 @@ export const Register = () => {
                         if (ret) {
                             alert('Já existe um paciente com esse CPF')
                         } else {
-                            let retAdd = await Patients.addPatient(patient) // recebe como retorno o ID documento ou a mensagem de erro
-                            alert(retAdd)
+                            let retAdd = await Patients.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
                         }
                     } else {
                         alert('Senhas não são iguais')
@@ -61,11 +62,15 @@ export const Register = () => {
                 }
             }
         }
-        
+    }
+
+    const { currentUser } = useContext(AuthContext)
+    if (currentUser) {
+        return <Navigate to="/" replace />
     }
     
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setPatient(prev => ({
             ...prev,
             [name]: value
@@ -107,14 +112,14 @@ export const Register = () => {
                         <CardInput placeholder="Sobrenome" inputWidth="50%" name="surname" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput type="mail" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange}></CardInput>
+                        <CardInput type="mail" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
                     </CardItem>
                     <CardItem>
                         <CardInput placeholder="DDD" inputWidth="11%" name="ddd" onChange={handleChange}></CardInput>
                         <CardInput  placeholder="Telefone" inputWidth="89%" name="phone" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="CPF" name="cpf" onChange={handleChange}></CardInput>
+                        <CardInput placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInput>
                     </CardItem>
                     {userCategory ? (
                         <>
@@ -130,7 +135,7 @@ export const Register = () => {
                         <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <CardInput placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
+                        <CardInput type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
                     </CardItem>
                     <StyledButton onClick={handleSubmit} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                 </CardItemContainer>  

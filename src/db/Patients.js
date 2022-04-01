@@ -30,6 +30,11 @@ const Patients = {
         }
     },
 
+    async addUser(patient, userCategory) {
+        const retUser = await Abstract.addUser(patient, userCategory)
+        return retUser
+    },
+
     // Verifica se já existe um paciente com esse CPF
     async hasPatient(patient) {
         const q = query(collection(db, "patients"), where("cpf", "==", patient.cpf))
