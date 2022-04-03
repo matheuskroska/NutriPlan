@@ -6,7 +6,8 @@ import "../assets/fonts/stylesheet.css";
 export const Container = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    height: 100vh;
+    min-height: calc(100vh - 150px);
+    /* height: 100vh; */
     padding: 20px;
     display: flex;
     align-items: center;
@@ -21,6 +22,10 @@ export const GlobalStyle = createGlobalStyle`
     --tertiary: #4A4D26;
     --font-dark: #4A4D26;
     --font-soft: #ffffff;
+    }
+
+    html {
+        background-color: var(--primary);
     }
 
     html, body, div, span, applet, object, iframe,

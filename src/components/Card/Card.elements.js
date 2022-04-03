@@ -5,7 +5,7 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 export const CardContainer = styled.div`
     width: 100%;
-    max-width: 550px;
+    max-width: 500px;
     margin: 0 auto;
     border-radius: 15px;
     position: relative;
@@ -15,8 +15,8 @@ export const CardInput = styled.input`
     border: 1px solid #66A571;
     color: var(--font-dark);
     width: ${props => props.inputWidth || "100%"};
-    height: 35px;
-    font-size: 1.4em;
+    height: 31px;
+    font-size: 1.3em;
     font-weight: 400;
     outline: 0;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -28,7 +28,7 @@ export const CardInput = styled.input`
 
 export const CardWrapper = styled.div`
     display: block;
-    padding: 26px 50px;
+    padding: 26px 32px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     background-color: rgb(111 140 67 / 90%);
     border-radius: 0 0 15px 15px;
@@ -50,8 +50,8 @@ export const CardItemContainer = styled.div`
 
 export const CardTitle = styled.h1`
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 1.8em;
+    /* text-transform: uppercase; */
+    font-size: 2.8em;
     color: var(--font-dark);
     text-align: center;
     padding: 25px 0 25px 0;
@@ -59,9 +59,9 @@ export const CardTitle = styled.h1`
     border-radius: 15px 15px 0 0;
 `
 export const CardDescription = styled.h2`
-    font-size: 1.6em;
+    font-size: 1.3em;
     font-weight: 400;
-    margin: 20px 0;
+    margin: 10px 0;
     color: var(--font-soft);
     min-width: fit-content;
     margin-right: 15px;

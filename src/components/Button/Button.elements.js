@@ -5,7 +5,7 @@ const cssButon = css`
     border-radius: 15px;
     max-width: 155px;
     height: 35px;
-    font-size: 1.6em;
+    font-size: 1.3em;
     font-weight: 500;
     display: flex;
     align-items: center;

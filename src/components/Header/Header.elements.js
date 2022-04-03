@@ -35,6 +35,7 @@ export const NavRight = styled.div`
 `
 
 export const NavLogo = styled.img`
+    max-height: 50px;
 `
 
 export const NavLogoTitle = styled.h1`
