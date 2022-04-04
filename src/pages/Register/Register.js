@@ -2,10 +2,11 @@ import React, { useContext, useState } from 'react'
 import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements'
 import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements'
 import { Card } from '../../components/index'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import Patients from '../../db/Patients'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
+import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 
 export const Register = () => {
 
@@ -23,6 +24,20 @@ export const Register = () => {
         password: null,
         conf_password: null,
     })
+
+    const [status, setStatus] = useState({
+        uuid: null,
+        name: null,
+        surname: null,
+        email: null,
+        ddd: null,
+        phone: null,
+        cpf: null,
+        crn: null,
+        password: null,
+        conf_password: null,
+    })
+    
     //userCategory determina o tipo de cadastro (paciente/nutricionista)
 
     const swapForm = (userCategory) => {
@@ -37,8 +52,9 @@ export const Register = () => {
             if (column === 'password') {
                 if (patient[column] !== null) {
                     _password = patient[column]
+                    setStatus({password: false})
                 } else {
-                    alert('Campo "Senha" não pode estar vazio')
+                    setStatus({password: true})
                     return
                 }
             }
@@ -46,18 +62,20 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
+                        setStatus({conf_password: false})
                         let ret = await Patients.hasPatient(patient)
                         if (ret) {
-                            alert('Já existe um paciente com esse CPF')
+                            setStatus({cpf: true})
                         } else {
+                            setStatus({cpf: false})
                             let retAdd = await Patients.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
                         }
                     } else {
-                        alert('Senhas não são iguais')
+                        setStatus({conf_password: true})
                         return
                     }
                 } else {
-                    alert('Campo "Confirme sua senha" não pode estar vazio')
+                    setStatus({conf_password: true})
                     return
                 }
             }
@@ -86,8 +104,9 @@ export const Register = () => {
         let cpassword = e.target.value
         if (tempPwd) {
             if ((tempPwd.length <= cpassword.length) && (tempPwd !== cpassword)) {
-                alert('as senhas tão diferentes')
+                setStatus({conf_password: true});
             } else {
+                setStatus({conf_password: false});
                 handleChange(e)
             }
         }
@@ -112,30 +131,61 @@ export const Register = () => {
                         <CardInput placeholder="Sobrenome" inputWidth="50%" name="surname" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
+
+                    </CardItem>
+                    <CardItem>
                         <CardInput type="mail" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
+                    </CardItem>
+                    <CardItem>
+                        
                     </CardItem>
                     <CardItem>
                         <CardInput placeholder="DDD" inputWidth="11%" name="ddd" onChange={handleChange}></CardInput>
                         <CardInput  placeholder="Telefone" inputWidth="89%" name="phone" onChange={handleChange}></CardInput>
                     </CardItem>
                     <CardItem>
+                        
+                    </CardItem>
+                    <CardItem>
                         <CardInput placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInput>
                     </CardItem>
-                    {userCategory ? (
+                    <CardItem>
+                        
+                    </CardItem>
+                    {userCategory && (
                         <>
                             <CardItem>
                                 <CardInput  placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
                             </CardItem>
+                            <CardItem>
+                            {status.crn && (
+                                <>
+                                    <ErrorMessage><ExclamationTriangleIcon/>Senha não pode ser vazio</ErrorMessage>
+                                </> 
+                            )}
+                            </CardItem>
                         </>
-                    ): 
-                    <>
-                    </>
-                    }     
+                    )}     
                     <CardItem>
                         <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
                     </CardItem>
                     <CardItem>
+                        {status.password && (
+                            <>
+                            <ErrorMessage><ExclamationTriangleIcon/>Senha não pode ser vazia</ErrorMessage>
+                            </>
+                        )}
+                        
+                    </CardItem>
+                    <CardItem>
                         <CardInput type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
+                    </CardItem>
+                    <CardItem>
+                        {status.conf_password && (
+                            <>
+                                <ErrorMessage><ExclamationTriangleIcon/>Senha não é igual</ErrorMessage>
+                            </>
+                        )}
                     </CardItem>
                     <StyledButton onClick={handleSubmit} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                 </CardItemContainer>  
