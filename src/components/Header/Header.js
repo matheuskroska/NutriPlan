@@ -1,13 +1,22 @@
-import {NavContainer,NavWrapper, NavItem, NavLogo, NavLogoTitle, NavRight, NavLink} from './Header.elements'
+import { NavContainer,NavWrapper, NavItem, NavLogo, NavLogoTitle, NavRight } from './Header.elements'
 import logo from '../../assets/images/logo.png';
-import { StyledButton } from '../Button/Button.elements';
-import {ExitIcon, EnterIcon} from '@radix-ui/react-icons'
-import { Link } from '../Link/Link';
+import { EnterIcon } from '@radix-ui/react-icons'
 import { StyledLink } from '../Link/Link.elements';
-
-
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../firebase/Auth';
+import Abstract from '../../db/Abstract';
 
 export const Header = () => {
+
+    const { currentUser } = useContext(AuthContext)
+
+    const handleLogout = async () => {
+        let retLogout = await Abstract.logout()
+        if (retLogout !== 'successful') {
+            alert(retLogout)
+        }
+    }
+
     return (
             <NavContainer>
                 <NavWrapper>
@@ -16,9 +25,14 @@ export const Header = () => {
                         <NavLogoTitle>NutriPlan</NavLogoTitle>
                     </NavItem>
                     <NavRight>
-                        {/* <StyledButton secundary>paciente</StyledButton> 
-                        <StyledButton secundary>nutricionista</StyledButton> */}
-                        <StyledLink header to="/cadastro">login/cadastre-se<EnterIcon/></StyledLink>
+                        {(!!!currentUser) ? (
+                            <StyledLink header to="/cadastro">login/cadastre-se<EnterIcon/></StyledLink>
+                        ) : (
+                            <div>
+                                <h3>{currentUser.fullname}</h3>
+                                <a onClick={handleLogout} href="/">sair</a>                       
+                            </div>
+                        )}
                     </NavRight>  
                 </NavWrapper>
             </NavContainer>

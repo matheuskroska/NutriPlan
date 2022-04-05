@@ -6,12 +6,13 @@ const Patients = {
     // Adiciona paciente na base
     async addPatient(patient) {
         try {
-            const retUser = await Abstract.createUserWithEmailPassword(patient.email, patient.password)
+            const retUser = await Abstract.createUser(patient.email, patient.password)
             if (typeof(retUser) === 'object') {
                 const docRef = await addDoc(collection(db, "patients"), {
                     uuid: retUser.uid,
                     name: patient.name,
                     surname: patient.surname,
+                    fullname: patient.name + ' ' + patient.surname,
                     email: patient.email,
                     ddd: patient.ddd,
                     phone: patient.phone,
