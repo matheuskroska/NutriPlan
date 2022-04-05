@@ -42,8 +42,8 @@ export const CardItem = styled.div`
 `
 
 export const CardItemContainer = styled.div`
-    opacity: ${props => (props.show ? "1" : "0")};
-    max-height: ${props => (props.show ? "600px" : "0")};
+    opacity: "1";
+    max-height: "100%";
     overflow: hidden;
     transition: all 1.5s ease-in-out;
 `
