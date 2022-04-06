@@ -12,7 +12,7 @@ export const Header = () => {
 
     const handleLogout = async () => {
         let retLogout = await Abstract.logout()
-        if (retLogout !== 'successful') {
+        if (!!!retLogout) {
             alert(retLogout)
         }
     }

@@ -33,8 +33,7 @@ const Abstract = {
 
     async logout() {
         return signOut(auth).then(() => {
-            // Sign-out successful.
-            return 'successful'
+            return true
           }).catch((error) => {
             const errorCode = error.code
             const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
