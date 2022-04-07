@@ -37,7 +37,7 @@ export const CardWrapper = styled.div`
 
 export const CardItem = styled.div`
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: ${props => props.wrap || "wrap"};
     margin-bottom: 10px;
     gap: ${props => props.gap || "0 8px"};
     justify-content: ${props => props.justifyContent || "initial"};
@@ -58,7 +58,6 @@ export const CardItemContainer = styled.div`
 
 export const CardTitle = styled.h1`
     font-weight: bold;
-    /* text-transform: uppercase; */
     font-size: 2.8em;
     color: var(--font-dark);
     text-align: center;

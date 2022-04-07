@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements'
 import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements'
 import { Card } from '../../components/index'
-import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { ArrowRightIcon, ExclamationTriangleIcon, ReloadIcon } from '@radix-ui/react-icons'
 import Patients from '../../db/Patients'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
@@ -130,7 +130,7 @@ export const Register = () => {
     return (
         <>
             <Card cardTitle="Cadastro" >
-                <CardItem>
+                <CardItem wrap={"initial"}>
                     <CardDescription>Eu sou um:</CardDescription>   
                     <StyledRadixToggleGroup type="single" aria-label="usuario">
                         <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
@@ -143,27 +143,27 @@ export const Register = () => {
                         </CardItem>
                         <form onSubmit={handleSubmit}>
                         <CardItem>
-                            <CardInput pattern="[A-Za-z0-9]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="name" onChange={handleChange}></CardInput>
-                            <CardInput pattern="[A-Za-z0-9]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="surname" onChange={handleChange}></CardInput>
+                            <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="name" onChange={handleChange}></CardInput>
+                            <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="surname" onChange={handleChange}></CardInput>
                             <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            <CardInput required type="email" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Formato invalido</ErrorMessage>
+                            <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
+                            <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                         </CardItem>
                         <CardItem>
                             <CardInput required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange}></CardInput>
                             <CardInput required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange}></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Formato Invalido</ErrorMessage>
+                            <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                         </CardItem>
                         <CardItem>
                             <CardInput placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>CPF Invalido</ErrorMessage>
+                            <ErrorMessage><ExclamationTriangleIcon/>CPF inválido</ErrorMessage>
                         </CardItem>
                             <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
                                 <CardItem>
                                     <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
-                                    <ErrorMessage><ExclamationTriangleIcon/>CRN invalido</ErrorMessage>
+                                    <ErrorMessage><ExclamationTriangleIcon/>CRN inválido</ErrorMessage>
                                 </CardItem>
                             </Animated.div>
                         <CardItem>
@@ -174,7 +174,7 @@ export const Register = () => {
                             <CardInput pattern={tempPwd} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
                             <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
                         </CardItem>
-                        <StyledButton primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
+                        <StyledButton primary hasIcon><ReloadIcon/>cadastrar<ArrowRightIcon/></StyledButton>
                         </form>
                     </CardItemContainer>    
             </Card>
