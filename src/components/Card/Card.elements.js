@@ -24,6 +24,7 @@ export const CardInput = styled.input`
     ::placeholder {
         color: rgb(74 77 38 / 50%);
     }
+    
 `
 
 export const CardWrapper = styled.div`
@@ -36,15 +37,19 @@ export const CardWrapper = styled.div`
 
 export const CardItem = styled.div`
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 10px;
     gap: ${props => props.gap || "8px"};
     justify-content: ${props => props.justifyContent || "initial"};
+    input:not(:placeholder-shown):invalid ~ span {
+        display: flex;
+    }
+
 `
 
 export const CardItemContainer = styled.div`
     opacity: ${props => props.visibility ? "1" : "0"};
     max-height: ${props => props.visibility ? "100%" : "0"};
-    overflow: hidden;
     transition: all 1.5s ease-in-out;
 `
 

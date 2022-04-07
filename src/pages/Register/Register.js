@@ -43,7 +43,6 @@ export const Register = () => {
     const [status, setStatus] = useState(initialStatus)
 
     const swapForm = (userCategory, e) => {
-        console.log(userCategory)
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
         setStatus({...initialStatus})
         setVisibility(true);
@@ -51,7 +50,9 @@ export const Register = () => {
     }
     
 
-    const handleSubmit = async() => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        console.log("hue")
         let _password = null
         for (let column in patient) {
             if (column === 'password') {
@@ -60,6 +61,15 @@ export const Register = () => {
                     setStatus({password: false})
                 } else {
                     setStatus({password: true})
+                    return
+                }
+            }
+
+            if (column === 'name') {
+                if (patient[column] !== null) {
+                    setStatus({name: false})
+                } else {
+                    setStatus({name: true})
                     return
                 }
             }
@@ -131,66 +141,41 @@ export const Register = () => {
                         <CardItem>
                             <CardDescription>Para concluir o cadastro, preencha o formulário abaixo</CardDescription>   
                         </CardItem>
+                        <form onSubmit={handleSubmit}>
                         <CardItem>
-                            <CardInput placeholder="Nome" inputWidth="50%" name="name" onChange={handleChange}></CardInput>
-                            <CardInput placeholder="Sobrenome" inputWidth="50%" name="surname" onChange={handleChange}></CardInput>
+                            <CardInput pattern="[A-Za-z0-9]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="name" onChange={handleChange}></CardInput>
+                            <CardInput pattern="[A-Za-z0-9]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="surname" onChange={handleChange}></CardInput>
+                            <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
                         </CardItem>
                         <CardItem>
-
+                            <CardInput required type="email" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
+                            <ErrorMessage><ExclamationTriangleIcon/>Formato invalido</ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            <CardInput type="mail" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
-                        </CardItem>
-                        <CardItem>
-                            
-                        </CardItem>
-                        <CardItem>
-                            <CardInput placeholder="DDD" inputWidth="11%" name="ddd" onChange={handleChange}></CardInput>
-                            <CardInput  placeholder="Telefone" inputWidth="89%" name="phone" onChange={handleChange}></CardInput>
-                        </CardItem>
-                        <CardItem>
-                            
+                            <CardInput required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange}></CardInput>
+                            <CardInput required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange}></CardInput>
+                            <ErrorMessage><ExclamationTriangleIcon/>Formato Invalido</ErrorMessage>
                         </CardItem>
                         <CardItem>
                             <CardInput placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInput>
-                        </CardItem>
-                        <CardItem>
-                            
+                            <ErrorMessage><ExclamationTriangleIcon/>CPF Invalido</ErrorMessage>
                         </CardItem>
                             <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
                                 <CardItem>
-                                    <CardInput  placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
-                                </CardItem>
-                                <CardItem>
-                                {status.crn && (
-                                    <>
-                                        <ErrorMessage><ExclamationTriangleIcon/>Senha não pode ser vazio</ErrorMessage>
-                                    </> 
-                                )}
+                                    <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
+                                    <ErrorMessage><ExclamationTriangleIcon/>CRN invalido</ErrorMessage>
                                 </CardItem>
                             </Animated.div>
                         <CardItem>
-                            <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
+                            <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
+                            <ErrorMessage><ExclamationTriangleIcon/>Senha deve ter de 8 a 20 caraceteres, 1 letra, 1 número e 1 caracter especial</ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            {status.password && (
-                                <>
-                                <ErrorMessage><ExclamationTriangleIcon/>Senha não pode ser vazia</ErrorMessage>
-                                </>
-                            )}
-                            
+                            <CardInput pattern={tempPwd} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
+                            <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
                         </CardItem>
-                        <CardItem>
-                            <CardInput type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
-                        </CardItem>
-                        <CardItem>
-                            {status.conf_password && (
-                                <>
-                                    <ErrorMessage><ExclamationTriangleIcon/>Senha não é igual</ErrorMessage>
-                                </>
-                            )}
-                        </CardItem>
-                        <StyledButton onClick={handleSubmit} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
+                        <StyledButton primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
+                        </form>
                     </CardItemContainer>    
             </Card>
         </> 
