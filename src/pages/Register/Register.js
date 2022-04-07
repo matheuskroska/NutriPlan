@@ -7,7 +7,7 @@ import Patients from '../../db/Patients'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
-import SmoothRender from 'react-smooth-render';
+import Animated from "react-mount-animation";
 
 
 export const Register = () => {
@@ -42,15 +42,8 @@ export const Register = () => {
 
     const [status, setStatus] = useState(initialStatus)
 
-
-    // let collection = "";
-    // collection = document.getElementsByClassName("toggleButton");
-    // collection[0].addEventListener("click", function() {
-    //     console.log("0")
-    // })
-    //userCategory determina o tipo de cadastro (paciente/nutricionista)
-
     const swapForm = (userCategory, e) => {
+        console.log(userCategory)
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
         setStatus({...initialStatus})
         setVisibility(true);
@@ -130,8 +123,8 @@ export const Register = () => {
                 <CardItem>
                     <CardDescription>Eu sou um:</CardDescription>   
                     <StyledRadixToggleGroup type="single" aria-label="usuario">
-                        <StyledRadixButton className="toggleButton" onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
-                        <StyledRadixButton className="toggleButton" onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
+                        <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
+                        <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
                     </StyledRadixToggleGroup>
                 </CardItem> 
                     <CardItemContainer visibility={visibility}>
@@ -164,7 +157,7 @@ export const Register = () => {
                         <CardItem>
                             
                         </CardItem>
-                        <SmoothRender hidden={!userCategory} timing={500}>
+                            <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
                                 <CardItem>
                                     <CardInput  placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
                                 </CardItem>
@@ -175,7 +168,7 @@ export const Register = () => {
                                     </> 
                                 )}
                                 </CardItem>
-                        </SmoothRender>  
+                            </Animated.div>
                         <CardItem>
                             <CardInput type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
                         </CardItem>
