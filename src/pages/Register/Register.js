@@ -134,8 +134,7 @@ export const Register = () => {
                         <StyledRadixButton className="toggleButton" onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
                     </StyledRadixToggleGroup>
                 </CardItem> 
-                <SmoothRender hidden={!visibility} initiallyHidden={true} timing={500}>
-                    <CardItemContainer>
+                    <CardItemContainer visibility={visibility}>
                         <CardItem>
                             <CardDescription>Para concluir o cadastro, preencha o formulário abaixo</CardDescription>   
                         </CardItem>
@@ -199,8 +198,7 @@ export const Register = () => {
                             )}
                         </CardItem>
                         <StyledButton onClick={handleSubmit} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
-                    </CardItemContainer> 
-                </SmoothRender>       
+                    </CardItemContainer>    
             </Card>
         </> 
     )

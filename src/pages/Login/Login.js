@@ -27,7 +27,7 @@ export const Login = () => {
 
     return (
         <Card cardTitle="Login" >
-            <CardItemContainer show={true}>
+            <CardItemContainer visibility={true}>
                 <CardItem>
                     <CardInput type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
                 </CardItem>
