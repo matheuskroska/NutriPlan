@@ -39,10 +39,13 @@ export const CardItem = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
-    gap: ${props => props.gap || "8px"};
+    gap: ${props => props.gap || "0 8px"};
     justify-content: ${props => props.justifyContent || "initial"};
     input:not(:placeholder-shown):invalid ~ span {
-        display: flex;
+        visibility: visible;
+        opacity: 1;
+        height: auto;
+        margin-top: 10px;
     }
 
 `
