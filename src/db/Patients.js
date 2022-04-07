@@ -10,9 +10,9 @@ const Patients = {
             if (typeof(retUser) === 'object') {
                 const docRef = await addDoc(collection(db, "patients"), {
                     uuid: retUser.uid,
-                    name: patient.name,
-                    surname: patient.surname,
-                    fullname: patient.name + ' ' + patient.surname,
+                    firstname: patient.firstname,
+                    lastname: patient.lastname,
+                    fullname: patient.firstname + ' ' + patient.lastname,
                     email: patient.email,
                     ddd: patient.ddd,
                     phone: patient.phone,

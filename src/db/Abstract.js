@@ -48,9 +48,9 @@ const Abstract = {
                 let dbName = null
                 let userInfo = {
                     uuid: retUser.uid,
-                    name: user.name,
-                    surname: user.surname,
-                    fullname: user.name + ' ' + user.surname,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    fullname: user.firstname + ' ' + user.lastname,
                     email: user.email,
                     ddd: user.ddd,
                     phone: user.phone,
