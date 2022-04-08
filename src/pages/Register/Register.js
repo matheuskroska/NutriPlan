@@ -81,7 +81,6 @@ export const Register = () => {
                             } else {
                                 retAdd = await Patients.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
                             }
-                            alert(retAdd)
                         }
                     } else {
                         setStatus({conf_password: true})
