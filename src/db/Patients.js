@@ -32,8 +32,34 @@ const Patients = {
     },
 
     async addUser(patient, userCategory) {
-        const retUser = await Abstract.addUser(patient, userCategory)
-        return retUser
+        // const retUser = await Abstract.addUser(patient, userCategory)
+
+        try {
+            const retUser = await Abstract.createUser(patient.email, patient.password)
+            if (typeof(retUser) === 'object') {
+                const docRef = await addDoc(collection(db, "patients"), {
+                    uuid: retUser.uid,
+                    firstname: patient.firstname,
+                    lastname: patient.lastname,
+                    fullname: patient.firstname + ' ' + patient.lastname,
+                    email: patient.email,
+                    ddd: patient.ddd,
+                    phone: patient.phone,
+                    cpf: patient.cpf,
+                    nutritionist_uuid: '',
+                    password: patient.password,
+                    created_at: Timestamp.now(),
+                    updated_at: Timestamp.now(),
+                })
+                return docRef.id
+            } else {
+                return retUser
+            }
+        } catch (e) {
+            console.error("Error adding document: ", e)
+        }
+
+        // return retUser
     },
 
     // Verifica se já existe um paciente com esse CPF

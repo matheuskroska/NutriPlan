@@ -8,6 +8,7 @@ import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
+import Nutritionists from '../../db/Nutritionists'
 
 
 export const Register = () => {
@@ -65,15 +66,6 @@ export const Register = () => {
                 }
             }
 
-            if (column === 'firstname') {
-                if (patient[column] !== null) {
-                    setStatus({firstname: false})
-                } else {
-                    setStatus({firstname: true})
-                    return
-                }
-            }
-
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
@@ -83,7 +75,13 @@ export const Register = () => {
                             setStatus({cpf: true})
                         } else {
                             setStatus({cpf: false})
-                            let retAdd = await Patients.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
+                            let retAdd = ""
+                            if (!!userCategory) {
+                                retAdd = await Nutritionists.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
+                            } else {
+                                retAdd = await Patients.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
+                            }
+                            alert(retAdd)
                         }
                     } else {
                         setStatus({conf_password: true})
@@ -171,7 +169,7 @@ export const Register = () => {
                             <ErrorMessage><ExclamationTriangleIcon/>Senha deve ter de 8 a 20 caraceteres, 1 letra, 1 número e 1 caracter especial</ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            <CardInput pattern={tempPwd} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
+                            <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
                             <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
                         </CardItem>
                         <StyledButton primary hasIcon><ReloadIcon/>cadastrar<ArrowRightIcon/></StyledButton>
