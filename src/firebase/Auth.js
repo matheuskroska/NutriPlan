@@ -10,10 +10,8 @@ export const AuthProvider = ({children}) => {
 
      useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
-            console.log('user', user)
             if (!!user) {
                 let userInfo = await Abstract.getUserByUid(user.uid)
-                console.log(userInfo)
                 setCurrentUser(userInfo)
             } else {
                 setCurrentUser(user)

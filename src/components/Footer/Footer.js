@@ -6,7 +6,7 @@ import { FooterColSocial, FooterLogo, FooterWrapper,FooterContainer,FooterItem, 
 export const Footer = () => {
     return (
             <FooterContainer>
-                <FooterWrapper bgColor="var(--secundary)">
+                <FooterWrapper bgColor="var(--secondary)">
                     <FooterItem >
                         
                     </FooterItem>

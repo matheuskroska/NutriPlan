@@ -31,7 +31,7 @@ const Patients = {
         }
     },
 
-    async addUser(patient, userCategory) {
+    async addUser(patient) {
         // const retUser = await Abstract.addUser(patient, userCategory)
 
         try {
@@ -67,12 +67,10 @@ const Patients = {
         const q = query(collection(db, "patients"), where("cpf", "==", patient.cpf))
 
         const data = await getDocs(q)
-        // console.log(data.docs)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id
         }))
-        console.log(dataResult.length)
         if (dataResult.length === 1) {
             return true
         } else {

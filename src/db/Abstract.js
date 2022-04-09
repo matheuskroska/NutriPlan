@@ -1,7 +1,7 @@
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { Errors } from "../firebase/Errors"
-import { collection, addDoc, Timestamp, query, where, getDocs } from 'firebase/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const Abstract = {
@@ -44,18 +44,28 @@ const Abstract = {
     async getUserByUid(uid) {
         const q = query(collection(db, "patients"), where("uuid", "==", uid))
 
+        const dataResult = await this.getAllDataUser(q)
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            const q = query(collection(db, "nutritionists"), where("uuid", "==", uid))
+            const dataResult = await this.getAllDataUser(q)
+            if (dataResult.length === 1) {
+                return dataResult[0]
+            } else {
+                return null
+            }
+        }
+    },
+
+    async getAllDataUser(q) {
         const data = await getDocs(q)
-        // console.log(data.docs)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id
         }))
-        if (dataResult.length === 1) {
-            return dataResult[0]
-        } else {
-            return null
-        }
-    },
+        return dataResult
+    }
 }
 
 export default Abstract

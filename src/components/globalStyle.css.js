@@ -18,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
 
     :root {
     --primary: #AAD76C;
-    --secundary: #6F8C43;
+    --secondary: #6F8C43;
     --tertiary: #4A4D26;
     --font-dark: #4A4D26;
     --font-soft: #ffffff;

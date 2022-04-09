@@ -4,6 +4,7 @@ import Patients from '../../db/Patients';
 import './Users.css'
 import { CheckIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
+import { StyledLink } from '../../components/Link/Link.elements';
 
 export const Users = () => {
 
@@ -27,8 +28,8 @@ export const Users = () => {
                         return (
                             <tr>     
                                 <td>{data.cpf} - {data.fullname}</td>
-                                <td><StyledButton primary hasIcon><CheckIcon/> liberar</StyledButton></td>
-                                <td><Pencil2Icon/></td>
+                                <td><StyledButton primary hasIconLeft><CheckIcon/>liberar</StyledButton></td>
+                                <td><StyledLink header to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></td>
                                 <td><TrashIcon/></td>
                             </tr>
                         )

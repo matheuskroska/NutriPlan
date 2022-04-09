@@ -4,7 +4,7 @@ import Abstract from './Abstract'
 
 const Nutritionists = {
     // Adiciona nutricionista na base
-    async addUser(nutritionist, userCategory) {
+    async addUser(nutritionist) {
         // const retUser = await Abstract.addUser(nutritionist, userCategory)
         try {
             const retUser = await Abstract.createUser(nutritionist.email, nutritionist.password)
@@ -39,12 +39,10 @@ const Nutritionists = {
         const q = query(collection(db, "nutritionists"), where("cpf", "==", nutritionist.cpf))
 
         const data = await getDocs(q)
-        // console.log(data.docs)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id
         }))
-        console.log(dataResult.length)
         if (dataResult.length === 1) {
             return true
         } else {

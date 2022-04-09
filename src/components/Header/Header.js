@@ -2,7 +2,7 @@ import { NavContainer,NavWrapper, NavItem, NavLogo, NavLogoTitle, NavRight } fro
 import logo from '../../assets/images/logo.png';
 import { EnterIcon } from '@radix-ui/react-icons'
 import { StyledLink } from '../Link/Link.elements';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../firebase/Auth';
 import Abstract from '../../db/Abstract';
 

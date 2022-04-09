@@ -10,7 +10,6 @@ import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
 import Nutritionists from '../../db/Nutritionists'
 
-
 export const Register = () => {
 
     const [visibility, setVisibility] = useState(false)
@@ -24,6 +23,18 @@ export const Register = () => {
         ddd: null,
         phone: null,
         cpf: null,
+        password: null,
+        conf_password: null,
+    })
+    const [nutritionist, setNutritionist] = useState({
+        uuid: null,
+        firstname: null,
+        lastname: null,
+        email: null,
+        ddd: null,
+        phone: null,
+        cpf: null,
+        crn: null,
         password: null,
         conf_password: null,
     })
@@ -53,7 +64,14 @@ export const Register = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log("hue")
+        if (!!userCategory) {
+            await registerNutritionist()
+        } else {
+            await registerPatient()
+        }
+    }
+
+    const registerPatient = async() => {
         let _password = null
         for (let column in patient) {
             if (column === 'password') {
@@ -70,17 +88,48 @@ export const Register = () => {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
                         setStatus({conf_password: false})
-                        let ret = await Patients.hasPatient(patient)
-                        if (ret) {
+                        let hasPatient = await Patients.hasPatient(patient)
+                        if (hasPatient) {
                             setStatus({cpf: true})
                         } else {
                             setStatus({cpf: false})
-                            let retAdd = ""
-                            if (!!userCategory) {
-                                retAdd = await Nutritionists.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
-                            } else {
-                                retAdd = await Patients.addUser(patient, userCategory) // recebe como retorno o ID documento ou a mensagem de erro
-                            }
+                            await Patients.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                        }
+                    } else {
+                        setStatus({conf_password: true})
+                        return
+                    }
+                } else {
+                    setStatus({conf_password: true})
+                    return
+                }
+            }
+        }
+    }
+
+    const registerNutritionist = async() => {
+        let _password = null
+        for (let column in nutritionist) {
+            if (column === 'password') {
+                if (nutritionist[column] !== null) {
+                    _password = nutritionist[column]
+                    setStatus({password: false})
+                } else {
+                    setStatus({password: true})
+                    return
+                }
+            }
+
+            if (column === 'conf_password') {
+                if (nutritionist[column] !== null) {
+                    if (_password === nutritionist[column]) {
+                        setStatus({conf_password: false})
+                        let hasNutritionist = await Nutritionists.hasNutritionist(nutritionist)
+                        if (!!hasNutritionist) {
+                            setStatus({cpf: true})
+                        } else {
+                            setStatus({cpf: false})
+                            await Nutritionists.addUser(nutritionist) // recebe como retorno o ID documento ou a mensagem de erro
                         }
                     } else {
                         setStatus({conf_password: true})
@@ -101,10 +150,17 @@ export const Register = () => {
     
     const handleChange = (e) => {
         const { name, value } = e.target
-        setPatient(prev => ({
-            ...prev,
-            [name]: value
-        }))
+        if (!!userCategory) {
+            setNutritionist(prev => ({
+                ...prev,
+                [name]: value
+            }))
+        } else {
+            setPatient(prev => ({
+                ...prev,
+                [name]: value
+            }))
+        }
     }
 
     const handleChangePwd = (e) => {

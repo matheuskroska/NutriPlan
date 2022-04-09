@@ -16,7 +16,7 @@ const cssButon = css`
     outline: 0;
     border: 0;
     gap: 0 10px;
-    padding: ${props => props.hasIcon ? "0 5px 0 15px" : "0 15px"};
+    padding: ${props => props.hasIconRight ? "0 5px 0 15px" : (props.hasIconLeft ? "0 15px 0 5px" : "0 15px")};
     width: 100%;
     font-family: inherit;
     margin: 0 auto;
@@ -53,9 +53,9 @@ export const StyledButton = styled.button`
         }
     `};
     ${props =>
-    props.secundary &&
+    props.secondary &&
     css`
-      background-color: var(--secundary);
+      background-color: var(--secondary);
       color: var(--font-soft);
       &:hover {
         background-color: var(--primary);
