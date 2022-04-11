@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements'
 import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements'
-import { Card } from '../../components/index'
+import { Card, Loader } from '../../components/index'
 import { ArrowRightIcon, ExclamationTriangleIcon, ReloadIcon } from '@radix-ui/react-icons'
 import Patients from '../../db/Patients'
 import { AuthContext } from '../../firebase/Auth'
@@ -9,10 +9,12 @@ import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
 import Nutritionists from '../../db/Nutritionists'
+import { BarLoader, BeatLoader, BounceLoader, CircleLoader, ClimbingBoxLoader, ClipLoader, ClockLoader, DotLoader, FadeLoader, GridLoader, HashLoader, MoonLoader, PacmanLoader, PropagateLoader, PuffLoader, PulseLoader, RingLoader, RiseLoader, RotateLoader, ScaleLoader, SkewLoader, SquareLoader, SyncLoader } from 'react-spinners'
 
 export const Register = () => {
 
     const [visibility, setVisibility] = useState(false)
+    const [loader, setLoader] = useState(false)
     const [userCategory, setUserCategory] = useState(null)
     const [tempPwd, setTempPwd] = useState(null)
     const [patient, setPatient] = useState({
@@ -58,6 +60,7 @@ export const Register = () => {
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
         setStatus({...initialStatus})
         setVisibility(true);
+        
         setUserCategory(userCategory)
     }
     
@@ -65,8 +68,10 @@ export const Register = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         if (!!userCategory) {
+            setLoader(true)
             await registerNutritionist()
         } else {
+            setLoader(true)
             await registerPatient()
         }
     }
@@ -91,6 +96,7 @@ export const Register = () => {
                         let hasPatient = await Patients.hasPatient(patient)
                         if (hasPatient) {
                             setStatus({cpf: true})
+                            setLoader(false)
                         } else {
                             setStatus({cpf: false})
                             await Patients.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
@@ -127,6 +133,7 @@ export const Register = () => {
                         let hasNutritionist = await Nutritionists.hasNutritionist(nutritionist)
                         if (!!hasNutritionist) {
                             setStatus({cpf: true})
+                            setLoader(false)
                         } else {
                             setStatus({cpf: false})
                             await Nutritionists.addUser(nutritionist) // recebe como retorno o ID documento ou a mensagem de erro
@@ -182,6 +189,10 @@ export const Register = () => {
     
     return (
         <>
+            { loader && 
+            <>
+                <Loader/>
+            </>}    
             <Card cardTitle="Cadastro" >
                 <CardItem wrap={"initial"}>
                     <CardDescription>Eu sou um:</CardDescription>   
@@ -227,7 +238,7 @@ export const Register = () => {
                             <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
                             <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
                         </CardItem>
-                        <StyledButton primary hasIcon><ReloadIcon/>cadastrar<ArrowRightIcon/></StyledButton>
+                        <StyledButton onClick={() => console.log("teste")} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                         </form>
                     </CardItemContainer>    
             </Card>

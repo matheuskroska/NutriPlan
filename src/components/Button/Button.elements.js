@@ -2,6 +2,7 @@ import styled, {css} from "styled-components";
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 const cssButon = css`
+    position: relative;
     border-radius: 15px;
     max-width: 155px;
     height: 35px;

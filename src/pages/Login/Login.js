@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { StyledButton } from '../../components/Button/Button.elements';
 import { CardItem, CardInput, CardItemContainer } from '../../components/Card/Card.elements';
-import { Card } from '../../components/index';
+import { Card, Loader } from '../../components/index';
 import {EnterIcon} from '@radix-ui/react-icons'
 import { Link } from '../../components/Link/Link';
 import Abstract from '../../db/Abstract';
@@ -20,6 +20,7 @@ export const Login = () => {
         let ret = await Abstract.signIn(email, password)
         if (typeof(ret) === 'string') {
             alert(ret)
+            setShowSpinner(false)
         }
     }
 
@@ -28,17 +29,12 @@ export const Login = () => {
         return <Navigate to="/" replace />
     }
 
-    const override = `
-        display: block;
-        margin: 0 auto;
-        border-color: #6F8C43;
-    `
-
     return (
         <>
-        {!!showSpinner ? (
-            <ScaleLoader color="red" loading={true} css={override} size={300} />
-        ) : (
+            { showSpinner && 
+            <>
+                <Loader/>
+            </>} 
             <Card cardTitle="Login" >
                 <CardItemContainer visibility={true}>
                     <CardItem>
@@ -55,7 +51,6 @@ export const Login = () => {
                     </CardItem>
                 </CardItemContainer>  
             </Card>
-        )}
         </>
     )
 }
