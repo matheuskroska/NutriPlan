@@ -2,14 +2,13 @@ import React, { useContext, useState } from 'react'
 import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements'
 import { CardItem, CardInput, CardItemContainer, CardDescription } from '../../components/Card/Card.elements'
 import { Card, Loader } from '../../components/index'
-import { ArrowRightIcon, ExclamationTriangleIcon, ReloadIcon } from '@radix-ui/react-icons'
+import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import Patients from '../../db/Patients'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
 import Nutritionists from '../../db/Nutritionists'
-import { BarLoader, BeatLoader, BounceLoader, CircleLoader, ClimbingBoxLoader, ClipLoader, ClockLoader, DotLoader, FadeLoader, GridLoader, HashLoader, MoonLoader, PacmanLoader, PropagateLoader, PuffLoader, PulseLoader, RingLoader, RiseLoader, RotateLoader, ScaleLoader, SkewLoader, SquareLoader, SyncLoader } from 'react-spinners'
 
 export const Register = () => {
 

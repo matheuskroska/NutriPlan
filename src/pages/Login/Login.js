@@ -7,7 +7,6 @@ import { Link } from '../../components/Link/Link';
 import Abstract from '../../db/Abstract';
 import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
-import { ScaleLoader } from 'react-spinners';
 
 export const Login = () => {
 
@@ -25,13 +24,13 @@ export const Login = () => {
     }
 
     const { currentUser } = useContext(AuthContext)
-    if (currentUser) {
+    if (!!currentUser) {
         return <Navigate to="/" replace />
     }
 
     return (
         <>
-            { showSpinner && 
+            { !!showSpinner && 
             <>
                 <Loader/>
             </>} 
@@ -44,7 +43,7 @@ export const Login = () => {
                         <CardInput type="password" placeholder="Senha" inputWidth="100%" onChange={(e) => setPassword(e.target.value)}></CardInput>
                     </CardItem>
                     <CardItem>
-                        <Link to="/cadastro" forgotpwd>esqueci minha senha</Link>
+                        <Link to="/alterar-senha" forgotpwd>esqueci minha senha</Link>
                     </CardItem>
                     <CardItem>
                         <StyledButton onClick={handleSubmit} primary hasIcon>entrar<EnterIcon/></StyledButton>

@@ -44,7 +44,6 @@ export const CardItem = styled.div`
         height: auto;
         margin-top: 10px;
     }
-
 `
 
 export const CardItemContainer = styled.div`
@@ -71,5 +70,10 @@ export const CardDescription = styled.h2`
     margin-right: 15px;
 `
 
-
-
+export const CardMessage = styled.h2`
+    font-size: 1.7em;
+    margin: 10px 0;
+    text-align: center;
+    color: var(--font-soft);
+    min-width: fit-content;
+`

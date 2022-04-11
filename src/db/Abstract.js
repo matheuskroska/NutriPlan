@@ -65,7 +65,24 @@ const Abstract = {
             id: doc.id
         }))
         return dataResult
-    }
+    },
+
+    async getUserByEmail(email) {
+        const q = query(collection(db, "patients"), where("email", "==", email))
+
+        const dataResult = await this.getAllDataUser(q)
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            const q = query(collection(db, "nutritionists"), where("email", "==", email))
+            const dataResult = await this.getAllDataUser(q)
+            if (dataResult.length === 1) {
+                return dataResult[0]
+            } else {
+                return null
+            }
+        }
+    },
 }
 
 export default Abstract
