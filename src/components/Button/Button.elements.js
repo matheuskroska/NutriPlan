@@ -4,7 +4,7 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 const cssButon = css`
     position: relative;
     border-radius: 15px;
-    max-width: 155px;
+    max-width: ${props => props.maxWidth ? props.maxWidth : "155px"};
     height: 35px;
     font-size: 1.3em;
     font-weight: 500;

@@ -4,7 +4,7 @@ import { Errors } from "../firebase/Errors";
 
 const LoginModel = {
     async sendEmailResetPassword(email) {
-        auth.languageCode('pt')
+        // auth.languageCode('pt')
         return await sendPasswordResetEmail(auth, email)
         .then(() => {
             // Password reset email sent!

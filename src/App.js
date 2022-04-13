@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './firebase/Auth';
 import { Users } from './pages/Users/Users';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                 <Route exact path="/cadastro" element={<Register/>} />
                 <Route exact path="/usuarios" element={<Users/>} />
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />
+                <Route exact path="/redefinir-senha" element={<ResetPassword/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>
