@@ -84,5 +84,7 @@ export const Errors = {
     'auth/phone-number-already-exists': 'O telefone fornecido já está em uso.',
     'auth/project-not-found': 'Nenhum projeto foi encontrado.',
     'auth/insufficient-permission': 'A credencial utilizada não tem permissão para acessar o recurso solicitado.',
-    'auth/internal-error': 'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.'
+    'auth/internal-error': 'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.',
+    'auth/login-not-approved': 'Seu login não foi aprovado pelo Administrador do sistema!! Por favor, aguarde até que seu login seja liberado',
+    'auth/null-email': 'Não encontramos nenhuma conta com este email. Verifique se o e-mail foi digitado corretamente.',
 }

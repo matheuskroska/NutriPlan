@@ -2,26 +2,28 @@ import React, { useContext, useState } from 'react';
 import { StyledButton } from '../../components/Button/Button.elements';
 import { CardItem, CardInput, CardItemContainer, CardMessage } from '../../components/Card/Card.elements';
 import { Card, Loader } from '../../components/index';
-import { CheckCircledIcon } from '@radix-ui/react-icons'
+import { CheckCircledIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
 import LoginModel from '../../db/LoginModel';
+import { ErrorMessage, ErrorMessageTeste } from '../../components/ErrorMessage/ErrorMessage';
 
 export const ForgotPassword = () => {
 
     const [email, setEmail] = useState(false)
     const [success, setSuccess] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const handleSubmit = async() => {
         setShowSpinner(true)
-        // let userData = await Abstract.getUserByEmail(email)
         let ret = await LoginModel.sendEmailResetPassword(email)
-        if (!!ret) {
-            setSuccess(true)
+        if (typeof(ret) === 'string') {
+            setErrorMessage(ret)
             setShowSpinner(false)
         } else {
-            alert(ret)
+            setSuccess(true)
+            setShowSpinner(false)
         }
     }
 
@@ -56,6 +58,7 @@ export const ForgotPassword = () => {
                     </CardItem>
                     <CardItem>
                         <CardInput type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
+                        {!!errorMessage && (<ErrorMessage visibility="true"><ExclamationTriangleIcon/>{errorMessage}</ErrorMessage>)}
                     </CardItem>
                     <CardItem>
                         <StyledButton onClick={handleSubmit} primary>enviar e-mail</StyledButton>

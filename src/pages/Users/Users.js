@@ -5,6 +5,7 @@ import './Users.css'
 import { CheckIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
+import { Navigate } from 'react-router-dom';
 
 export const Users = () => {
 
@@ -18,6 +19,8 @@ export const Users = () => {
 
     if (!!currentUser && !!!patientList) {
         getPatients()
+    } else {
+        return <Navigate to="/login" replace />
     }
 
     return (

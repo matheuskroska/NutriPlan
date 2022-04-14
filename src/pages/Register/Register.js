@@ -188,7 +188,7 @@ export const Register = () => {
     
     return (
         <>
-            { loader && 
+            { !!loader && 
             <>
                 <Loader/>
             </>}    

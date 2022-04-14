@@ -19,6 +19,10 @@ const Abstract = {
     },
     
     async signIn(email, password) {
+        let user = await this.getUserByEmail(email)
+        if (!!!user.login_approved) {
+            return Errors['auth/login-not-approved']
+        }
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user

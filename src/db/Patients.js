@@ -19,6 +19,7 @@ const Patients = {
                     cpf: patient.cpf,
                     password: patient.password,
                     nutritionist_uuid: '',
+                    login_approved: false,
                     created_at: Timestamp.now(),
                     updated_at: Timestamp.now(),
                 })

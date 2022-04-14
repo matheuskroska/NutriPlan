@@ -1,10 +1,14 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase"
 import { Errors } from "../firebase/Errors";
+import Abstract from "./Abstract";
 
 const LoginModel = {
     async sendEmailResetPassword(email) {
-        // auth.languageCode('pt')
+        const user = await Abstract.getUserByEmail(email)
+        if (!!!user) {
+            return Errors['auth/null-email']
+        }
         return await sendPasswordResetEmail(auth, email)
         .then(() => {
             // Password reset email sent!
