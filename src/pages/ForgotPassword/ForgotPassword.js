@@ -6,7 +6,7 @@ import { CheckCircledIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons
 import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
 import LoginModel from '../../db/LoginModel';
-import { ErrorMessage, ErrorMessageTeste } from '../../components/ErrorMessage/ErrorMessage';
+import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
 
 export const ForgotPassword = () => {
 
@@ -40,7 +40,7 @@ export const ForgotPassword = () => {
         </>}
         {!!success ? (
             <Card cardTitle="Alterar a senha" >
-                <CardItemContainer visibility={true}>
+                <CardItemContainer visibility="true">
                     <CardItem>
                         <CardMessage>
                             E-mail enviado com sucesso <CheckCircledIcon />
@@ -50,7 +50,7 @@ export const ForgotPassword = () => {
             </Card>
         ) : (
             <Card cardTitle="Alterar a senha" >
-                <CardItemContainer visibility={true}>
+                <CardItemContainer visibility="true">
                     <CardItem>
                         <CardMessage>
                             Para alterar sua senha, informe o e-mail cadastrado e enviaremos um link com as instruções.

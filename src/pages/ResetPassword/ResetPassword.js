@@ -49,7 +49,7 @@ export const ResetPassword = () => {
     const handleResetPassword = async() => {
         if (!!!showNewPwd) {
             let ret = await ResetPasswordModel.handleResetPassword(actionCode, continueUrl, lang)
-            if (!!ret && ret.indexOf('@') != -1) {
+            if (!!ret && ret.indexOf('@') !== -1) {
                 setShowNewPwd(true)
                 setEmail(ret)
             } else {
@@ -91,7 +91,7 @@ export const ResetPassword = () => {
         <>
         { !!!showNewPwd ? (
             <Card cardTitle="Tente solicitar um novo link para alterar sua senha" >
-                <CardItemContainer visibility={true}>
+                <CardItemContainer visibility="true">
                     <CardItem>
                         <CardMessage>
                             {message}
@@ -104,7 +104,7 @@ export const ResetPassword = () => {
             </Card>
         ) : (
             <Card cardTitle="Definir nova senha" >
-                <CardItemContainer visibility={true}>
+                <CardItemContainer visibility="true">
                     { !!showBtnLogin ? (
                         <>
                             <CardItem>

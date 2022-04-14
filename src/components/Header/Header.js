@@ -27,8 +27,8 @@ export const Header = () => {
                     <NavRight>
                         {(!!!currentUser) ? (
                             <>
-                                <StyledLink header to="/login">login</StyledLink>
-                                <StyledLink header to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
+                                <StyledLink header="true" to="/login">login</StyledLink>
+                                <StyledLink header="true" to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
                             </>
                         ) : (
                             <div>

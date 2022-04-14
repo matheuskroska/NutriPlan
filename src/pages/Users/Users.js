@@ -19,7 +19,7 @@ export const Users = () => {
 
     if (!!currentUser && !!!patientList) {
         getPatients()
-    } else {
+    } else if (!!!currentUser) {
         return <Navigate to="/login" replace />
     }
 
@@ -31,8 +31,8 @@ export const Users = () => {
                         return (
                             <tr>     
                                 <td>{data.cpf} - {data.fullname}</td>
-                                <td><StyledButton primary hasIconLeft maxWidth="fit-content"><CheckIcon/>liberar</StyledButton></td>
-                                <td><StyledLink header to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></td>
+                                <td>{!!!data.login_approved && (<StyledButton primary hasIconLeft maxWidth="fit-content"><CheckIcon/>liberar acesso</StyledButton>)}</td>
+                                <td><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></td>
                                 <td><TrashIcon/></td>
                             </tr>
                         )

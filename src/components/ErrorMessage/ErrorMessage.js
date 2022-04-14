@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledError, StyledError2 } from './ErrorMessage.elements'
+import { StyledError } from './ErrorMessage.elements'
 
 export const ErrorMessage = (props) => {
   return (
