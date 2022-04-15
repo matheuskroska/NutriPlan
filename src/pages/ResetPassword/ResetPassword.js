@@ -87,49 +87,53 @@ export const ResetPassword = () => {
         return <Navigate to="/" replace />
     }
 
-    return (
-        <>
-        { !!!showNewPwd ? (
-            <Card cardTitle="Tente solicitar um novo link para alterar sua senha" >
-                <CardItemContainer visibility="true">
-                    <CardItem>
-                        <CardMessage>
-                            {message}
-                        </CardMessage>
-                    </CardItem>
-                    <CardItem>
-                        <StyledButton onClick={handleForgotPassword} primary maxWidth="fit-content">esqueci minha senha</StyledButton>
-                    </CardItem>
-                </CardItemContainer>  
-            </Card>
-        ) : (
-            <Card cardTitle="Definir nova senha" >
-                <CardItemContainer visibility="true">
-                    { !!showBtnLogin ? (
-                        <>
-                            <CardItem>
-                                <CardMessage>{message}</CardMessage>
-                            </CardItem>
-                            <CardItem>
-                                <StyledButton onClick={handleRedirectLogin} primary maxWidth="fit-content">Fazer login com nova senha</StyledButton>
-                            </CardItem>
-                        </>
-                    ) : (
-                        <>
-                            <CardItem>
-                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Nova senha" inputWidth="100%" onChange={(e) => setNewPassword(e.target.value)}></CardInput>
-                            </CardItem>
-                            <CardItem>
-                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Confirmar nova senha" inputWidth="100%" onChange={(e) => setConfNewPassword(e.target.value)}></CardInput>
-                            </CardItem>
-                            <CardItem>
-                                <StyledButton onClick={handleSubmit} primary>alterar senha</StyledButton>
-                            </CardItem>
-                        </>
-                    )}
-                </CardItemContainer>  
-            </Card>
-        )}
-        </>
-    )
+    if (!!!showNewPwd) {
+        return (
+            <>
+                <Card cardTitle="Tente solicitar um novo link para alterar sua senha" >
+                    <CardItemContainer visibility="true">
+                        <CardItem>
+                            <CardMessage>
+                                {message}
+                            </CardMessage>
+                        </CardItem>
+                        <CardItem>
+                            <StyledButton onClick={handleForgotPassword} primary maxWidth="fit-content">esqueci minha senha</StyledButton>
+                        </CardItem>
+                    </CardItemContainer>  
+                </Card>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <Card cardTitle="Definir nova senha" >
+                    <CardItemContainer visibility="true">
+                        { !!showBtnLogin ? (
+                            <>
+                                <CardItem>
+                                    <CardMessage>{message}</CardMessage>
+                                </CardItem>
+                                <CardItem>
+                                    <StyledButton onClick={handleRedirectLogin} primary maxWidth="fit-content">Fazer login com nova senha</StyledButton>
+                                </CardItem>
+                            </>
+                        ) : (
+                            <>
+                                <CardItem>
+                                    <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Nova senha" inputWidth="100%" onChange={(e) => setNewPassword(e.target.value)}></CardInput>
+                                </CardItem>
+                                <CardItem>
+                                    <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Confirmar nova senha" inputWidth="100%" onChange={(e) => setConfNewPassword(e.target.value)}></CardInput>
+                                </CardItem>
+                                <CardItem>
+                                    <StyledButton onClick={handleSubmit} primary>alterar senha</StyledButton>
+                                </CardItem>
+                            </>
+                        )}
+                    </CardItemContainer>  
+                </Card>
+            </>
+        )
+    }
 }

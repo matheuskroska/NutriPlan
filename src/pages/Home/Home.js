@@ -17,12 +17,17 @@ export const Home = () => {
         navigate("/usuarios", { replace: true });
     }
 
-    return (
-        <>
-        {!!currentUser &&
-            <StyledButton onClick={handleListUsers} primary>lista de usuários</StyledButton>
-        }
-        <h1>Home</h1>
-        </>
-    )
+    if (!!currentUser) {
+        return (
+            <>
+                <StyledButton onClick={handleListUsers} primary>lista de usuários</StyledButton>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <h1>Home</h1>
+            </>
+        )
+    }
 }

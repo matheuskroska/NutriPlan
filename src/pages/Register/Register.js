@@ -186,61 +186,65 @@ export const Register = () => {
         }
     }
     
-    return (
-        <>
-            { !!loader && 
+    if (!!loader) {
+        return (
             <>
                 <Loader/>
-            </>}    
-            <Card cardTitle="Cadastro" >
-                <CardItem wrap={"initial"}>
-                    <CardDescription>Eu sou um:</CardDescription>   
-                    <StyledRadixToggleGroup type="single" aria-label="usuario">
-                        <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
-                        <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
-                    </StyledRadixToggleGroup>
-                </CardItem> 
-                    <CardItemContainer visibility={visibility}>
-                        <CardItem>
-                            <CardDescription>Para concluir o cadastro, preencha o formulário abaixo</CardDescription>   
-                        </CardItem>
-                        <form onSubmit={handleSubmit}>
-                        <CardItem>
-                            <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange}></CardInput>
-                            <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange}></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
-                        </CardItem>
-                        <CardItem>
-                            <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
-                        </CardItem>
-                        <CardItem>
-                            <CardInput required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange}></CardInput>
-                            <CardInput required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange}></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
-                        </CardItem>
-                        <CardItem>
-                            <CardInput placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>CPF inválido</ErrorMessage>
-                        </CardItem>
-                            <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
-                                <CardItem>
-                                    <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
-                                    <ErrorMessage><ExclamationTriangleIcon/>CRN inválido</ErrorMessage>
-                                </CardItem>
-                            </Animated.div>
-                        <CardItem>
-                            <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Senha deve ter de 8 a 20 caraceteres, 1 letra, 1 número e 1 caracter especial</ErrorMessage>
-                        </CardItem>
-                        <CardItem>
-                            <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
-                            <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
-                        </CardItem>
-                        <StyledButton onClick={() => console.log("teste")} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
-                        </form>
-                    </CardItemContainer>    
-            </Card>
-        </> 
-    )
+            </>
+        )
+    } else {
+        return (
+            <>
+                <Card cardTitle="Cadastro" >
+                    <CardItem wrap={"initial"}>
+                        <CardDescription>Eu sou um:</CardDescription>
+                        <StyledRadixToggleGroup type="single" aria-label="usuario">
+                            <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
+                            <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
+                        </StyledRadixToggleGroup>
+                    </CardItem>
+                        <CardItemContainer visibility={visibility}>
+                            <CardItem>
+                                <CardDescription>Para concluir o cadastro, preencha o formulário abaixo</CardDescription>
+                            </CardItem>
+                            <form onSubmit={handleSubmit}>
+                            <CardItem>
+                                <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange}></CardInput>
+                                <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange}></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
+                            </CardItem>
+                            <CardItem>
+                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off"></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                            </CardItem>
+                            <CardItem>
+                                <CardInput required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange}></CardInput>
+                                <CardInput required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange}></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                            </CardItem>
+                            <CardItem>
+                                <CardInput placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/>CPF inválido</ErrorMessage>
+                            </CardItem>
+                                <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
+                                    <CardItem>
+                                        <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
+                                        <ErrorMessage><ExclamationTriangleIcon/>CRN inválido</ErrorMessage>
+                                    </CardItem>
+                                </Animated.div>
+                            <CardItem>
+                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd}></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/>Senha deve ter de 8 a 20 caraceteres, 1 letra, 1 número e 1 caracter especial</ErrorMessage>
+                            </CardItem>
+                            <CardItem>
+                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
+                            </CardItem>
+                            <StyledButton onClick={() => console.log("teste")} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
+                            </form>
+                        </CardItemContainer>
+                </Card>
+            </>
+        )
+    }
 }

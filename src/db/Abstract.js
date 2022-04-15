@@ -96,6 +96,14 @@ const Abstract = {
             password: newPassword
         })
     },
+
+    async editUser(uuid) {
+        const user = await this.getUserByUid(uuid)
+        const docRef = doc(db, user.dbName, user.docId)
+        return await updateDoc(docRef, {
+            login_approved: true
+        })
+    },
 }
 
 export default Abstract

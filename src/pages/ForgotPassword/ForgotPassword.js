@@ -32,40 +32,46 @@ export const ForgotPassword = () => {
         return <Navigate to="/" replace />
     }
 
-    return (
-        <>
-        { !!showSpinner && 
-        <>
-            <Loader/>
-        </>}
-        {!!success ? (
-            <Card cardTitle="Alterar a senha" >
-                <CardItemContainer visibility="true">
-                    <CardItem>
-                        <CardMessage>
-                            E-mail enviado com sucesso <CheckCircledIcon />
-                        </CardMessage>
-                    </CardItem>
-                </CardItemContainer>  
-            </Card>
-        ) : (
-            <Card cardTitle="Alterar a senha" >
-                <CardItemContainer visibility="true">
-                    <CardItem>
-                        <CardMessage>
-                            Para alterar sua senha, informe o e-mail cadastrado e enviaremos um link com as instruções.
-                        </CardMessage>
-                    </CardItem>
-                    <CardItem>
-                        <CardInput type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
-                        {!!errorMessage && (<ErrorMessage visibility="true"><ExclamationTriangleIcon/>{errorMessage}</ErrorMessage>)}
-                    </CardItem>
-                    <CardItem>
-                        <StyledButton onClick={handleSubmit} primary>enviar e-mail</StyledButton>
-                    </CardItem>
-                </CardItemContainer>  
-            </Card>
-        )}
-        </>
-    )
+    if (!!showSpinner) {
+        return (
+            <>
+                <Loader/>
+            </>
+        )
+    } else if (!!success) {
+        return (
+            <>
+                <Card cardTitle="Alterar a senha" >
+                    <CardItemContainer visibility="true">
+                        <CardItem>
+                            <CardMessage>
+                                E-mail enviado com sucesso <CheckCircledIcon />
+                            </CardMessage>
+                        </CardItem>
+                    </CardItemContainer>  
+                </Card>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <Card cardTitle="Alterar a senha" >
+                    <CardItemContainer visibility="true">
+                        <CardItem>
+                            <CardMessage>
+                                Para alterar sua senha, informe o e-mail cadastrado e enviaremos um link com as instruções.
+                            </CardMessage>
+                        </CardItem>
+                        <CardItem>
+                            <CardInput type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
+                            {!!errorMessage && (<ErrorMessage visibility="true"><ExclamationTriangleIcon/>{errorMessage}</ErrorMessage>)}
+                        </CardItem>
+                        <CardItem>
+                            <StyledButton onClick={handleSubmit} primary>enviar e-mail</StyledButton>
+                        </CardItem>
+                    </CardItemContainer>  
+                </Card>
+            </>
+        )
+    }
 }

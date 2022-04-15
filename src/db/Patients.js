@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { collection, addDoc, getDocs, Timestamp, query, where } from 'firebase/firestore'
+import { collection, addDoc, getDocs, Timestamp, query, where, orderBy } from 'firebase/firestore'
 import Abstract from './Abstract'
 
 const Patients = {
@@ -81,7 +81,9 @@ const Patients = {
 
     // Recupera todos os pacientes da base
     async getPatients() {
-        const data = await getDocs(collection(db, "patients"))
+        const q = query(collection(db, "patients"), orderBy("created_at"))
+
+        const data = await getDocs(q)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id

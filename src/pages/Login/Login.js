@@ -28,28 +28,32 @@ export const Login = () => {
         return <Navigate to="/" replace />
     }
 
-    return (
-        <>
-            { !!showSpinner && 
+    if (!!showSpinner) {
+        return (
             <>
                 <Loader/>
-            </>} 
-            <Card cardTitle="Login" >
-                <CardItemContainer visibility="true">
-                    <CardItem>
-                        <CardInput type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
-                    </CardItem>
-                    <CardItem>
-                        <CardInput type="password" placeholder="Senha" inputWidth="100%" onChange={(e) => setPassword(e.target.value)}></CardInput>
-                    </CardItem>
-                    <CardItem>
-                        <Link to="/alterar-senha" forgotpwd>esqueci minha senha</Link>
-                    </CardItem>
-                    <CardItem>
-                        <StyledButton onClick={handleSubmit} primary hasIcon>entrar<EnterIcon/></StyledButton>
-                    </CardItem>
-                </CardItemContainer>  
-            </Card>
-        </>
-    )
+            </>
+        )
+    } else {
+        return (
+            <>
+                <Card cardTitle="Login" >
+                    <CardItemContainer visibility="true">
+                        <CardItem>
+                            <CardInput type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
+                        </CardItem>
+                        <CardItem>
+                            <CardInput type="password" placeholder="Senha" inputWidth="100%" onChange={(e) => setPassword(e.target.value)}></CardInput>
+                        </CardItem>
+                        <CardItem>
+                            <Link to="/alterar-senha" forgotpwd>esqueci minha senha</Link>
+                        </CardItem>
+                        <CardItem>
+                            <StyledButton onClick={handleSubmit} primary hasIcon>entrar<EnterIcon/></StyledButton>
+                        </CardItem>
+                    </CardItemContainer>  
+                </Card>
+            </>
+        )
+    }
 }
