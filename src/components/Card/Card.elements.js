@@ -10,10 +10,10 @@ export const CardContainer = styled.div`
     ` : 
     css`
         max-width: 500px;
-        position: relative;
     `};
     margin: 0 auto;
     border-radius: 15px;
+    position: relative;
 `
 export const CardInput = styled.input`
     border-radius: 15px;
