@@ -6,6 +6,9 @@ import { CheckIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
+import { Card } from '../../components';
+import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
+import avatar from '../../assets/images/user-test.png';
 
 export const Users = () => {
 
@@ -40,7 +43,37 @@ export const Users = () => {
 
     return (
         <>
-            <table>
+            <Card cardTitle="Lista de usuários">
+                <CardContainer menu="true">
+                    <CardMenuContainer>
+                        <CardMenuHeader>
+                            <p>{currentUser.fullname}</p>
+                            <CardAvatar src={avatar} alt="avatar"></CardAvatar>
+                            <p>Editar perfil</p>
+                        </CardMenuHeader>
+                        <CardMenuItem>Teste</CardMenuItem>
+                        <CardMenuItem selected="true">Teste</CardMenuItem>
+                        <CardMenuItem>Teste</CardMenuItem>
+                    </CardMenuContainer>
+                    <CardContent>
+                        <CardContentRow>
+                            <CardContentCol><input type="search" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)}/></CardContentCol>
+                            <CardContentCol>Ações</CardContentCol>
+                        </CardContentRow>
+                        {!!patientList && search(patientList).map(data => {
+                            return (
+                                <CardContentRow>
+                                    <CardContentCol>{data.cpf} - {data.fullname}</CardContentCol>
+                                    <CardContentCol>{!!!data.login_approved && (<StyledButton primary hasIconLeft maxWidth="fit-content"><CheckIcon/>liberar acesso</StyledButton>)}</CardContentCol>
+                                    <CardContentCol><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
+                                    <CardContentCol><TrashIcon/></CardContentCol>
+                                </CardContentRow>
+                            )
+                        })}
+                    </CardContent>
+                </CardContainer>
+            </Card>
+            {/* <table>
                 <thead>
                     <tr>
                         <td colSpan={2}><input type="search" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)}/></td>
@@ -59,7 +92,7 @@ export const Users = () => {
                         )
                     })}
                 </tbody>
-            </table>
+            </table> */}
         </>
     )
 }

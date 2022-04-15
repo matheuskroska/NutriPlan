@@ -3,7 +3,7 @@ import {CardContainer,CardWrapper,CardTitle} from './Card.elements'
 export const Card = (props) => {
     return (
         <>
-            <CardContainer>
+            <CardContainer menu={props.menu}>
                 <CardTitle>{props.cardTitle}</CardTitle>
                 <CardWrapper> 
                     {props.children}
