@@ -97,12 +97,30 @@ const Abstract = {
         })
     },
 
-    async editUser(uuid) {
-        const user = await this.getUserByUid(uuid)
+    async approveLoginUser(cpf) {
+        const user = await this.getUserByCpf(cpf)
         const docRef = doc(db, user.dbName, user.docId)
-        return await updateDoc(docRef, {
+        await updateDoc(docRef, {
             login_approved: true
         })
+    },
+
+    async getUserByCpf(cpf) {
+        console.log(cpf)
+        const q = query(collection(db, "patients"), where("cpf", "==", cpf))
+
+        const dataResult = await this.getAllDataUser(q, "patients")
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            const q = query(collection(db, "nutritionists"), where("cpf", "==", cpf))
+            const dataResult = await this.getAllDataUser(q, "nutritionists")
+            if (dataResult.length === 1) {
+                return dataResult[0]
+            } else {
+                return null
+            }
+        }
     },
 }
 

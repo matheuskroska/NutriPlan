@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { collection, addDoc, getDocs, Timestamp, query, where, orderBy } from 'firebase/firestore'
+import { collection, addDoc, getDocs, Timestamp, query, where, orderBy, onSnapshot } from 'firebase/firestore'
 import Abstract from './Abstract'
 
 const Patients = {
@@ -89,6 +89,19 @@ const Patients = {
             id: doc.id
         }))
         return dataResult
+    },
+
+    // Listener para recuperar todos os pacientes da base
+    getPatientsSnapshot() {
+        const q = query(collection(db, "patients"), orderBy("created_at"))
+        const usersList = onSnapshot(q, (data) => {
+            const dataResult = data.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            return dataResult
+        })
+        return usersList
     },
 
 }

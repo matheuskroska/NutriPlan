@@ -12,8 +12,7 @@ export const EditUser = () => {
     }
 
     const handleEdit = async() => {
-        let ret = await Abstract.editUser(uuid)
-        alert(ret)
+        alert('edit')
     }
 
     return (

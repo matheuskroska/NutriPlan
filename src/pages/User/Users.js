@@ -9,6 +9,7 @@ import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
 import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
+import Abstract from '../../db/Abstract';
 
 export const Users = () => {
 
@@ -41,6 +42,15 @@ export const Users = () => {
         });
     }
 
+    const handleApprove = async(e) => {
+        if (window.confirm('Aprovar acesso do usuário no sistema?')) {
+            let cpf = e.target.parentElement.parentElement.id
+            await Abstract.approveLoginUser(cpf)
+            let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+            setPatientList(patients)
+        }
+    }
+
     return (
         <>
             <Card cardTitle="Lista de usuários">
@@ -62,9 +72,9 @@ export const Users = () => {
                         </CardContentRow>
                         {!!patientList && search(patientList).map(data => {
                             return (
-                                <CardContentRow>
+                                <CardContentRow id={data.cpf}>
                                     <CardContentCol>{data.cpf} - {data.fullname}</CardContentCol>
-                                    <CardContentCol>{!!!data.login_approved && (<StyledButton primary hasIconLeft maxWidth="fit-content"><CheckIcon/>liberar acesso</StyledButton>)}</CardContentCol>
+                                    <CardContentCol>{!!!data.login_approved && (<StyledLink header="true" to="#" onClick={(e) => handleApprove(e)}><CheckIcon/></StyledLink>)}</CardContentCol>
                                     <CardContentCol><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
                                     <CardContentCol><TrashIcon/></CardContentCol>
                                 </CardContentRow>
