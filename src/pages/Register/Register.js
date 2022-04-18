@@ -240,7 +240,7 @@ export const Register = () => {
                                 <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword}></CardInput>
                                 <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
                             </CardItem>
-                            <StyledButton onClick={() => console.log("teste")} primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
+                            <StyledButton primary hasIcon>cadastrar<ArrowRightIcon/></StyledButton>
                             </form>
                         </CardItemContainer>
                 </Card>

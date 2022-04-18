@@ -52,6 +52,12 @@ export const CardItem = styled.div`
         height: auto;
         margin-top: 10px;
     }
+
+    a {
+        color: var(--font-soft);
+        font-size: 1.3em;
+        font-weight: 400;
+    }
 `
 
 export const CardItemContainer = styled.div`
