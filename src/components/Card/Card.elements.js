@@ -49,8 +49,9 @@ export const CardItem = styled.div`
     input:not(:placeholder-shown):invalid ~ span {
         visibility: visible;
         opacity: 1;
-        height: auto;
+        height: 10px;
         margin-top: 10px;
+        transition-delay: 2s;
     }
 
     a {

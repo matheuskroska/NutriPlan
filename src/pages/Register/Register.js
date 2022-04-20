@@ -9,10 +9,14 @@ import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
 import Nutritionists from '../../db/Nutritionists'
+import { Errors } from '../../firebase/Errors'
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 export const Register = () => {
 
     const [visibility, setVisibility] = useState(false)
+    const [error, setError] = useState();
+    const [modalError, setModalError] = useState(false);
     const [loader, setLoader] = useState(false)
     const [userCategory, setUserCategory] = useState(null)
     const [tempPwd, setTempPwd] = useState(null)
@@ -40,26 +44,9 @@ export const Register = () => {
         conf_password: null,
     })
 
-    const initialStatus = {
-        uuid: null,
-        firstname: null,
-        lastname: null,
-        email: null,
-        ddd: null,
-        phone: null,
-        cpf: null,
-        crn: null,
-        password: null,
-        conf_password: null,
-    }
-
-    const [status, setStatus] = useState(initialStatus)
-
     const swapForm = (userCategory, e) => {
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
-        setStatus({...initialStatus})
         setVisibility(true);
-        
         setUserCategory(userCategory)
     }
     
@@ -81,9 +68,7 @@ export const Register = () => {
             if (column === 'password') {
                 if (patient[column] !== null) {
                     _password = patient[column]
-                    setStatus({password: false})
                 } else {
-                    setStatus({password: true})
                     return
                 }
             }
@@ -91,21 +76,24 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
-                        setStatus({conf_password: false})
                         let hasPatient = await Patients.hasPatient(patient)
                         if (hasPatient) {
-                            setStatus({cpf: true})
                             setLoader(false)
+                            setError("CPF já existente");
+                            setModalError(true)
                         } else {
-                            setStatus({cpf: false})
-                            await Patients.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                            let ret = await Patients.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                            
+                            if (!!Errors[ret]) {
+                                setLoader(false)
+                                setError(Errors[ret]);
+                                setModalError(true)
+                            }   
                         }
                     } else {
-                        setStatus({conf_password: true})
                         return
                     }
                 } else {
-                    setStatus({conf_password: true})
                     return
                 }
             }
@@ -118,9 +106,7 @@ export const Register = () => {
             if (column === 'password') {
                 if (nutritionist[column] !== null) {
                     _password = nutritionist[column]
-                    setStatus({password: false})
                 } else {
-                    setStatus({password: true})
                     return
                 }
             }
@@ -128,21 +114,23 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (nutritionist[column] !== null) {
                     if (_password === nutritionist[column]) {
-                        setStatus({conf_password: false})
                         let hasNutritionist = await Nutritionists.hasNutritionist(nutritionist)
                         if (!!hasNutritionist) {
-                            setStatus({cpf: true})
                             setLoader(false)
                         } else {
-                            setStatus({cpf: false})
-                            await Nutritionists.addUser(nutritionist) // recebe como retorno o ID documento ou a mensagem de erro
+                            let ret = await Nutritionists.addUser(nutritionist) // recebe como retorno o ID documento ou a mensagem de erro
+                            if (!!Errors[ret]) {
+                                setLoader(false)
+                                setError(Errors[ret]);
+                                setModalError(true)
+                            }   
                         }
                     } else {
-                        setStatus({conf_password: true})
+                        
                         return
                     }
                 } else {
-                    setStatus({conf_password: true})
+                    
                     return
                 }
             }
@@ -178,13 +166,18 @@ export const Register = () => {
         let cpassword = e.target.value
         if (tempPwd) {
             if ((tempPwd.length <= cpassword.length) && (tempPwd !== cpassword)) {
-                setStatus({conf_password: true});
+                ;
             } else {
-                setStatus({conf_password: false});
                 handleChange(e)
             }
         }
     }
+
+    const pull_data = (data) => {
+        console.log(data)
+        setModalError(data);
+    }
+    
     
     if (!!loader) {
         return (
@@ -195,7 +188,12 @@ export const Register = () => {
     } else {
         return (
             <>
-                <Card cardTitle="Cadastro" >
+                {modalError && (
+                    <>
+                        <ModalMessage func={pull_data}>{error}</ModalMessage>
+                    </>
+                )}
+                <Card cardTitle="Cadastro">
                     <CardItem wrap={"initial"}>
                         <CardDescription>Eu sou um:</CardDescription>
                         <StyledRadixToggleGroup type="single" aria-label="usuario">

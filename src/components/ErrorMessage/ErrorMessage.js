@@ -4,7 +4,7 @@ import { StyledError } from './ErrorMessage.elements'
 export const ErrorMessage = (props) => {
   return (
     <>
-      <StyledError visibility={props.visibility}>{props.children}</StyledError>
+      <StyledError>{props.children}</StyledError>
     </>
   )
 }

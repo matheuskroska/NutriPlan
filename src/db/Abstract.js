@@ -14,14 +14,14 @@ const Abstract = {
             .catch((error) => {
                 const errorCode = error.code
                 const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
-                return errorMessage
+                return errorCode
             })
     },
     
     async signIn(email, password) {
         let user = await this.getUserByEmail(email)
-        if (!!!user.login_approved) {
-            return Errors['auth/login-not-approved']
+        if (!!user && !!!user.login_approved) {
+            return 'auth/login-not-approved'
         }
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -31,7 +31,7 @@ const Abstract = {
             .catch((error) => {
                 const errorCode = error.code
                 const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
-                return errorMessage
+                return error.code
             })
     },
 

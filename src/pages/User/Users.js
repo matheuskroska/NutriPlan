@@ -54,7 +54,7 @@ export const Users = () => {
     return (
         <>
             <Card cardTitle="Lista de usuários">
-                <CardContainer menu="true">
+                <CardContainer menu={true}>
                     <CardMenuContainer>
                         <CardMenuHeader>
                             <p>{currentUser.fullname}</p>
@@ -83,26 +83,6 @@ export const Users = () => {
                     </CardContent>
                 </CardContainer>
             </Card>
-            {/* <table>
-                <thead>
-                    <tr>
-                        <td colSpan={2}><input type="search" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)}/></td>
-                        <td colSpan={2}>Ações</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {!!patientList && search(patientList).map(data => {
-                        return (
-                            <tr>
-                                <td>{data.cpf} - {data.fullname}</td>
-                                <td>{!!!data.login_approved && (<StyledButton primary hasIconLeft maxWidth="fit-content"><CheckIcon/>liberar acesso</StyledButton>)}</td>
-                                <td><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></td>
-                                <td><TrashIcon/></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table> */}
         </>
     )
 }
