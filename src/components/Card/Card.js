@@ -1,3 +1,4 @@
+import React  from 'react';
 import {CardContainer,CardWrapper,CardTitle} from './Card.elements'
 
 export const Card = (props) => {

@@ -62,7 +62,7 @@ export const Users = () => {
                             <p>Editar perfil</p>
                         </CardMenuHeader>
                         <CardMenuItem>Teste</CardMenuItem>
-                        <CardMenuItem selected="true">Teste</CardMenuItem>
+                        <CardMenuItem selected={true}>Teste</CardMenuItem>
                         <CardMenuItem>Teste</CardMenuItem>
                     </CardMenuContainer>
                     <CardContent>
@@ -74,7 +74,7 @@ export const Users = () => {
                             return (
                                 <CardContentRow id={data.cpf}>
                                     <CardContentCol>{data.cpf} - {data.fullname}</CardContentCol>
-                                    <CardContentCol>{!!!data.login_approved && (<StyledLink header="true" to="#" onClick={(e) => handleApprove(e)}><CheckIcon/></StyledLink>)}</CardContentCol>
+                                    <CardContentCol>{data.access === 0 && (<StyledLink header="true" to="#" onClick={(e) => handleApprove(e)}><CheckIcon/></StyledLink>)}</CardContentCol>
                                     <CardContentCol><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
                                     <CardContentCol><TrashIcon/></CardContentCol>
                                 </CardContentRow>

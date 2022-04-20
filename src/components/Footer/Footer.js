@@ -1,3 +1,4 @@
+import React  from 'react';
 import {} from './Footer.elements'
 import logo from '../../assets/images/logo.png';
 import {FigmaLogoIcon, GitHubLogoIcon, InstagramLogoIcon, DiscordLogoIcon} from '@radix-ui/react-icons'

@@ -85,6 +85,7 @@ export const Errors = {
     'auth/project-not-found': 'Nenhum projeto foi encontrado.',
     'auth/insufficient-permission': 'A credencial utilizada não tem permissão para acessar o recurso solicitado.',
     'auth/internal-error': 'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.',
-    'auth/login-not-approved': 'Seu login não foi aprovado pelo Administrador do sistema!! Por favor, aguarde até que seu login seja liberado',
+    'auth/login-not-approved': 'Seu login não foi aprovado pelo Administrador do sistema. Por favor, aguarde até que seu login seja liberado',
+    'auth/login-reproved': 'Seu login foi reprovado pelo Administrador do sistema. Aguarde até que seu login seja liberado',
     'auth/null-email': 'Não encontramos nenhuma conta com este email. Verifique se o e-mail foi digitado corretamente.',
 }

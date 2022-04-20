@@ -19,9 +19,11 @@ const Abstract = {
     },
     
     async signIn(email, password) {
-        let user = await this.getUserByEmail(email)
-        if (!!user && !!!user.login_approved) {
+        let userData = await this.getUserByEmail(email)
+        if (userData.access === 0) {
             return 'auth/login-not-approved'
+        } else if (userData.access === 2) {
+            return 'auth/login-reproved'
         }
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -46,6 +48,7 @@ const Abstract = {
     },
 
     async getUserByUid(uid) {
+        
         const q = query(collection(db, "patients"), where("uuid", "==", uid))
 
         const dataResult = await this.getAllDataUser(q, "patients")
@@ -101,7 +104,7 @@ const Abstract = {
         const user = await this.getUserByCpf(cpf)
         const docRef = doc(db, user.dbName, user.docId)
         await updateDoc(docRef, {
-            login_approved: true
+            access: 1
         })
     },
 
@@ -121,7 +124,7 @@ const Abstract = {
                 return null
             }
         }
-    },
+    }
 }
 
 export default Abstract

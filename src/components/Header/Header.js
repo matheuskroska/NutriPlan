@@ -1,3 +1,4 @@
+import React  from 'react';
 import { NavContainer,NavWrapper, NavItem, NavLogo, NavLogoTitle, NavRight } from './Header.elements'
 import logo from '../../assets/images/logo.png';
 import { EnterIcon } from '@radix-ui/react-icons'
@@ -27,8 +28,8 @@ export const Header = () => {
                     <NavRight>
                         {(!!!currentUser) ? (
                             <>
-                                <StyledLink header="true" to="/login">login</StyledLink>
-                                <StyledLink header="true" to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
+                                <StyledLink header={true} to="/login">login</StyledLink>
+                                <StyledLink header={true} to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
                             </>
                         ) : (
                             <div>

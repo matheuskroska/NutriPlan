@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app"
+import { initializeApp as initialize } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth";
 
@@ -14,6 +14,10 @@ const firebaseConfig = {
 }
 
 // Inicialização do firebase
-const app = initializeApp(firebaseConfig)
+const app = initialize(firebaseConfig)
 export const auth = getAuth()
 export const db = getFirestore(app)
+
+// The Firebase Admin SDK to access Firestore.
+const admin = require('firebase-admin');
+admin.initializeApp();

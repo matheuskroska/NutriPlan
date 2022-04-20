@@ -91,7 +91,7 @@ export const ResetPassword = () => {
         return (
             <>
                 <Card cardTitle="Tente solicitar um novo link para alterar sua senha" >
-                    <CardItemContainer visibility="true">
+                    <CardItemContainer visibility={true}>
                         <CardItem>
                             <CardMessage>
                                 {message}
@@ -108,7 +108,7 @@ export const ResetPassword = () => {
         return (
             <>
                 <Card cardTitle="Definir nova senha" >
-                    <CardItemContainer visibility="true">
+                    <CardItemContainer visibility={true}>
                         { !!showBtnLogin ? (
                             <>
                                 <CardItem>

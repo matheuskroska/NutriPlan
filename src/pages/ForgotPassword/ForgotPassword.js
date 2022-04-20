@@ -43,7 +43,7 @@ export const ForgotPassword = () => {
         return (
             <>
                 <Card cardTitle="Alterar a senha" >
-                    <CardItemContainer visibility="true">
+                    <CardItemContainer visibility={true}>
                         <CardItem>
                             <CardMessage>
                                 E-mail enviado com sucesso <CheckCircledIcon />
@@ -57,7 +57,7 @@ export const ForgotPassword = () => {
         return (
             <>
                 <Card cardTitle="Alterar a senha" >
-                    <CardItemContainer visibility="true">
+                    <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>
                                 <CardMessage>

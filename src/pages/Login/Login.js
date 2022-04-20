@@ -17,20 +17,20 @@ export const Login = () => {
     const [password, setPassword] = useState(false)
     const [error, setError] = useState();
     const [loader, setLoader] = useState(false)
-    const [modalError, setModalError] = useState(false);
-
+    const [modalError, setModalError] = useState(false)
+    const { currentUser } = useContext(AuthContext)
+    
     const handleSubmit = async(e) => {
         e.preventDefault()
         setLoader(true)
         let ret = await Abstract.signIn(email, password)
         if (!!Errors[ret]) {
             setLoader(false)
-            setError(Errors[ret]);
+            setError(Errors[ret])
             setModalError(true)
         }
     }
 
-    const { currentUser } = useContext(AuthContext)
     if (!!currentUser) {
         return <Navigate to="/" replace />
     }
@@ -54,7 +54,7 @@ export const Login = () => {
                     </>
                 )}
                 <Card cardTitle="Login" >
-                    <CardItemContainer visibility="true">
+                    <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>
                                 <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>

@@ -20,7 +20,8 @@ const Nutritionists = {
                     cpf: nutritionist.cpf,
                     crn: nutritionist.crn,
                     password: nutritionist.password,
-                    login_approved: false,
+                    access: 0,
+                    active: false,
                     created_at: Timestamp.now(),
                     updated_at: Timestamp.now(),
                 })

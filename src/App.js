@@ -1,3 +1,4 @@
+import React  from 'react';
 import { GlobalStyle,Container} from './components/index';
 import {Home, Register, Login} from './pages/index'
 import {Header, Footer} from './components/index'

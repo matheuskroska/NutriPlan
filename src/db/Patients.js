@@ -19,7 +19,8 @@ const Patients = {
                     cpf: patient.cpf,
                     password: patient.password,
                     nutritionist_uuid: '',
-                    login_approved: false,
+                    access: 0,
+                    active: false,
                     created_at: Timestamp.now(),
                     updated_at: Timestamp.now(),
                 })
@@ -49,6 +50,8 @@ const Patients = {
                     cpf: patient.cpf,
                     nutritionist_uuid: '',
                     password: patient.password,
+                    access: 0,
+                    active: false,
                     created_at: Timestamp.now(),
                     updated_at: Timestamp.now(),
                 })
