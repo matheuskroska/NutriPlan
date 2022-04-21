@@ -148,7 +148,6 @@ export const Register = () => {
         let pass = document.getElementById("cpf");
         if (!!!e.target.value.match(/_/gi)) {
             let sanitized = e.target.value.replace(/[^\w\s]/gi, '')
-            console.log(sanitized)
             if(testaCPF(sanitized)) {
             } else {
                 pass.setCustomValidity("CPF Incorreto");

@@ -222,4 +222,17 @@ export const CardContentCol = styled.div`
             color: var(--font-soft);
         }
     `};
+
+    ${props => props.denyTheme &&
+    css`
+        background-color: var(--tertiary);
+        color: var(--font-soft);
+        border-radius: 15px;
+        font-size: 1em;
+        cursor: pointer;
+        :hover {
+            background-color: var(--primary);
+            color: var(--font-dark);
+        }
+    `};
 `

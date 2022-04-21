@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Patients from '../../db/Patients';
 import './Users.css'
-import { CheckIcon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
+import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
@@ -85,13 +85,13 @@ export const Users = () => {
                                         {data.access === 0 ? (
                                             <>
                                                 <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.cpf)}><CheckIcon/>Reprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.cpf)}><Cross2Icon/>Reprovar</CardContentCol>
                                             </>
                                         ) : (
                                             data.access === 2 ? (
                                                 <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
                                             ) : (
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.cpf)}><CheckIcon/>Reprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.cpf)}><Cross2Icon/>Reprovar</CardContentCol>
                                             )
                                         )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
