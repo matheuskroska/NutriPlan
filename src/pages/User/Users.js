@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 import { StyledButton } from '../../components/Button/Button.elements';
 import Patients from '../../db/Patients';
 import './Users.css'
-import { CheckIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
+import { CheckIcon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
-import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
+import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
 import Abstract from '../../db/Abstract';
 
@@ -53,9 +53,9 @@ export const Users = () => {
 
     return (
         <>
-            <Card cardTitle="Lista de usuários">
-                <CardContainer menu={true}>
-                    <CardMenuContainer>
+            <Card maxWidth={"1200px"} cardTitle="Lista de usuários">
+                <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
+                    <CardMenuContainer >
                         <CardMenuHeader>
                             <p>{currentUser.fullname}</p>
                             <CardAvatar src={avatar} alt="avatar"></CardAvatar>
@@ -67,16 +67,20 @@ export const Users = () => {
                     </CardMenuContainer>
                     <CardContent>
                         <CardContentRow>
-                            <CardContentCol><input type="search" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)}/></CardContentCol>
-                            <CardContentCol>Ações</CardContentCol>
+                            <CardContentCol wSearchIcon justify={"start"}><input type="search" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)}/><MagnifyingGlassIcon/></CardContentCol>
+                            <CardContentCol maxWidth={"240px"}>Ações</CardContentCol>
                         </CardContentRow>
                         {!!patientList && search(patientList).map(data => {
                             return (
                                 <CardContentRow id={data.cpf}>
-                                    <CardContentCol>{data.cpf} - {data.fullname}</CardContentCol>
-                                    <CardContentCol>{data.access === 0 && (<StyledLink header="true" to="#" onClick={(e) => handleApprove(e)}><CheckIcon/></StyledLink>)}</CardContentCol>
-                                    <CardContentCol><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
-                                    <CardContentCol><TrashIcon/></CardContentCol>
+                                    <CardItem marginBottom={"0"}>
+                                        <CardContentCol justify={"start"} maxWidth={"250px"}>{data.cpf} - {data.fullname}</CardContentCol>
+                                    </CardItem>
+                                    <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
+                                        {data.access === 0 && (<CardContentCol maxWidth={"100px"} confirmTheme><StyledLink header="true" to="#" onClick={(e) => handleApprove(e)}><CheckIcon/>Liberar</StyledLink></CardContentCol>)}
+                                        <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"}><TrashIcon/></CardContentCol>
+                                    </CardItem>
                                 </CardContentRow>
                             )
                         })}

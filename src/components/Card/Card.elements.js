@@ -2,15 +2,10 @@ import styled from "styled-components";
 import { css } from "styled-components";
 
 export const CardContainer = styled.div`
-    ${props => props.menu ?
-    css`
-        display: flex;
-        max-width: 900px;
-        width: 100%;
-    ` : 
-    css`
-        max-width: 500px;
-    `};
+    max-width: ${props => props.maxWidth || "550px"};
+    display: ${props=> props.display || "initial"};
+    justify-content: ${props=> props.justify || "initial"};
+    width: 100%;
     margin: 0 auto;
     border-radius: 15px;
     position: relative;
@@ -43,7 +38,9 @@ export const CardWrapper = styled.div`
 export const CardItem = styled.div`
     display: flex;
     flex-wrap: ${props => props.wrap || "wrap"};
-    margin-bottom: 10px;
+    width: ${props => props.width || "initial"};
+    max-width: ${props => props.maxWidth || "initial"};
+    margin-bottom: ${props => props.marginBottom || "10px"};
     gap: ${props => props.gap || "0 8px"};
     justify-content: ${props => props.justifyContent || "initial"};
     input:not(:placeholder-shown):invalid ~ span {
@@ -98,7 +95,7 @@ export const CardMenuContainer = styled.div`
     text-align: center;
     background-color: rgb(170 215 108 / 90%);
     border-radius: 15px;
-    width: 40%;
+    width: 25%;
 `
 
 export const CardMenuHeader = styled.div`
@@ -111,9 +108,11 @@ export const CardMenuHeader = styled.div`
 `
 
 export const CardAvatar = styled.img`
-    padding: 0.5em;
+        padding: 0.5em;
     width: 4em;
+    height: 4em;
     border-radius: 50%;
+    object-fit: cover;
 `
 
 export const CardMenuItem = styled.div`
@@ -134,7 +133,7 @@ export const CardContent = styled.div`
     display: block;
     padding: 0 3em 1em 2em;
     border-radius: 15px;
-    width: 60%;
+    width: 65%;
 `
 
 export const CardContentRow = styled.div`
@@ -142,6 +141,7 @@ export const CardContentRow = styled.div`
     border-radius: 15px;
     background-color: #ffffff;
     display: flex;
+    justify-content: space-between;
     :not(:first-child) {
         margin-top: 2em;
     }
@@ -157,6 +157,47 @@ export const CardContentHeader = styled.div`
 export const CardContentCol = styled.div`
     padding: 0.5em;
     color: var(--font-dark);
-    display: block;
+    display: flex;
+    font-size: 1.6em;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: ${props => props.justify || "center"};
+    overflow: hidden;
+    text-overflow: ellipsis;
     width: ${props => props.icon ? "5%" : "100%"};
+    max-width: ${props => props.maxWidth || "initial"};
+    min-width: ${props => props.maxWidth || "initial"};
+
+    svg {
+        width: 25px;
+    }
+
+
+    a {
+        color: var(--font-dark);
+    }
+
+    ${props => props.wSearchIcon &&
+    css`
+        width: fit-content;
+        position: relative;
+        svg {
+            position: absolute;
+            right: 10px;
+        }
+        input {
+            border: 1px solid var(--secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    `
+    };
+
+    ${props => props.confirmTheme &&
+    css`
+        background-color: var(--primary);
+        color: var(--font-soft);
+        border-radius: 15px;
+        font-size: 0.8em;
+    `};
 `
