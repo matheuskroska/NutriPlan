@@ -41,18 +41,54 @@ export const Users = () => {
         });
     }
 
-    const handleApprove = async(e, cpf) => {
+    const handleApprove = async(e, uuid) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await Abstract.approveLoginUser(cpf)
+            await Abstract.approveReproveLoginUser(uuid, 'approve')
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
     }
-    const handleReprove = async(e, cpf) => {
+
+    const handleReprove = async(e, uuid) => {
         if (window.confirm('Reprovar acesso do usuário no sistema?')) {
-            await Abstract.reproveLoginUser(cpf)
+            await Abstract.approveReproveLoginUser(uuid, 'reprove')
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
+        }
+    }
+
+    const mouseHover = (e) => {
+        e.target.classList.add('selected')
+        var idHover = e.target.id
+        var elements = document.getElementsByClassName('trashIcon')
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.cursor = 'pointer'
+            if (idHover === elements.item(i).id) {
+                elements.item(i).firstChild.setAttribute('fill-rule', 'nonzero')
+            }
+        }
+    }
+
+    const mouseOut = (e) => {
+        e.target.classList.remove('selected')
+        var idHover = e.target.id
+        var elements = document.getElementsByClassName('trashIcon')
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.cursor = 'pointer'
+            if (idHover === elements.item(i).id) {
+                elements.item(i).firstChild.setAttribute('fill-rule', 'evenodd')
+            }
+        }
+    }
+     
+    
+    const handleDelete = async(e, uuid) => {
+        if (window.confirm('Deseja deletar esse usuário do sistema?')) {
+            if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
+                await Abstract.deleteUser(uuid)
+                let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+                setPatientList(patients)
+            }
         }
     }
 
@@ -77,25 +113,25 @@ export const Users = () => {
                         </CardContentRow>
                         {!!patientList && search(patientList).map(data => {
                             return (
-                                <CardContentRow id={data.cpf}>
+                                <CardContentRow key={data.uuid}>
                                     <CardItem marginBottom={"0"}>
                                         <CardContentCol justify={"start"} maxWidth={"250px"}>{data.cpf} - {data.fullname}</CardContentCol>
                                     </CardItem>
                                     <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
                                         {data.access === 0 ? (
                                             <>
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.cpf)}><CheckIcon/>Reprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.uuid)}><CheckIcon/>Reprovar</CardContentCol>
                                             </>
                                         ) : (
                                             data.access === 2 ? (
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
                                             ) : (
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.cpf)}><CheckIcon/>Reprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.uuid)}><CheckIcon/>Reprovar</CardContentCol>
                                             )
                                         )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
-                                        <CardContentCol maxWidth={"25px"}><TrashIcon/></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><TrashIcon onMouseOver={(e) => mouseHover(e)} onMouseOut={(e) => mouseOut(e)} className="trashIcon" id={`trash-`+data.uuid}/></CardContentCol>
                                     </CardItem>
                                 </CardContentRow>
                             )

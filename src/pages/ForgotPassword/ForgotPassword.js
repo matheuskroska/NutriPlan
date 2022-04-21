@@ -7,24 +7,28 @@ import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
 import LoginModel from '../../db/LoginModel';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
+import { Errors } from '../../firebase/Errors';
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
 
 export const ForgotPassword = () => {
 
     const [email, setEmail] = useState(false)
     const [success, setSuccess] = useState(false)
-    const [showSpinner, setShowSpinner] = useState(false)
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [loader, setLoader] = useState(false)
+    const [error, setError] = useState()
+    const [modalError, setModalError] = useState(false)
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        setShowSpinner(true)
+        setLoader(true)
         let ret = await LoginModel.sendEmailResetPassword(email)
-        if (typeof(ret) === 'string') {
-            setErrorMessage(ret)
-            setShowSpinner(false)
+        if (!!Errors[ret]) {
+            setLoader(false)
+            setError(Errors[ret])
+            setModalError(true)
         } else {
             setSuccess(true)
-            setShowSpinner(false)
+            setLoader(false)
         }
     }
 
@@ -33,10 +37,20 @@ export const ForgotPassword = () => {
         return <Navigate to="/" replace />
     }
 
-    if (!!showSpinner) {
+    const pull_data = (data) => {
+        setModalError(data);
+    }
+
+    if (!!loader) {
         return (
             <>
                 <Loader/>
+            </>
+        )
+    } else if (!!modalError) {
+        return (
+            <>
+                <ModalMessage func={pull_data}>{error}</ModalMessage>
             </>
         )
     } else if (!!success) {

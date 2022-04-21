@@ -1,7 +1,6 @@
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { Errors } from "../firebase/Errors"
-import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore'
+import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const Abstract = {
@@ -12,9 +11,7 @@ const Abstract = {
                 return user
             })
             .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
-                return errorCode
+                return error.code
             })
     },
     
@@ -33,8 +30,6 @@ const Abstract = {
                 return user
             })
             .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
                 return error.code
             })
     },
@@ -43,9 +38,7 @@ const Abstract = {
         return signOut(auth).then(() => {
             return true
           }).catch((error) => {
-            const errorCode = error.code
-            const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
-            return errorMessage
+            return error.code
           })
     },
 
@@ -119,19 +112,20 @@ const Abstract = {
         })
     },
 
-    async approveLoginUser(cpf) {
-        const user = await this.getUserByCpf(cpf)
+    async approveReproveLoginUser(uuid, action) {
+        let access = 0
+        switch (action) {
+            case 'approve':
+                access = 1
+                break
+            case 'reprove':
+                access = 2
+                break
+        }
+        const user = await this.getUserByUid(uuid)
         const docRef = doc(db, user.dbName, user.docId)
         await updateDoc(docRef, {
-            access: 1
-        })
-    },
-
-    async reproveLoginUser(cpf) {
-        const user = await this.getUserByCpf(cpf)
-        const docRef = doc(db, user.dbName, user.docId)
-        await updateDoc(docRef, {
-            access: 2
+            access: access
         })
     },
 
@@ -150,6 +144,11 @@ const Abstract = {
                 return null
             }
         }
+    },
+
+    async deleteUser(uuid) {
+        const user = await this.getUserByUid(uuid)
+        await deleteDoc(doc(db, user.dbName, user.docId));
     }
 }
 

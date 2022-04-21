@@ -13,14 +13,11 @@ export const Footer = () => {
         const location = useLocation();
 
         useEffect(() => {
-            location.pathname != "/" ? setFooterVisibility(false) : setFooterVisibility(true);
+            location.pathname !== "/" ? setFooterVisibility(false) : setFooterVisibility(true);
         }, [location])
     }
 
     currentPage()
-
-    
-
     
     return (
             <FooterContainer>

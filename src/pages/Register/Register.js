@@ -174,7 +174,6 @@ export const Register = () => {
     }
 
     const pull_data = (data) => {
-        console.log(data)
         setModalError(data);
     }
     

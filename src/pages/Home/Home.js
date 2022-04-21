@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
 import { StyledButton } from "../../components/Button/Button.elements"
 import { AuthContext } from "../../firebase/Auth"
 
 export const Home = () => {
 
-    const [user, setCurrentUser] = useState(null)
     const { currentUser } = useContext(AuthContext)
     const navigate = useNavigate();
 

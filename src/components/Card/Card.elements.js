@@ -205,4 +205,15 @@ export const CardContentCol = styled.div`
             color: var(--font-soft);
         }
     `};
+
+    ${props => props.confirmThemeIcon &&
+    css`
+        color: var(--font-dark);
+        border-radius: 15px;
+        font-size: 1em;
+        cursor: pointer;
+        :hover {
+            color: var(--font-soft);
+        }
+    `};
 `

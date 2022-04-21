@@ -28,13 +28,13 @@ export const Header = () => {
                     <NavRight>
                         {(!!!currentUser) ? (
                             <>
-                                <StyledLink header={true} to="/login">login</StyledLink>
-                                <StyledLink header={true} to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
+                                <StyledLink header="true" to="/login">login</StyledLink>
+                                <StyledLink header="true" to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
                             </>
                         ) : (
                             <NavItem>
-                                <StyledLink header={true} to="/">{currentUser.fullname}</StyledLink>
-                                <StyledLink onClick={handleLogout} header={true} to="/">sair<ExitIcon/></StyledLink>
+                                <StyledLink header="true" to="/">{currentUser.fullname}</StyledLink>
+                                <StyledLink onClick={handleLogout} header="true" to="/">sair<ExitIcon/></StyledLink>
                             </NavItem>
                         )}
                     </NavRight>  

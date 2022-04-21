@@ -8,12 +8,10 @@ const ResetPasswordModel = {
         // Verificar se o código de reset da senha é válido
         const ret = await verifyPasswordResetCode(auth, actionCode)
         .then((email) => {
-            console.log('email', email)
             return email
         }).catch((error) => {
             const errorCode = error.code
             const errorMessage = !!Errors[errorCode] ? Errors[errorCode] : error.message
-            console.log('errorMessage', errorMessage)
             return errorMessage
         })
 
