@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Patients from '../../db/Patients';
 import './Users.css'
-import { CheckIcon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
+import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
@@ -56,31 +56,6 @@ export const Users = () => {
             setPatientList(patients)
         }
     }
-
-    const mouseHover = (e) => {
-        e.target.classList.add('selected')
-        var idHover = e.target.id
-        var elements = document.getElementsByClassName('trashIcon')
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.cursor = 'pointer'
-            if (idHover === elements.item(i).id) {
-                elements.item(i).firstChild.setAttribute('fill-rule', 'nonzero')
-            }
-        }
-    }
-
-    const mouseOut = (e) => {
-        e.target.classList.remove('selected')
-        var idHover = e.target.id
-        var elements = document.getElementsByClassName('trashIcon')
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.cursor = 'pointer'
-            if (idHover === elements.item(i).id) {
-                elements.item(i).firstChild.setAttribute('fill-rule', 'evenodd')
-            }
-        }
-    }
-     
     
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
@@ -131,7 +106,7 @@ export const Users = () => {
                                             )
                                         )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
-                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><TrashIcon onMouseOver={(e) => mouseHover(e)} onMouseOut={(e) => mouseOut(e)} className="trashIcon" id={`trash-`+data.uuid}/></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><TrashIcon/></CardContentCol>
                                     </CardItem>
                                 </CardContentRow>
                             )

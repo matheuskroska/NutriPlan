@@ -8,9 +8,9 @@ export const Home = () => {
     const { currentUser } = useContext(AuthContext)
     const navigate = useNavigate();
 
-    if (!!!currentUser) {
-        return <Navigate to="/login" replace />
-    }
+    // if (!!!currentUser) {
+    //     return <Navigate to="/login" replace />
+    // }
 
     const handleListUsers = () => {
         navigate("/usuarios", { replace: true });
