@@ -17,13 +17,19 @@ const Abstract = {
     
     async signIn(email, password) {
         let userData = await this.getUserByEmailAndPassword(email, password)
-        if (!!userData && userData.access === 0) {
-            return 'auth/login-not-approved'
-        } else if (!!userData && userData.access === 2) {
-            return 'auth/login-reproved'
-        } else if (!!userData && !!!userData.active) {
-            return 'auth/user-disabled'
+        console.log(userData)
+        if (!!userData) {
+            if (userData.access === 0) {
+                return 'auth/login-not-approved'
+            } else if (userData.access === 2) {
+                return 'auth/login-reproved'
+            } else if (!!!userData.active) {
+                return 'auth/user-disabled'
+            }
+        } else {
+            return 'auth/user-not-found'
         }
+        
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user

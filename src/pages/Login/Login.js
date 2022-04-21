@@ -24,6 +24,7 @@ export const Login = () => {
         e.preventDefault()
         setLoader(true)
         let ret = await Abstract.signIn(email, password)
+        console.log(ret)
         if (!!Errors[ret]) {
             setLoader(false)
             setError(Errors[ret])
