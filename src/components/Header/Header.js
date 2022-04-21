@@ -1,4 +1,5 @@
-import React  from 'react';
+import React, {useState, useEffect}  from 'react';
+import { useLocation } from 'react-router-dom';
 import { NavContainer,NavWrapper, NavItem, NavLogo, NavLogoTitle, NavRight } from './Header.elements'
 import logo from '../../assets/images/logo.png';
 import { EnterIcon, ExitIcon } from '@radix-ui/react-icons'
@@ -18,26 +19,45 @@ export const Header = () => {
         }
     }
 
+    const [headerVisibility, setHeaderVisibility] = useState(false)
+
+    const currentPage  = () => {
+        const location = useLocation();
+
+        useEffect(() => {
+            location.pathname == "/login" || location.pathname == "/cadastro" || location.pathname == "/alterar-senha" || location.pathname == "/redefinir-senha" 
+            ? setHeaderVisibility(false) : setHeaderVisibility(true);
+        }, [location])
+    }
+
+    currentPage()
+
+    
+
     return (
             <NavContainer>
-                <NavWrapper>
+                <NavWrapper justify={"center"}>
                     <NavItem>
-                        <NavLogo src={logo}/>
-                        <NavLogoTitle>NutriPlan</NavLogoTitle>
+                        <StyledLink to="/"><NavLogo src={logo}></NavLogo><NavLogoTitle>NutriPlan</NavLogoTitle></StyledLink>
                     </NavItem>
-                    <NavRight>
-                        {(!!!currentUser) ? (
+                    {headerVisibility && (
                             <>
-                                <StyledLink header={true} to="/login">login</StyledLink>
-                                <StyledLink header={true} to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
+                                <NavRight>
+                                    {(!!!currentUser) ? (
+                                        <>
+                                            <StyledLink header={true} to="/login">login</StyledLink>
+                                            <StyledLink header={true} to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
+                                        </>
+                                    ) : (
+                                        <NavItem>
+                                            <StyledLink header={true} to="/">{currentUser.fullname}</StyledLink>
+                                            <StyledLink onClick={handleLogout} header={true} to="/">sair<ExitIcon/></StyledLink>
+                                        </NavItem>
+                                    )}
+                                </NavRight> 
                             </>
-                        ) : (
-                            <NavItem>
-                                <StyledLink header={true} to="/">{currentUser.fullname}</StyledLink>
-                                <StyledLink onClick={handleLogout} header={true} to="/">sair<ExitIcon/></StyledLink>
-                            </NavItem>
                         )}
-                    </NavRight>  
+                     
                 </NavWrapper>
             </NavContainer>
     )

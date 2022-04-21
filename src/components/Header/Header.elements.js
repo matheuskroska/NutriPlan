@@ -11,7 +11,7 @@ export const NavWrapper = styled.div`
     max-width: 1280px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: ${props => props.justify || "space-between"};;
     padding: 20px 20px;
     position: relative;
 `
