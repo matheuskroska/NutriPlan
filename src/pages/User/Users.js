@@ -41,18 +41,29 @@ export const Users = () => {
         });
     }
 
-    const handleApprove = async(e, cpf) => {
+    const handleApprove = async(e, uuid) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await Abstract.approveLoginUser(cpf)
+            await Abstract.approveReproveLoginUser(uuid, 'approve')
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
     }
-    const handleReprove = async(e, cpf) => {
+
+    const handleReprove = async(e, uuid) => {
         if (window.confirm('Reprovar acesso do usuário no sistema?')) {
-            await Abstract.reproveLoginUser(cpf)
+            await Abstract.approveReproveLoginUser(uuid, 'reprove')
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
+        }
+    }
+    
+    const handleDelete = async(e, uuid) => {
+        if (window.confirm('Deseja deletar esse usuário do sistema?')) {
+            if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
+                await Abstract.deleteUser(uuid)
+                let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+                setPatientList(patients)
+            }
         }
     }
 
@@ -84,18 +95,18 @@ export const Users = () => {
                                     <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
                                         {data.access === 0 ? (
                                             <>
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
-                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.cpf)}><Cross2Icon/>Reprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
                                             </>
                                         ) : (
                                             data.access === 2 ? (
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
                                             ) : (
-                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.cpf)}><Cross2Icon/>Reprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
                                             )
                                         )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
-                                        <CardContentCol maxWidth={"25px"}><TrashIcon/></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><TrashIcon/></CardContentCol>
                                     </CardItem>
                                 </CardContentRow>
                             )
