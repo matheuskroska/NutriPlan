@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { StyledButton } from '../../components/Button/Button.elements';
 import Patients from '../../db/Patients';
 import './Users.css'
 import { CheckIcon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
@@ -42,10 +41,16 @@ export const Users = () => {
         });
     }
 
-    const handleApprove = async(e) => {
+    const handleApprove = async(e, cpf) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            let cpf = e.target.parentElement.parentElement.id
             await Abstract.approveLoginUser(cpf)
+            let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+            setPatientList(patients)
+        }
+    }
+    const handleReprove = async(e, cpf) => {
+        if (window.confirm('Reprovar acesso do usuário no sistema?')) {
+            await Abstract.reproveLoginUser(cpf)
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
@@ -67,7 +72,7 @@ export const Users = () => {
                     </CardMenuContainer>
                     <CardContent>
                         <CardContentRow>
-                            <CardContentCol wSearchIcon justify={"start"}><input type="search" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)}/><MagnifyingGlassIcon/></CardContentCol>
+                            <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
                             <CardContentCol maxWidth={"240px"}>Ações</CardContentCol>
                         </CardContentRow>
                         {!!patientList && search(patientList).map(data => {
@@ -77,7 +82,18 @@ export const Users = () => {
                                         <CardContentCol justify={"start"} maxWidth={"250px"}>{data.cpf} - {data.fullname}</CardContentCol>
                                     </CardItem>
                                     <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
-                                        {data.access === 0 && (<CardContentCol maxWidth={"100px"} confirmTheme><StyledLink header="true" to="#" onClick={(e) => handleApprove(e)}><CheckIcon/>Liberar</StyledLink></CardContentCol>)}
+                                        {data.access === 0 ? (
+                                            <>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.cpf)}><CheckIcon/>Reprovar</CardContentCol>
+                                            </>
+                                        ) : (
+                                            data.access === 2 ? (
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.cpf)}><CheckIcon/>Aprovar</CardContentCol>
+                                            ) : (
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleReprove(e, data.cpf)}><CheckIcon/>Reprovar</CardContentCol>
+                                            )
+                                        )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
                                         <CardContentCol maxWidth={"25px"}><TrashIcon/></CardContentCol>
                                     </CardItem>

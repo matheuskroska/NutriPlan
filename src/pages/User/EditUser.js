@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import Abstract from '../../db/Abstract';
 import { AuthContext } from '../../firebase/Auth';
 
 export const EditUser = () => {

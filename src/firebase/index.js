@@ -17,7 +17,3 @@ const firebaseConfig = {
 const app = initialize(firebaseConfig)
 export const auth = getAuth()
 export const db = getFirestore(app)
-
-// The Firebase Admin SDK to access Firestore.
-const admin = require('firebase-admin');
-admin.initializeApp();

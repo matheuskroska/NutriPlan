@@ -196,8 +196,13 @@ export const CardContentCol = styled.div`
     ${props => props.confirmTheme &&
     css`
         background-color: var(--primary);
-        color: var(--font-soft);
+        color: var(--font-dark);
         border-radius: 15px;
-        font-size: 0.8em;
+        font-size: 1em;
+        cursor: pointer;
+        :hover {
+            background-color: var(--tertiary);
+            color: var(--font-soft);
+        }
     `};
 `

@@ -19,11 +19,13 @@ const Abstract = {
     },
     
     async signIn(email, password) {
-        let userData = await this.getUserByEmail(email)
-        if (userData.access === 0) {
+        let userData = await this.getUserByEmailAndPassword(email, password)
+        if (!!userData && userData.access === 0) {
             return 'auth/login-not-approved'
-        } else if (userData.access === 2) {
+        } else if (!!userData && userData.access === 2) {
             return 'auth/login-reproved'
+        } else if (!!userData && !!!userData.active) {
+            return 'auth/user-disabled'
         }
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -75,6 +77,23 @@ const Abstract = {
         return dataResult
     },
 
+    async getUserByEmailAndPassword(email, password) {
+        const q = query(collection(db, "patients"), where("email", "==", email), where("password", "==", password))
+
+        const dataResult = await this.getAllDataUser(q, "patients")
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            const q = query(collection(db, "nutritionists"), where("email", "==", email), where("password", "==", password))
+            const dataResult = await this.getAllDataUser(q, "nutritionists")
+            if (dataResult.length === 1) {
+                return dataResult[0]
+            } else {
+                return null
+            }
+        }
+    },
+
     async getUserByEmail(email) {
         const q = query(collection(db, "patients"), where("email", "==", email))
 
@@ -108,8 +127,15 @@ const Abstract = {
         })
     },
 
+    async reproveLoginUser(cpf) {
+        const user = await this.getUserByCpf(cpf)
+        const docRef = doc(db, user.dbName, user.docId)
+        await updateDoc(docRef, {
+            access: 2
+        })
+    },
+
     async getUserByCpf(cpf) {
-        console.log(cpf)
         const q = query(collection(db, "patients"), where("cpf", "==", cpf))
 
         const dataResult = await this.getAllDataUser(q, "patients")

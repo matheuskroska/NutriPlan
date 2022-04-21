@@ -21,5 +21,10 @@
   },
   "remoteconfig": {
     "template": "remoteconfig.template.json"
+  },
+  "emulators": {
+    "firestore": {
+      "port": "5004"
+    }
   }
 }
