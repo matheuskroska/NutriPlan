@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, {useState}  from 'react';
 import { GlobalStyle,Container} from './components/index';
 import {Home, Register, Login} from './pages/index'
 import {Header, Footer} from './components/index'
@@ -8,8 +8,10 @@ import { Users } from './pages/User/Users';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 import { EditUser } from './pages/User/EditUser';
+import {useLocation} from 'react-router-dom';
 
 function App() {
+
   return (
     <>
       <GlobalStyle/>
