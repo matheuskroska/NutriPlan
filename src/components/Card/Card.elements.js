@@ -221,6 +221,7 @@ export const CardContentCol = styled.div`
             background-color: var(--tertiary);
             color: var(--font-soft);
         }
+
     `};
 
     ${props => props.denyTheme &&
