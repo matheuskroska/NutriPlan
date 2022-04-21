@@ -1,7 +1,7 @@
 import React  from 'react';
 import { NavContainer,NavWrapper, NavItem, NavLogo, NavLogoTitle, NavRight } from './Header.elements'
 import logo from '../../assets/images/logo.png';
-import { EnterIcon } from '@radix-ui/react-icons'
+import { EnterIcon, ExitIcon } from '@radix-ui/react-icons'
 import { StyledLink } from '../Link/Link.elements';
 import { useContext } from 'react';
 import { AuthContext } from '../../firebase/Auth';
@@ -32,10 +32,10 @@ export const Header = () => {
                                 <StyledLink header={true} to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
                             </>
                         ) : (
-                            <div>
-                                <h3>{currentUser.fullname}</h3>
-                                <a onClick={handleLogout} href="/">sair</a>                       
-                            </div>
+                            <NavItem>
+                                <StyledLink header={true} to="/">{currentUser.fullname}</StyledLink>
+                                <StyledLink onClick={handleLogout} header={true} to="/">sair<ExitIcon/></StyledLink>
+                            </NavItem>
                         )}
                     </NavRight>  
                 </NavWrapper>

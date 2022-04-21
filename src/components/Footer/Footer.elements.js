@@ -26,7 +26,8 @@ export const FooterItem = styled.div`
 `
 
 export const FooterCol = styled.div`
-    padding: 50px 10px;
+    padding: 25px 10px;
+    text-align: center;
 `
 export const FooterColTitle = styled.h3`
     font-size: 1.6em;
@@ -42,8 +43,8 @@ export const FooterColSocial = styled.ul`
     display: flex;
     gap: 0 10px;
     svg {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
     }
 `
 
@@ -56,4 +57,5 @@ export const FooterColItem = styled.li`
 
 export const FooterLogo = styled.img`
     max-height: 50px;
+    margin-bottom: 10px;
 `
