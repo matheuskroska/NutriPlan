@@ -175,7 +175,7 @@ export const CardContentCol = styled.div`
     padding: 0.5em;
     color: var(--font-dark);
     display: flex;
-    font-size: 1.6em;
+    font-size: ${props => props.fontSize ? "1em" : "1.6em"};
     white-space: nowrap;
     align-items: center;
     justify-content: ${props => props.justify || "center"};

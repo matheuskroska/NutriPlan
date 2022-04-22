@@ -135,6 +135,15 @@ const Abstract = {
         })
     },
 
+    async activeDesactiveLoginUser(uuid, active) {
+        console.log(uuid, active)
+        const user = await this.getUserByUid(uuid)
+        const docRef = doc(db, user.dbName, user.docId)
+        await updateDoc(docRef, {
+            active: active
+        })
+    },
+
     async getUserByCpf(cpf) {
         const q = query(collection(db, "patients"), where("cpf", "==", cpf))
 

@@ -56,6 +56,29 @@ export const Users = () => {
             setPatientList(patients)
         }
     }
+
+    const handleActiveDesactive = async(e, uuid, action) => {
+        e.preventDefault()
+        let question = null
+        let active = null
+        switch (action) {
+            case 'desactive':
+                question = 'Deseja desativar login desse usuário?'
+                active = false
+                break
+            case 'active':
+                question = 'Deseja ativar login desse usuário?'
+                active = true
+                break
+        }
+        console.log(question    )
+        console.log(active)
+        if (window.confirm(question)) {
+            await Abstract.activeDesactiveLoginUser(uuid, active)
+            let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+            setPatientList(patients)
+        }
+    }
     
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
@@ -99,11 +122,18 @@ export const Users = () => {
                                                 <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
                                             </>
                                         ) : (
-                                            data.access === 2 ? (
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
-                                            ) : (
-                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
-                                            )
+                                            <>
+                                                {data.active ? (
+                                                    <CardContentCol maxWidth={"100px"} fontSize={true}><StyledLink header="true" to="#" onClick={(e) => handleActiveDesactive(e, data.uuid, 'desactive')}><Cross2Icon/>Desativar</StyledLink></CardContentCol>
+                                                ) : (
+                                                    <CardContentCol maxWidth={"100px"} fontSize={true}><StyledLink header="true" to="#" onClick={(e) => handleActiveDesactive(e, data.uuid, 'active')}><CheckIcon/>Ativar</StyledLink></CardContentCol>
+                                                )}
+                                                {data.access === 2 ? (
+                                                    <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
+                                                ) : (
+                                                    <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
+                                                )}
+                                            </>
                                         )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
                                         <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><TrashIcon/></CardContentCol>
