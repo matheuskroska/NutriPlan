@@ -1,10 +1,10 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase"
-import Abstract from "./Abstract";
+import User from "./User";
 
 const LoginModel = {
     async sendEmailResetPassword(email) {
-        const user = await Abstract.getUserByEmail(email)
+        const user = await User.getUserByEmail(email)
         if (!!!user) {
             return 'auth/null-email'
         }

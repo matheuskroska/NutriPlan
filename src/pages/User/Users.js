@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
 import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
-import Abstract from '../../db/Abstract';
+import User from '../../db/User';
 
 export const Users = () => {
 
@@ -43,7 +43,7 @@ export const Users = () => {
 
     const handleApprove = async(e, uuid) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await Abstract.approveReproveLoginUser(uuid, 'approve')
+            await User.approveReproveLoginUser(uuid, 'approve')
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
@@ -51,7 +51,7 @@ export const Users = () => {
 
     const handleReprove = async(e, uuid) => {
         if (window.confirm('Reprovar acesso do usuário no sistema?')) {
-            await Abstract.approveReproveLoginUser(uuid, 'reprove')
+            await User.approveReproveLoginUser(uuid, 'reprove')
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
@@ -74,7 +74,7 @@ export const Users = () => {
         console.log(question    )
         console.log(active)
         if (window.confirm(question)) {
-            await Abstract.activeDesactiveLoginUser(uuid, active)
+            await User.activeDesactiveLoginUser(uuid, active)
             let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
@@ -83,7 +83,7 @@ export const Users = () => {
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
             if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
-                await Abstract.deleteUser(uuid)
+                await User.deleteUser(uuid)
                 let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
                 setPatientList(patients)
             }

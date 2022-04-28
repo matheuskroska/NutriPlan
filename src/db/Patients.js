@@ -1,12 +1,12 @@
 import { db } from '../firebase'
 import { collection, addDoc, getDocs, Timestamp, query, where, orderBy, onSnapshot } from 'firebase/firestore'
-import Abstract from './Abstract'
+import User from './User'
 
 const Patients = {
     // Adiciona paciente na base
     async addPatient(patient) {
         try {
-            const retUser = await Abstract.createUser(patient.email, patient.password)
+            const retUser = await User.createUser(patient.email, patient.password)
             if (typeof(retUser) === 'object') {
                 const docRef = await addDoc(collection(db, "patients"), {
                     uuid: retUser.uid,
@@ -34,10 +34,10 @@ const Patients = {
     },
 
     async addUser(patient) {
-        // const retUser = await Abstract.addUser(patient, userCategory)
+        // const retUser = await User.addUser(patient, userCategory)
 
         try {
-            const retUser = await Abstract.createUser(patient.email, patient.password)
+            const retUser = await User.createUser(patient.email, patient.password)
             if (typeof(retUser) === 'object') {
                 const docRef = await addDoc(collection(db, "patients"), {
                     uuid: retUser.uid,
