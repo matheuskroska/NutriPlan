@@ -146,7 +146,8 @@ export const Register = () => {
     const handleChange = (e) => {
         const { name, value } = e.target
         let pass = document.getElementById("cpf");
-        if (!!!e.target.value.match(/_/gi)) {
+        if (!!!e.target.value.match(/_/gi) && e.target.id === "cpf") {
+            // console.log(e.target.id)
             let sanitized = e.target.value.replace(/[^\w\s]/gi, '')
             if(testaCPF(sanitized)) {
             } else {
@@ -256,7 +257,7 @@ export const Register = () => {
                                 <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInputMask id="cpf" mask='999.999.999-99' pattern={"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"} required placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInputMask>
+                                <CardInputMask id="cpf" mask='999.999.999-99' required pattern={"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"} placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInputMask>
                                 <ErrorMessage><ExclamationTriangleIcon/>{cpfError}</ErrorMessage>
                             </CardItem>
                                 <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
