@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const Abstract = {
+const User = {
     async createUser(email, password) {
         return createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -167,4 +167,4 @@ const Abstract = {
     }
 }
 
-export default Abstract
+export default User

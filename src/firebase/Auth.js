@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from "react"
 import { auth } from '.'
 import { Loader } from "../components"
-import Abstract from "../db/Abstract"
+import User from "../db/User"
 
 export const AuthContext = React.createContext()
 
@@ -12,7 +12,7 @@ export const AuthProvider = ({children}) => {
      useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             if (!!user) {
-                let userInfo = await Abstract.getUserByUid(user.uid)
+                let userInfo = await User.getUserByUid(user.uid)
                 setCurrentUser(userInfo)
             } else {
                 setCurrentUser(user)

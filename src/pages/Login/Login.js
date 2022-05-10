@@ -4,7 +4,7 @@ import { CardItem, CardInput, CardItemContainer } from '../../components/Card/Ca
 import { Card, Loader } from '../../components/index';
 import {EnterIcon, ExclamationTriangleIcon} from '@radix-ui/react-icons'
 import { Link } from '../../components/Link/Link';
-import Abstract from '../../db/Abstract';
+import User from '../../db/User';
 import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
@@ -23,7 +23,7 @@ export const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         setLoader(true)
-        let ret = await Abstract.signIn(email, password)
+        let ret = await User.signIn(email, password)
         console.log(ret)
         if (!!Errors[ret]) {
             setLoader(false)
