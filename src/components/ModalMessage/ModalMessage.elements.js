@@ -43,7 +43,8 @@ export const ModalTitle = styled.h2`
 `
 
 export const ModalContent = styled.p`
-    font-size: 1.8em;
+    font-size: 1.4em;
+    line-height: 1.2em;
     color: var(--font-soft);
     text-align: center;
     margin-bottom: 20px;

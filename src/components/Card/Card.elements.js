@@ -3,7 +3,7 @@ import { css } from "styled-components";
 import InputMask from 'react-input-mask';
 
 export const CardContainer = styled.div`
-    max-width: ${props => props.maxWidth || "550px"};
+    max-width: ${props => props.maxWidth || "420px"};
     display: ${props=> props.display || "initial"};
     justify-content: ${props=> props.justify || "initial"};
     width: 100%;
@@ -66,6 +66,17 @@ export const CardItem = styled.div`
         height: 10px;
         margin-top: 10px;
         transition-delay: 2s;
+        color: var(--deny-dark);
+    }
+
+    input:not(:placeholder-shown):invalid {
+        border-color: 1px solid var(--deny);
+        transition-delay: 2s;
+        color: var(--deny);
+    }
+
+    input:focus {
+        border-color: var(--tertiary);
     }
 
     a {
@@ -100,7 +111,8 @@ export const CardDescription = styled.h2`
 `
 
 export const CardMessage = styled.h2`
-    font-size: 1.7em;
+    font-size: 1.4em;
+    line-height: 1.3em;
     margin: 10px 0;
     text-align: center;
     color: var(--font-soft);
@@ -184,11 +196,13 @@ export const CardContentCol = styled.div`
     width: ${props => props.icon ? "5%" : "100%"};
     max-width: ${props => props.maxWidth || "initial"};
     min-width: ${props => props.maxWidth || "initial"};
+    strong {
+        font-weight: bold;
+    }
 
     svg {
         width: 25px;
     }
-
 
     a {
         color: var(--font-dark);
@@ -196,7 +210,10 @@ export const CardContentCol = styled.div`
 
     ${props => props.wSearchIcon &&
     css`
-        width: fit-content;
+        input {
+            width: 100%;
+        }
+
         position: relative;
         svg {
             position: absolute;
@@ -226,14 +243,14 @@ export const CardContentCol = styled.div`
 
     ${props => props.denyTheme &&
     css`
-        background-color: var(--tertiary);
+        background-color: var(--deny);
         color: var(--font-soft);
         border-radius: 15px;
         font-size: 1em;
         cursor: pointer;
         :hover {
-            background-color: var(--primary);
-            color: var(--font-dark);
+            background-color: var(--deny-dark);
+            color: var(--font-soft);
         }
     `};
 `

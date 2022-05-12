@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import Patients from '../../db/Patients';
-import './Users.css'
 import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
@@ -113,7 +112,7 @@ export const Users = () => {
                             return (
                                 <CardContentRow id={data.cpf}>
                                     <CardItem marginBottom={"0"}>
-                                        <CardContentCol justify={"start"} maxWidth={"250px"}>{data.cpf} - {data.fullname}</CardContentCol>
+                                        <CardContentCol justify={"start"} maxWidth={"250px"}><strong>{data.cpf}</strong> - {data.fullname}</CardContentCol>
                                     </CardItem>
                                     <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
                                         {data.access === 0 ? (
@@ -124,19 +123,14 @@ export const Users = () => {
                                         ) : (
                                             <>
                                                 {data.active ? (
-                                                    <CardContentCol maxWidth={"100px"} fontSize={true}><StyledLink header="true" to="#" onClick={(e) => handleActiveDesactive(e, data.uuid, 'desactive')}><Cross2Icon/>Desativar</StyledLink></CardContentCol>
+                                                    <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'desactive')}><Cross2Icon/>Desativar</CardContentCol>
                                                 ) : (
-                                                    <CardContentCol maxWidth={"100px"} fontSize={true}><StyledLink header="true" to="#" onClick={(e) => handleActiveDesactive(e, data.uuid, 'active')}><CheckIcon/>Ativar</StyledLink></CardContentCol>
-                                                )}
-                                                {data.access === 2 ? (
-                                                    <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
-                                                ) : (
-                                                    <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
+                                                    <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'active')}><CheckIcon/>Ativar</CardContentCol>
                                                 )}
                                             </>
                                         )}
-                                        <CardContentCol maxWidth={"25px"}><StyledLink header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
-                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><TrashIcon/></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"}><StyledLink edit header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
                                     </CardItem>
                                 </CardContentRow>
                             )

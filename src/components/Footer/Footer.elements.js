@@ -19,14 +19,14 @@ export const FooterWrapper = styled.div`
 export const FooterItem = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    padding: 10px 20px;
+    padding: ${props => props.padding || "10px 20px"};
     display: flex;
     width: 100%;
     justify-content: space-around;
 `
 
 export const FooterCol = styled.div`
-    padding: 25px 10px;
+    padding: 15px 10px;
     text-align: center;
 `
 export const FooterColTitle = styled.h3`
@@ -43,8 +43,8 @@ export const FooterColSocial = styled.ul`
     display: flex;
     gap: 0 10px;
     svg {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
     }
 `
 
@@ -58,4 +58,5 @@ export const FooterColItem = styled.li`
 export const FooterLogo = styled.img`
     max-height: 50px;
     margin-bottom: 10px;
+    filter: brightness(0.5)
 `
