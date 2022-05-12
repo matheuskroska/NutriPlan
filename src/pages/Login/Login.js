@@ -69,7 +69,7 @@ export const Login = () => {
                                 <Link to="/alterar-senha" forgotpwd>esqueci minha senha</Link>
                             </CardItem>
                             <CardItem>
-                                <StyledButton primary hasIcon>entrar<EnterIcon/></StyledButton>
+                                <StyledButton primary hasIcon marginTop={"20px"}>entrar<EnterIcon/></StyledButton>
                             </CardItem>
                         </form>
                     </CardItemContainer>  

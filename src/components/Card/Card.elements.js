@@ -8,11 +8,11 @@ export const CardContainer = styled.div`
     justify-content: ${props=> props.justify || "initial"};
     width: 100%;
     margin: 0 auto;
-    border-radius: 15px;
+    border-radius: 5px;
     position: relative;
 `
 export const CardInput = styled.input`
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #66A571;
     color: var(--font-dark);
     width: ${props => props.inputWidth || "100%"};
@@ -28,7 +28,7 @@ export const CardInput = styled.input`
 `
 
 export const CardInputMask = styled(InputMask)`
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #66A571;
     color: var(--font-dark);
     width: ${props => props.inputWidth || "100%"};
@@ -49,7 +49,7 @@ export const CardWrapper = styled.div`
     padding: 26px 32px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     background-color: rgb(111 140 67 / 90%);
-    border-radius: 0 0 15px 15px;
+    border-radius: 0 0 5px 5px;
 `
 
 export const CardItem = styled.div`
@@ -99,7 +99,7 @@ export const CardTitle = styled.h1`
     text-align: center;
     padding: 25px 0 25px 0;
     background-color: rgb(255 255 255 / 90%);
-    border-radius: 15px 15px 0 0;
+    border-radius: 5px 5px 0 0;
 `
 export const CardDescription = styled.h2`
     font-size: 1.3em;
@@ -123,14 +123,15 @@ export const CardMenuContainer = styled.div`
     color: var(--font-dark);
     text-align: center;
     background-color: rgb(170 215 108 / 90%);
-    border-radius: 15px;
-    width: 25%;
+    border-radius: 5px;
+    min-width: 300px;
+    margin-right: 32px;
 `
 
 export const CardMenuHeader = styled.div`
     padding: 0.5em;
     font-weight: bold;
-    border-radius: 15px 15px 0 0;
+    border-radius: 5px;
     background-color: rgb(255 255 255 / 90%);
     color: var(--font-dark);
     font-size: 2.5em;
@@ -158,16 +159,14 @@ export const CardMenuItem = styled.div`
 `
 
 export const CardContent = styled.div`
-    padding: 0.5em;
     display: block;
-    padding: 0 3em 1em 2em;
-    border-radius: 15px;
-    width: 65%;
+    border-radius: 5px;
+    width: 100%;
 `
 
 export const CardContentRow = styled.div`
     padding: 0.5em;
-    border-radius: 15px;
+    border-radius: 5px;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
@@ -231,7 +230,7 @@ export const CardContentCol = styled.div`
     css`
         background-color: var(--primary);
         color: var(--font-dark);
-        border-radius: 15px;
+        border-radius: 5px;
         font-size: 1em;
         cursor: pointer;
         :hover {
@@ -245,7 +244,7 @@ export const CardContentCol = styled.div`
     css`
         background-color: var(--deny);
         color: var(--font-soft);
-        border-radius: 15px;
+        border-radius: 5px;
         font-size: 1em;
         cursor: pointer;
         :hover {

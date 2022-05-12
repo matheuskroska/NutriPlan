@@ -4,11 +4,11 @@ import bgImg from '../assets/images/home-bg.png';
 import "../assets/fonts/stylesheet.css";
 
 export const Container = styled.div`
-    max-width: 1280px;
+    /* max-width: 1280px; */
     margin: 0 auto;
-    min-height: calc(100vh - 322px);
+    min-height: calc(100vh - 282px);
     /* height: 100vh; */
-    padding: 20px;
+    /* padding: 20px; */
     display: flex;
     align-items: center;
     justify-content: center;
