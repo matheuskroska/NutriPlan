@@ -92,7 +92,7 @@ export const Users = () => {
 
     return (
         <>
-            <Card maxWidth={"1200px"} cardTitle="Lista de usuários">
+            <Card maxWidth={"100%"} cardTitle="Lista de usuários">
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <CardMenuContainer >
                         <CardMenuHeader>

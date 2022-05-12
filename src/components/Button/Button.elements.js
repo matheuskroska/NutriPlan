@@ -3,8 +3,8 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 const cssButon = css`
     position: relative;
-    border-radius: 15px;
-    max-width: ${props => props.maxWidth ? props.maxWidth : "155px"};
+    border-radius: 5px;
+    max-width: ${props => props.maxWidth ? props.maxWidth : "100%"};
     height: 35px;
     font-size: 1.3em;
     font-weight: 500;
@@ -21,6 +21,7 @@ const cssButon = css`
     width: 100%;
     font-family: inherit;
     margin: 0 auto;
+    margin-top: ${props => props.marginTop ? props.marginTop : "0"};
 `
 
 export const StyledRadixToggleGroup = styled(ToggleGroupPrimitive.Root)`
