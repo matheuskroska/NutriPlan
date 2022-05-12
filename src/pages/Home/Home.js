@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { StyledButton } from "../../components/Button/Button.elements"
+import UserModel from "../../db/UserModel"
 import { AuthContext } from "../../firebase/Auth"
 
 export const Home = () => {
@@ -8,9 +9,12 @@ export const Home = () => {
     const { currentUser } = useContext(AuthContext)
     const navigate = useNavigate();
 
-    // if (!!!currentUser) {
-    //     return <Navigate to="/login" replace />
-    // }
+    if (!!currentUser) {
+        if (currentUser.access === 0 && currentUser.active === false) {
+            let userModel = new UserModel()
+            userModel.logout()
+        }
+    }
 
     const handleListUsers = () => {
         navigate("/usuarios", { replace: true });

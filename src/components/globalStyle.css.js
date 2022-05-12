@@ -6,7 +6,7 @@ import "../assets/fonts/stylesheet.css";
 export const Container = styled.div`
     max-width: 1280px;
     margin: 0 auto;
-    min-height: calc(100vh - 327px);
+    min-height: calc(100vh - 322px);
     /* height: 100vh; */
     padding: 20px;
     display: flex;
@@ -22,6 +22,8 @@ export const GlobalStyle = createGlobalStyle`
     --tertiary: #4A4D26;
     --font-dark: #4A4D26;
     --font-soft: #ffffff;
+    --deny: #ff0000;
+    --deny-dark: #b10000;
     }
 
     html {

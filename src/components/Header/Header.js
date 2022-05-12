@@ -6,14 +6,15 @@ import { EnterIcon, ExitIcon } from '@radix-ui/react-icons'
 import { StyledLink } from '../Link/Link.elements';
 import { useContext } from 'react';
 import { AuthContext } from '../../firebase/Auth';
-import User from '../../db/User';
+import UserModel from '../../db/UserModel';
 
 export const Header = () => {
 
     const { currentUser } = useContext(AuthContext)
+    const userModel = new UserModel()
 
     const handleLogout = async () => {
-        let retLogout = await User.logout()
+        let retLogout = await userModel.logout()
         if (!!!retLogout) {
             alert(retLogout)
         }

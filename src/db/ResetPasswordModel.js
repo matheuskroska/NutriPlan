@@ -1,7 +1,7 @@
 import { confirmPasswordReset, verifyPasswordResetCode } from "firebase/auth"
 import { auth } from "../firebase"
 import { Errors } from "../firebase/Errors"
-import User from "./User"
+import UserModel from "./UserModel"
 
 const ResetPasswordModel = {
     async handleResetPassword(actionCode, continueUrl, lang) {
@@ -21,7 +21,8 @@ const ResetPasswordModel = {
     async handleConfirmNewPassword(email, newPassword, actionCode) {
         // Salva nova senha
         const ret = await confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
-            User.resetPassword(email, newPassword)
+            let userModel = new UserModel()
+            userModel.resetPassword(email, newPassword)
             return true
         }).catch((error) => {
             const errorCode = error.code

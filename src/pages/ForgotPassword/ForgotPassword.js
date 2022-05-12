@@ -75,7 +75,7 @@ export const ForgotPassword = () => {
                         <form onSubmit={handleSubmit}>
                             <CardItem>
                                 <CardMessage>
-                                    Para alterar sua senha, informe o e-mail cadastrado e enviaremos um link com as instruções.
+                                    Para alterar sua senha, informe o e-mail cadastrado<br/>enviaremos um link com as instruções.
                                 </CardMessage>
                             </CardItem>
                             <CardItem>

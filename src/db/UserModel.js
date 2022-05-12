@@ -3,7 +3,24 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const User = {
+class UserModel {
+// const UserModel = {
+    constructor() {
+        this.createUser = this.createUser.bind(this)
+        this.signIn = this.signIn.bind(this)
+        this.logout = this.logout.bind(this)
+        this.getUserByUid = this.getUserByUid.bind(this)
+        this.getAllDataUser = this.getAllDataUser.bind(this)
+        this.getUserByEmailAndPassword = this.getUserByEmailAndPassword.bind(this)
+        this.getUserByEmail = this.getUserByEmail.bind(this)
+        this.resetPassword = this.resetPassword.bind(this)
+        this.approveReproveLoginUser = this.approveReproveLoginUser.bind(this)
+        this.activeDesactiveLoginUser = this.activeDesactiveLoginUser.bind(this)
+        this.getUserByCpf = this.getUserByCpf.bind(this)
+        this.getUserByCpf = this.getUserByCpf.bind(this)
+        this.deleteUser = this.deleteUser.bind(this)
+    }
+
     async createUser(email, password) {
         return createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -13,7 +30,7 @@ const User = {
             .catch((error) => {
                 return error.code
             })
-    },
+    }
     
     async signIn(email, password) {
         let userData = await this.getUserByEmailAndPassword(email, password)
@@ -38,7 +55,7 @@ const User = {
             .catch((error) => {
                 return error.code
             })
-    },
+    }
 
     async logout() {
         return signOut(auth).then(() => {
@@ -46,7 +63,7 @@ const User = {
           }).catch((error) => {
             return error.code
           })
-    },
+    }
 
     async getUserByUid(uid) {
         
@@ -64,7 +81,7 @@ const User = {
                 return null
             }
         }
-    },
+    }
 
     async getAllDataUser(q, dbName) {
         const data = await getDocs(q)
@@ -74,7 +91,7 @@ const User = {
             dbName: dbName
         }))
         return dataResult
-    },
+    }
 
     async getUserByEmailAndPassword(email, password) {
         const q = query(collection(db, "patients"), where("email", "==", email), where("password", "==", password))
@@ -91,7 +108,7 @@ const User = {
                 return null
             }
         }
-    },
+    }
 
     async getUserByEmail(email) {
         const q = query(collection(db, "patients"), where("email", "==", email))
@@ -108,7 +125,7 @@ const User = {
                 return null
             }
         }
-    },
+    }
 
     async resetPassword(email, newPassword) {
         const user = await this.getUserByEmail(email)
@@ -116,7 +133,7 @@ const User = {
         await updateDoc(docRef, {
             password: newPassword
         })
-    },
+    }
 
     async approveReproveLoginUser(uuid, action) {
         let access = 0
@@ -133,7 +150,7 @@ const User = {
         await updateDoc(docRef, {
             access: access
         })
-    },
+    }
 
     async activeDesactiveLoginUser(uuid, active) {
         console.log(uuid, active)
@@ -142,7 +159,7 @@ const User = {
         await updateDoc(docRef, {
             active: active
         })
-    },
+    }
 
     async getUserByCpf(cpf) {
         const q = query(collection(db, "patients"), where("cpf", "==", cpf))
@@ -159,12 +176,12 @@ const User = {
                 return null
             }
         }
-    },
+    }
 
     async deleteUser(uuid) {
         const user = await this.getUserByUid(uuid)
-        await deleteDoc(doc(db, user.dbName, user.docId));
+        await deleteDoc(doc(db, user.dbName, user.docId))
     }
 }
 
-export default User
+export default UserModel

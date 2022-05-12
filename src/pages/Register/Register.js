@@ -3,7 +3,7 @@ import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../c
 import { CardItem, CardInput, CardItemContainer, CardDescription, CardInputMask } from '../../components/Card/Card.elements'
 import { Card, Loader } from '../../components/index'
 import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
-import Patients from '../../db/Patients'
+import PatientModel from '../../db/PatientModel'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
@@ -77,13 +77,13 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
-                        let hasPatient = await Patients.hasPatient(patient)
+                        let hasPatient = await PatientModel.hasPatient(patient)
                         if (hasPatient) {
                             setLoader(false)
                             setError("CPF já existente");
                             setModalError(true)
                         } else {
-                            let ret = await Patients.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                            let ret = await PatientModel.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
                             
                             if (!!Errors[ret]) {
                                 setLoader(false)
@@ -146,14 +146,14 @@ export const Register = () => {
     const handleChange = (e) => {
         const { name, value } = e.target
         let pass = document.getElementById("cpf");
-        if (!!!e.target.value.match(/_/gi)) {
+        if (!!!e.target.value.match(/_/gi) && e.target.id === "cpf") {
             let sanitized = e.target.value.replace(/[^\w\s]/gi, '')
             if(testaCPF(sanitized)) {
             } else {
                 pass.setCustomValidity("CPF Incorreto");
                 setcpfError("CPF Incorreto") 
             }
-        } else {
+        } else if (e.target.id === "cpf") {
             pass.setCustomValidity("");
             setcpfError("Formato Inválido")
         }
@@ -256,7 +256,7 @@ export const Register = () => {
                                 <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInputMask id="cpf" mask='999.999.999-99' pattern={"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"} required placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInputMask>
+                                <CardInputMask id="cpf" mask='999.999.999-99' required pattern={"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"} placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off"></CardInputMask>
                                 <ErrorMessage><ExclamationTriangleIcon/>{cpfError}</ErrorMessage>
                             </CardItem>
                                 <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>

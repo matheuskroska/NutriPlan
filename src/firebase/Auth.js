@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from "react"
 import { auth } from '.'
 import { Loader } from "../components"
-import User from "../db/User"
+import UserModel from "../db/UserModel"
 
 export const AuthContext = React.createContext()
 
@@ -12,7 +12,8 @@ export const AuthProvider = ({children}) => {
      useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             if (!!user) {
-                let userInfo = await User.getUserByUid(user.uid)
+                let userModel = new UserModel()
+                let userInfo = await userModel.getUserByUid(user.uid)
                 setCurrentUser(userInfo)
             } else {
                 setCurrentUser(user)
