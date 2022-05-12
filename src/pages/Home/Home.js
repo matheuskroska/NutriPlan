@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { StyledButton } from "../../components/Button/Button.elements"
-import User from "../../db/User"
+import UserModel from "../../db/UserModel"
 import { AuthContext } from "../../firebase/Auth"
 
 export const Home = () => {
@@ -11,7 +11,8 @@ export const Home = () => {
 
     if (!!currentUser) {
         if (currentUser.access === 0 && currentUser.active === false) {
-            User.logout()
+            let userModel = new UserModel()
+            userModel.logout()
         }
     }
 

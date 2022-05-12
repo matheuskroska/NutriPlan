@@ -1,10 +1,11 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase"
-import User from "./User";
+import UserModel from "./UserModel";
 
 const LoginModel = {
     async sendEmailResetPassword(email) {
-        const user = await User.getUserByEmail(email)
+        let userModel = new UserModel()
+        const user = await userModel.getUserByEmail(email)
         if (!!!user) {
             return 'auth/null-email'
         }

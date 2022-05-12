@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import Patients from '../../db/Patients';
+import PatientModel from '../../db/PatientModel';
 import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
 import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
-import User from '../../db/User';
+import UserModel from '../../db/UserModel';
 
 export const Users = () => {
 
@@ -15,9 +15,12 @@ export const Users = () => {
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["fullname", "cpf"]); //colunas da base para realizar busca
+    
+    const patientModel = new PatientModel()
+    const userModel = new UserModel()
 
     const getPatients = async () => {
-        let patients = await Patients.getPatients();
+        let patients = await patientModel.getPatients();
         setPatientList(patients)
     }
 
@@ -42,16 +45,16 @@ export const Users = () => {
 
     const handleApprove = async(e, uuid) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await User.approveReproveLoginUser(uuid, 'approve')
-            let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+            await userModel.approveReproveLoginUser(uuid, 'approve')
+            let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
     }
 
     const handleReprove = async(e, uuid) => {
         if (window.confirm('Reprovar acesso do usuário no sistema?')) {
-            await User.approveReproveLoginUser(uuid, 'reprove')
-            let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+            await userModel.approveReproveLoginUser(uuid, 'reprove')
+            let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
     }
@@ -70,11 +73,9 @@ export const Users = () => {
                 active = true
                 break
         }
-        console.log(question    )
-        console.log(active)
         if (window.confirm(question)) {
-            await User.activeDesactiveLoginUser(uuid, active)
-            let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+            await userModel.activeDesactiveLoginUser(uuid, active)
+            let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
             setPatientList(patients)
         }
     }
@@ -82,8 +83,8 @@ export const Users = () => {
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
             if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
-                await User.deleteUser(uuid)
-                let patients = Patients.getPatientsSnapshot() //recupera lista atualizada
+                await userModel.deleteUser(uuid)
+                let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
                 setPatientList(patients)
             }
         }

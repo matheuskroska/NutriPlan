@@ -3,7 +3,7 @@ import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../c
 import { CardItem, CardInput, CardItemContainer, CardDescription, CardInputMask } from '../../components/Card/Card.elements'
 import { Card, Loader } from '../../components/index'
 import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
-import Patients from '../../db/Patients'
+import PatientModel from '../../db/PatientModel'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
@@ -77,13 +77,13 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
-                        let hasPatient = await Patients.hasPatient(patient)
+                        let hasPatient = await PatientModel.hasPatient(patient)
                         if (hasPatient) {
                             setLoader(false)
                             setError("CPF já existente");
                             setModalError(true)
                         } else {
-                            let ret = await Patients.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                            let ret = await PatientModel.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
                             
                             if (!!Errors[ret]) {
                                 setLoader(false)

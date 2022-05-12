@@ -1,13 +1,13 @@
 import { db } from '../firebase'
 import { collection, addDoc, getDocs, Timestamp, query, where } from 'firebase/firestore'
-import User from './User'
+import UserModel from './UserModel'
 
 const Nutritionists = {
     // Adiciona nutricionista na base
     async addUser(nutritionist) {
-        // const retUser = await User.addUser(nutritionist, userCategory)
         try {
-            const retUser = await User.createUser(nutritionist.email, nutritionist.password)
+            let userModel = new UserModel()
+            const retUser = await userModel.createUser(nutritionist.email, nutritionist.password)
             if (typeof(retUser) === 'object') {
                 const docRef = await addDoc(collection(db, "nutritionists"), {
                     uuid: retUser.uid,
