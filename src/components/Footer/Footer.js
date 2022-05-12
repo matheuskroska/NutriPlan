@@ -74,6 +74,7 @@ export const Footer = () => {
                         
                     </FooterItem>
                 </FooterWrapper>
+                <FooterItem padding={"0 20px 10px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
                 <FooterWrapper bgColor="var(--tertiary)">
                     <FooterItem >
                         

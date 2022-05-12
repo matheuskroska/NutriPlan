@@ -22,6 +22,14 @@ export const StyledLink = styled(Link)`
       color: var(--font-dark);
     `};
     ${props =>
+    props.edit &&
+    css`
+      svg:hover path {
+        fill-rule:nonzero;
+        /* fill: var(--primary); */
+      }
+    `};
+    ${props =>
     props.css &&
     css`
         font-weight: 400;

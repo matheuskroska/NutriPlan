@@ -36,6 +36,7 @@ export const NavRight = styled.div`
 
 export const NavLogo = styled.img`
     max-height: 50px;
+    filter: brightness(0.5)
 `
 
 export const NavLogoTitle = styled.h1`
