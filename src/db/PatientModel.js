@@ -6,7 +6,8 @@ class PatientModel extends UserModel {
 
     constructor() {
         super()
-        this.table = "paciente"
+        // this.table = "paciente"
+        this.table = "patients"
     }
 
     // Adiciona paciente na base
