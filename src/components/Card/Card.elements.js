@@ -7,8 +7,8 @@ export const CardContainer = styled.div`
     display: ${props=> props.display || "initial"};
     justify-content: ${props=> props.justify || "initial"};
     width: 100%;
-    margin: 0 auto;
-    border-radius: 5px;
+    margin: ${props=> props.margin || "0 auto"};
+    border-radius: ${props=> props.borderRadius || "5px"};
     position: relative;
 `
 export const CardInput = styled.input`
@@ -47,9 +47,9 @@ export const CardInputMask = styled(InputMask)`
 export const CardWrapper = styled.div`
     display: block;
     padding: 26px 32px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: ${props => props.boxShadow || "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"};
     background-color: rgb(111 140 67 / 90%);
-    border-radius: 0 0 5px 5px;
+    border-radius: ${props => props.borderRadius || "0 0 5px 5px"};
 `
 
 export const CardItem = styled.div`
@@ -99,7 +99,7 @@ export const CardTitle = styled.h1`
     text-align: center;
     padding: 25px 0 25px 0;
     background-color: rgb(255 255 255 / 90%);
-    border-radius: 5px 5px 0 0;
+    border-radius: ${props => props.borderRadius || "5px 5px 0 0"};
 `
 export const CardDescription = styled.h2`
     font-size: 1.3em;

@@ -55,7 +55,7 @@ export const Login = () => {
                         <ModalMessage func={pull_data}>{error}</ModalMessage>
                     </>
                 )}
-                <Card cardTitle="Login" >
+                <Card margin={"140px 0"} cardTitle="Login" >
                     <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>

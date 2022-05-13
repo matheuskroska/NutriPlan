@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { Card } from "../../components"
 import { StyledButton } from "../../components/Button/Button.elements"
 import UserModel from "../../db/UserModel"
 import { AuthContext } from "../../firebase/Auth"
@@ -23,7 +24,10 @@ export const Home = () => {
     if (!!currentUser) {
         return (
             <>
-                <StyledButton onClick={handleListUsers} primary>lista de usuários</StyledButton>
+                <Card margin={"140px 0"}>
+                    <StyledButton onClick={handleListUsers} primary>lista de usuários</StyledButton>
+                </Card>
+                
             </>
         )
     } else {
