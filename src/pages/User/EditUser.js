@@ -12,20 +12,20 @@ export const EditUser = () => {
     }
 
     const handleEdit = async() => {
-        var data = {
-            "email": "name@example.com",
-            "emailVerified": true,
-            "phoneNumber": "+15551212",
-            "password": "randomPW",
-            "displayName": "User Name",
-            "disabled": false,
-            "sponsor": "Extra Payload #1 (optional)",
-            "study": "Extra Payload #2 (optional)"
-        };
-        createUser( data ).then(function (result) {
-            // Read result of the Cloud Function.
-            console.log(result.data)
-        });
+        // var data = {
+        //     "email": "name@example.com",
+        //     "emailVerified": true,
+        //     "phoneNumber": "+15551212",
+        //     "password": "randomPW",
+        //     "displayName": "User Name",
+        //     "disabled": false,
+        //     "sponsor": "Extra Payload #1 (optional)",
+        //     "study": "Extra Payload #2 (optional)"
+        // };
+        // createUser( data ).then(function (result) {
+        //     // Read result of the Cloud Function.
+        //     console.log(result.data)
+        // });
         alert('edit')
     }
 
