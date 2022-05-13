@@ -97,7 +97,7 @@ export const Users = () => {
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <CardMenuContainer >
                         <CardMenuHeader>
-                            <p>{currentUser.fullname}</p>
+                            <p>{currentUser.nome_completo}</p>
                             <CardAvatar src={avatar} alt="avatar"></CardAvatar>
                             <p>Editar perfil</p>
                         </CardMenuHeader>

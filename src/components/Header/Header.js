@@ -51,7 +51,7 @@ export const Header = () => {
                                         </>
                                     ) : (
                                         <NavItem>
-                                            <StyledLink header="true" to="/">{currentUser.fullname}</StyledLink>
+                                            <StyledLink header="true" to="/">{currentUser.nome_completo}</StyledLink>
                                             <StyledLink onClick={handleLogout} header="true" to="/">sair<ExitIcon/></StyledLink>
                                         </NavItem>
                                     )}
