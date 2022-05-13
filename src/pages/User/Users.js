@@ -13,7 +13,7 @@ export const Users = () => {
     const [usersList, setUsersList] = useState(null)
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
-    const [searchParam] = useState(["fullname", "cpf"]); //colunas da base para realizar busca
+    const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
     
     const userModel = new UserModel()
 
@@ -114,17 +114,17 @@ export const Users = () => {
                             return (
                                 <CardContentRow id={data.cpf}>
                                     <CardItem marginBottom={"0"}>
-                                        <CardContentCol justify={"start"} maxWidth={"250px"}><strong>{data.cpf}</strong> - {data.fullname}</CardContentCol>
+                                        <CardContentCol justify={"start"} maxWidth={"250px"}><strong>{data.cpf}</strong> - {data.nome_completo}</CardContentCol>
                                     </CardItem>
                                     <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
-                                        {data.access === 0 ? (
+                                        {data.acesso === 0 ? (
                                             <>
                                                 <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
                                                 <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
                                             </>
                                         ) : (
                                             <>
-                                                {data.active ? (
+                                                {data.ativo ? (
                                                     <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'desactive')}><Cross2Icon/>Desativar</CardContentCol>
                                                 ) : (
                                                     <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'active')}><CheckIcon/>Ativar</CardContentCol>

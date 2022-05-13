@@ -11,7 +11,7 @@ export const Home = () => {
     const navigate = useNavigate();
 
     if (!!currentUser) {
-        if (currentUser.access === 0 && currentUser.active === false) {
+        if (currentUser.acesso === 0 && currentUser.ativo === false) {
             let userModel = new UserModel()
             userModel.logout()
         }

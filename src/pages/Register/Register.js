@@ -3,9 +3,9 @@ import { StyledButton, StyledRadixButton, StyledRadixToggleGroup } from '../../c
 import { CardItem, CardInput, CardItemContainer, CardDescription, CardInputMask } from '../../components/Card/Card.elements'
 import { Card, Loader } from '../../components/index'
 import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
-import PatientModel from '../../db/PatientModel'
+import UserModel from '../../db/UserModel'
 import { AuthContext } from '../../firebase/Auth'
-import { Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
 import Nutritionists from '../../db/Nutritionists'
@@ -16,15 +16,17 @@ export const Register = () => {
 
     const [visibility, setVisibility] = useState(false)
     const [cpfError, setcpfError] = useState("Formato Inválido");
-    const [error, setError] = useState();
-    const [modalError, setModalError] = useState(false);
+    const [message, setMessage] = useState();
+    const [modalMessage, setModalMessage] = useState(false);
     const [loader, setLoader] = useState(false)
     const [userCategory, setUserCategory] = useState(null)
     const [tempPwd, setTempPwd] = useState(null)
-    const [patient, setPatient] = useState({
+    const [success, setSuccess] = useState(false)
+    const [user, setUser] = useState({
         uuid: null,
         firstname: null,
         lastname: null,
+        displayName: null,
         email: null,
         ddd: null,
         phone: null,
@@ -44,7 +46,8 @@ export const Register = () => {
         password: null,
         conf_password: null,
     })
-    const patientModel = new PatientModel()
+    const userModel = new UserModel()
+    const navigate = useNavigate()
 
     const swapForm = (userCategory, e) => {
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
@@ -60,37 +63,39 @@ export const Register = () => {
             await registerNutritionist()
         } else {
             setLoader(true)
-            await registerPatient()
+            await registerUser()
         }
     }
 
-    const registerPatient = async() => {
+    const registerUser = async() => {
         let _password = null
-        for (let column in patient) {
+        for (let column in user) {
             if (column === 'password') {
-                if (patient[column] !== null) {
-                    _password = patient[column]
+                if (user[column] !== null) {
+                    _password = user[column]
                 } else {
                     return
                 }
             }
 
             if (column === 'conf_password') {
-                if (patient[column] !== null) {
-                    if (_password === patient[column]) {
-                        let hasPatient = await patientModel.hasPatient(patient)
-                        if (hasPatient) {
+                if (user[column] !== null) {
+                    if (_password === user[column]) {
+                        let hasUser = await userModel.hasUser(user)
+                        if (hasUser) {
                             setLoader(false)
-                            setError("CPF já existente");
-                            setModalError(true)
+                            setMessage("CPF já existente");
+                            setModalMessage(true)
                         } else {
-                            let ret = await patientModel.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
-                            
+                            let ret = await userModel.add(user) // recebe como retorno o ID documento ou a mensagem de erro
+                            setLoader(false)
                             if (!!Errors[ret]) {
-                                setLoader(false)
-                                setError(Errors[ret]);
-                                setModalError(true)
-                            }   
+                                setMessage(Errors[ret]);
+                            } else {
+                                setSuccess(true)
+                                setMessage("Cadastro realizado com sucesso! Por favor, aguarde até que seu login seja liberado.");
+                            }
+                            setModalMessage(true)
                         }
                     } else {
                         return
@@ -123,8 +128,8 @@ export const Register = () => {
                             let ret = await Nutritionists.addUser(nutritionist) // recebe como retorno o ID documento ou a mensagem de erro
                             if (!!Errors[ret]) {
                                 setLoader(false)
-                                setError(Errors[ret]);
-                                setModalError(true)
+                                setMessage(Errors[ret]);
+                                setModalMessage(true)
                             }   
                         }
                     } else {
@@ -159,13 +164,21 @@ export const Register = () => {
             setcpfError("Formato Inválido")
         }
 
+        if (name === "firstname") {
+            let displayNameVal = user.firstname + ' ' + value
+            setUser(prev => ({
+                ...prev,
+                displayName: displayNameVal
+            }))
+        }
+
         if (!!userCategory) {
             setNutritionist(prev => ({
                 ...prev,
                 [name]: value
             }))
         } else {
-            setPatient(prev => ({
+            setUser(prev => ({
                 ...prev,
                 [name]: value
             }))
@@ -181,15 +194,18 @@ export const Register = () => {
         let cpassword = e.target.value
         if (tempPwd) {
             if ((tempPwd.length <= cpassword.length) && (tempPwd !== cpassword)) {
-                ;
+                console.log(tempPwd.length)
             } else {
                 handleChange(e)
             }
         }
     }
 
-    const pull_data = (data) => {
-        setModalError(data);
+    const pull_data = (data, propsSuccess) => {
+        setModalMessage(data)
+        if (!!propsSuccess) {
+            navigate("/login", { replace: true });
+        }
     }
 
     const testaCPF = (strCPF) => {
@@ -224,9 +240,9 @@ export const Register = () => {
     } else {
         return (
             <>
-                {modalError && (
+                {modalMessage && (
                     <>
-                        <ModalMessage func={pull_data}>{error}</ModalMessage>
+                        <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
                     </>
                 )}
                 <Card margin={"140px 0"} cardTitle="Cadastro">
