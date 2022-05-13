@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const FooterContainer = styled.div`
     width: 100%;
     margin: 0 auto;
-    background-color: var(--primary);
     bottom: 0;
 `
 
@@ -23,6 +22,7 @@ export const FooterItem = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-around;
+    background-color: ${props => props.bgColor || "initial"};
 `
 
 export const FooterCol = styled.div`

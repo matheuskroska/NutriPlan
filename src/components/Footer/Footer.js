@@ -22,7 +22,7 @@ export const Footer = () => {
     return (
             <FooterContainer>
                 
-                <FooterWrapper bgColor="var(--secondary)">
+                <FooterWrapper bgColor="rgb(111 140 67 / 90%)">
                     <FooterItem >   
                     </FooterItem>
                 </FooterWrapper>
@@ -74,12 +74,15 @@ export const Footer = () => {
                         
                     </FooterItem>
                 </FooterWrapper>
+                <FooterWrapper bgColor="var(--primary)">
                 <FooterItem padding={"0 20px 10px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
-                <FooterWrapper bgColor="var(--tertiary)">
+                </FooterWrapper>
+                
+                {/* <FooterWrapper bgColor="var(--tertiary)">
                     <FooterItem >
                         
                     </FooterItem>
-                </FooterWrapper>
+                </FooterWrapper> */}
             </FooterContainer>
     )
 }

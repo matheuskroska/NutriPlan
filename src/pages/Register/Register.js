@@ -228,7 +228,7 @@ export const Register = () => {
                         <ModalMessage func={pull_data}>{error}</ModalMessage>
                     </>
                 )}
-                <Card cardTitle="Cadastro">
+                <Card margin={"140px 0"} cardTitle="Cadastro">
                     <CardItem wrap={"initial"}>
                         <CardDescription>Eu sou um:</CardDescription>
                         <StyledRadixToggleGroup type="single" aria-label="usuario">

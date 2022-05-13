@@ -70,7 +70,7 @@ export const ForgotPassword = () => {
     } else {
         return (
             <>
-                <Card cardTitle="Alterar a senha" >
+                <Card margin={"140px 0"} cardTitle="Alterar a senha" >
                     <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>
@@ -83,7 +83,7 @@ export const ForgotPassword = () => {
                                 <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <StyledButton primary>enviar e-mail<EnvelopeClosedIcon/></StyledButton>
+                                <StyledButton primary marginTop={"20px"}>enviar e-mail<EnvelopeClosedIcon/></StyledButton>
                             </CardItem>
                         </form>
                     </CardItemContainer>  
