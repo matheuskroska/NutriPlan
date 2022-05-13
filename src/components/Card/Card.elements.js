@@ -147,7 +147,7 @@ export const CardAvatar = styled.img`
 
 export const CardMenuItem = styled.div`
     padding: 0.5em;
-    font-size: 2em;
+    font-size: 1.6em;
     ${props => props.selected ?
     css`
         background-color: rgb(111 140 67 / 90%);
@@ -166,12 +166,30 @@ export const CardContent = styled.div`
 
 export const CardContentRow = styled.div`
     padding: 0.5em;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
-    :not(:first-child) {
+    /* :not(:first-child) {
         margin-top: 2em;
+    } */
+    :first-child {
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    :nth-child(2) {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+
+    :last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    :not(:first-child):nth-child(odd) {
+        background-color: #f8f8f8;
     }
 `
 

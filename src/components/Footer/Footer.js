@@ -74,15 +74,16 @@ export const Footer = () => {
                         
                     </FooterItem>
                 </FooterWrapper>
-                <FooterWrapper bgColor="var(--primary)">
-                <FooterItem padding={"0 20px 10px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
-                </FooterWrapper>
-                
-                {/* <FooterWrapper bgColor="var(--tertiary)">
-                    <FooterItem >
-                        
-                    </FooterItem>
-                </FooterWrapper> */}
+
+                {(!footerVisibility) ? (
+                    <>
+                        <FooterWrapper bgColor="var(--primary)">
+                            <FooterItem padding={"0 20px 10px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
+                        </FooterWrapper>
+                    </>) : (
+                        <>
+                        </>
+                    )}                
             </FooterContainer>
     )
 }
