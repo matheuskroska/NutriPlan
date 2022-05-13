@@ -6,7 +6,7 @@ class PatientModel extends UserModel {
 
     constructor() {
         super()
-        this.table = "patients"
+        this.table = "paciente"
     }
 
     // Adiciona paciente na base
@@ -37,8 +37,25 @@ class PatientModel extends UserModel {
         } catch (e) {
             console.error("Error adding document: ", e)
         }
+    }
 
-        // return retUser
+    // Adiciona paciente na base
+    async add(patient) {
+        try {
+            this.addUser(patient, this.table)
+            const retUser = await this.createUser(patient.email, patient.password)
+            if (typeof(retUser) === 'object') {
+                const docRef = await addDoc(collection(db, this.table), {
+                    // usuario_uuid: retUser.uid,
+                    nutritionist_uuid: '',
+                })
+                return docRef.id
+            } else {
+                return retUser
+            }
+        } catch (e) {
+            console.error("Error adding document: ", e)
+        }
     }
 
     // Verifica se já existe um paciente com esse CPF
@@ -55,31 +72,6 @@ class PatientModel extends UserModel {
         } else {
             return false
         }
-    }
-
-    // Recupera todos os pacientes da base
-    async getPatients() {
-        const q = query(collection(db, this.table), orderBy("created_at"))
-
-        const data = await getDocs(q)
-        const dataResult = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id
-        }))
-        return dataResult
-    }
-
-    // Listener para recuperar todos os pacientes da base
-    getPatientsSnapshot() {
-        const q = query(collection(db, this.table), orderBy("created_at"))
-        const usersList = onSnapshot(q, (data) => {
-            const dataResult = data.docs.map((doc) => ({
-                ...doc.data(),
-                id: doc.id
-            }))
-            return dataResult
-        })
-        return usersList
     }
 
 }

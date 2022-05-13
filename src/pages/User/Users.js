@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import PatientModel from '../../db/PatientModel';
 import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { StyledLink } from '../../components/Link/Link.elements';
@@ -11,21 +10,20 @@ import UserModel from '../../db/UserModel';
 
 export const Users = () => {
 
-    const [patientList, setPatientList] = useState(null)
+    const [usersList, setUsersList] = useState(null)
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["fullname", "cpf"]); //colunas da base para realizar busca
     
-    const patientModel = new PatientModel()
     const userModel = new UserModel()
 
-    const getPatients = async () => {
-        let patients = await patientModel.getPatients();
-        setPatientList(patients)
+    const getUsers = async () => {
+        let users = await userModel.getUsers();
+        setUsersList(users)
     }
 
-    if (!!currentUser && !!!patientList) {
-        getPatients()
+    if (!!currentUser && !!!usersList) {
+        getUsers()
     } else if (!!!currentUser) {
         return <Navigate to="/login" replace />
     }
@@ -46,16 +44,16 @@ export const Users = () => {
     const handleApprove = async(e, uuid) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
             await userModel.approveReproveLoginUser(uuid, 'approve')
-            let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
-            setPatientList(patients)
+            let users = userModel.getUsersSnapshot() //recupera lista atualizada
+            setUsersList(users)
         }
     }
 
     const handleReprove = async(e, uuid) => {
         if (window.confirm('Reprovar acesso do usuário no sistema?')) {
             await userModel.approveReproveLoginUser(uuid, 'reprove')
-            let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
-            setPatientList(patients)
+            let users = userModel.getUsersSnapshot() //recupera lista atualizada
+            setUsersList(users)
         }
     }
 
@@ -75,8 +73,8 @@ export const Users = () => {
         }
         if (window.confirm(question)) {
             await userModel.activeDesactiveLoginUser(uuid, active)
-            let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
-            setPatientList(patients)
+            let users = userModel.getUsersSnapshot() //recupera lista atualizada
+            setUsersList(users)
         }
     }
     
@@ -84,15 +82,15 @@ export const Users = () => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
             if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
                 await userModel.deleteUser(uuid)
-                let patients = patientModel.getPatientsSnapshot() //recupera lista atualizada
-                setPatientList(patients)
+                let users = userModel.getUsersSnapshot() //recupera lista atualizada
+                setUsersList(users)
             }
         }
     }
 
     return (
         <>
-            <Card boxShadow={"none"} borderRadius={"0px"} maxWidth={"100%"} cardTitle="Lista de usuários">
+            <Card maxWidth={"100%"} cardTitle="Lista de usuários">
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <CardMenuContainer >
                         <CardMenuHeader>
@@ -109,7 +107,7 @@ export const Users = () => {
                             <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
                             <CardContentCol maxWidth={"240px"}>Ações</CardContentCol>
                         </CardContentRow>
-                        {!!patientList && search(patientList).map(data => {
+                        {!!usersList && search(usersList).map(data => {
                             return (
                                 <CardContentRow id={data.cpf}>
                                     <CardItem marginBottom={"0"}>

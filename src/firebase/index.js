@@ -1,6 +1,7 @@
-import { initializeApp as initialize } from "firebase/app"
+import { initializeApp } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 // Configuração do firebase
 const firebaseConfig = {
@@ -14,6 +15,9 @@ const firebaseConfig = {
 }
 
 // Inicialização do firebase
-const app = initialize(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 export const auth = getAuth()
 export const db = getFirestore(app)
+
+const functions = getFunctions(app);
+export const createUser = httpsCallable(functions, 'createUser');

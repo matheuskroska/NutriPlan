@@ -1,9 +1,23 @@
 const functions = require("firebase-functions");
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
+// The Firebase Admin SDK to access Firestore.
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+// CREATE NEW USER IN FIREBASE BY FUNCTION
+exports.createUser = functions.https.onCall(async (data, context) => {
+  try {
+    const user = await admin.auth().createUser({
+      email: data.email,
+      emailVerified: true,
+      password: data.password,
+      displayName: data.displayName,
+      disabled: false,
+    });
+    return {
+      response: user
+    };
+} catch (error) {
+    throw new functions.https.HttpsError('failed to create a user');
+  }
 });

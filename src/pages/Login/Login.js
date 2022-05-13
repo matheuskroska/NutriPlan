@@ -25,7 +25,6 @@ export const Login = () => {
         setLoader(true)
         let userModel = new UserModel()
         let ret = await userModel.signIn(email, password)
-        console.log(ret)
         if (!!Errors[ret]) {
             setLoader(false)
             setError(Errors[ret])

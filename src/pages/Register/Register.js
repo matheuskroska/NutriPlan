@@ -44,6 +44,7 @@ export const Register = () => {
         password: null,
         conf_password: null,
     })
+    const patientModel = new PatientModel()
 
     const swapForm = (userCategory, e) => {
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
@@ -77,13 +78,13 @@ export const Register = () => {
             if (column === 'conf_password') {
                 if (patient[column] !== null) {
                     if (_password === patient[column]) {
-                        let hasPatient = await PatientModel.hasPatient(patient)
+                        let hasPatient = await patientModel.hasPatient(patient)
                         if (hasPatient) {
                             setLoader(false)
                             setError("CPF já existente");
                             setModalError(true)
                         } else {
-                            let ret = await PatientModel.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
+                            let ret = await patientModel.addUser(patient) // recebe como retorno o ID documento ou a mensagem de erro
                             
                             if (!!Errors[ret]) {
                                 setLoader(false)

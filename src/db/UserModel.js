@@ -1,11 +1,11 @@
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, addDoc, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 
 class UserModel {
-// const UserModel = {
     constructor() {
+        this.table = "usuario"
         this.createUser = this.createUser.bind(this)
         this.signIn = this.signIn.bind(this)
         this.logout = this.logout.bind(this)
@@ -21,6 +21,27 @@ class UserModel {
         this.deleteUser = this.deleteUser.bind(this)
     }
 
+    async addUser(user) {
+        const docRef = await addDoc(collection(db, "usuario"), {
+            // uuid: retUser.uid,
+            nome: user.firstname,
+            sobrenome: user.lastname,
+            nome_completo: user.firstname + ' ' + user.lastname,
+            email: user.email,
+            ddd: user.ddd,
+            telefone: user.phone,
+            cpf: user.cpf,
+            senha: user.password,
+            acesso: 0,
+            ativo: false,
+            criado_em: Timestamp.now(),
+            // criado_por: retUser.uid,
+            atualizado_em: Timestamp.now(),
+            // atualizado_por: retUser.uid,
+        })
+        return docRef.id
+    }
+
     async createUser(email, password) {
         return createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -34,7 +55,6 @@ class UserModel {
     
     async signIn(email, password) {
         let userData = await this.getUserByEmailAndPassword(email, password)
-        console.log(userData)
         if (!!userData) {
             if (userData.access === 0) {
                 return 'auth/login-not-approved'
@@ -153,7 +173,6 @@ class UserModel {
     }
 
     async activeDesactiveLoginUser(uuid, active) {
-        console.log(uuid, active)
         const user = await this.getUserByUid(uuid)
         const docRef = doc(db, user.dbName, user.docId)
         await updateDoc(docRef, {
@@ -181,6 +200,33 @@ class UserModel {
     async deleteUser(uuid) {
         const user = await this.getUserByUid(uuid)
         await deleteDoc(doc(db, user.dbName, user.docId))
+    }
+
+    // Recupera todos os usuários da base
+    async getUsers() {
+        const q = query(collection(db, "patients"), orderBy("created_at"))
+        // const q = query(collection(db, this.table), orderBy("criado_em"))
+
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+        return dataResult
+    }
+
+    // Listener para recuperar todos os pacientes da base
+    getUsersSnapshot() {
+        const q = query(collection(db, "patients"), orderBy("created_at"))
+        // const q = query(collection(db, this.table), orderBy("criado_em"))
+        const usersList = onSnapshot(q, (data) => {
+            const dataResult = data.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            return dataResult
+        })
+        return usersList
     }
 }
 
