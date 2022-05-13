@@ -70,6 +70,9 @@ export const Users = () => {
                 question = 'Deseja ativar login desse usuário?'
                 active = true
                 break
+            default:
+                console.log('Erro na action')
+                break
         }
         if (window.confirm(question)) {
             await userModel.activeDesactiveLoginUser(uuid, active)

@@ -164,6 +164,9 @@ class UserModel {
             case 'reprove':
                 access = 2
                 break
+            default:
+                console.log('Erro na action')
+                break
         }
         const user = await this.getUserByUid(uuid)
         const docRef = doc(db, user.dbName, user.docId)

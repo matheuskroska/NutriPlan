@@ -26,7 +26,7 @@ export const Header = () => {
         const location = useLocation();
 
         useEffect(() => {
-            location.pathname == "/login" || location.pathname == "/cadastro" || location.pathname == "/alterar-senha" || location.pathname == "/redefinir-senha" 
+            location.pathname === "/login" || location.pathname === "/cadastro" || location.pathname === "/alterar-senha" || location.pathname === "/redefinir-senha" 
             ? setHeaderVisibility(false) : setHeaderVisibility(true);
         }, [location])
     }
