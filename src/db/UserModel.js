@@ -100,21 +100,13 @@ class UserModel {
     }
 
     async getUserByUid(uid) {
-        
-        // const q = query(collection(db, "patients"), where("uuid", "==", uid))
-
-        // const dataResult = await this.getAllDataUser(q, "patients")
-        // if (dataResult.length === 1) {
-        //     return dataResult[0]
-        // } else {
-            const q = query(collection(db, "usuario"), where("uuid", "==", uid))
-            const dataResult = await this.getAllDataUser(q, "usuario")
-            if (dataResult.length === 1) {
-                return dataResult[0]
-            } else {
-                return null
-            }
-        // }
+        const q = query(collection(db, "usuario"), where("uuid", "==", uid))
+        const dataResult = await this.getAllDataUser(q, "usuario")
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            return null
+        }
     }
 
     async getAllDataUser(q, dbName) {
@@ -128,37 +120,23 @@ class UserModel {
     }
 
     async getUserByEmailAndPassword(email, password) {
-        // const q = query(collection(db, "patients"), where("email", "==", email), where("password", "==", password))
-
-        // const dataResult = await this.getAllDataUser(q, "patients")
-        // if (dataResult.length === 1) {
-        //     return dataResult[0]
-        // } else {
-            const q = query(collection(db, "usuario"), where("email", "==", email), where("senha", "==", password))
-            const dataResult = await this.getAllDataUser(q, "usuario")
-            if (dataResult.length === 1) {
-                return dataResult[0]
-            } else {
-                return null
-            }
-        // }
+        const q = query(collection(db, "usuario"), where("email", "==", email), where("senha", "==", password))
+        const dataResult = await this.getAllDataUser(q, "usuario")
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            return null
+        }
     }
 
     async getUserByEmail(email) {
-        // const q = query(collection(db, "patients"), where("email", "==", email))
-
-        // const dataResult = await this.getAllDataUser(q, "patients")
-        // if (dataResult.length === 1) {
-        //     return dataResult[0]
-        // } else {
-            const q = query(collection(db, "usuario"), where("email", "==", email))
-            const dataResult = await this.getAllDataUser(q, "usuario")
-            if (dataResult.length === 1) {
-                return dataResult[0]
-            } else {
-                return null
-            }
-        // }
+        const q = query(collection(db, "usuario"), where("email", "==", email))
+        const dataResult = await this.getAllDataUser(q, "usuario")
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            return null
+        }
     }
 
     async resetPassword(email, newPassword) {
@@ -198,20 +176,13 @@ class UserModel {
     }
 
     async getUserByCpf(cpf) {
-        // const q = query(collection(db, "patients"), where("cpf", "==", cpf))
-
-        // const dataResult = await this.getAllDataUser(q, "patients")
-        // if (dataResult.length === 1) {
-        //     return dataResult[0]
-        // } else {
-            const q = query(collection(db, "usuario"), where("cpf", "==", cpf))
-            const dataResult = await this.getAllDataUser(q, "usuario")
-            if (dataResult.length === 1) {
-                return dataResult[0]
-            } else {
-                return null
-            }
-        // }
+        const q = query(collection(db, "usuario"), where("cpf", "==", cpf))
+        const dataResult = await this.getAllDataUser(q, "usuario")
+        if (dataResult.length === 1) {
+            return dataResult[0]
+        } else {
+            return null
+        }
     }
 
     async deleteUser(uuid) {
@@ -221,7 +192,6 @@ class UserModel {
 
     // Recupera todos os usuários da base
     async getUsers() {
-        // const q = query(collection(db, "patients"), orderBy("created_at"))
         const q = query(collection(db, "usuario"), orderBy("criado_em"))
 
         const data = await getDocs(q)
@@ -234,7 +204,6 @@ class UserModel {
 
     // Listener para recuperar todos os pacientes da base
     getUsersSnapshot() {
-        // const q = query(collection(db, "patients"), orderBy("created_at"))
         const q = query(collection(db, "usuario"), orderBy("criado_em"))
         const usersList = onSnapshot(q, (data) => {
             const dataResult = data.docs.map((doc) => ({
