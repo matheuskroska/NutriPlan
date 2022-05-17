@@ -9,6 +9,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
 import Nutritionists from '../../db/Nutritionists'
+import PatientModel from '../../db/PatientModel'
 import { Errors } from '../../firebase/Errors'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
@@ -87,7 +88,8 @@ export const Register = () => {
                             setMessage("CPF já existente");
                             setModalMessage(true)
                         } else {
-                            let ret = await userModel.add(user) // recebe como retorno o ID documento ou a mensagem de erro
+                            let patientModel = new PatientModel()
+                            let ret = await patientModel.add(user)
                             setLoader(false)
                             if (!!Errors[ret]) {
                                 setMessage(Errors[ret]);
@@ -245,7 +247,7 @@ export const Register = () => {
                         <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
                     </>
                 )}
-                <Card margin={"140px 0"} cardTitle="Cadastro">
+                <Card margin={"80px 0"} cardTitle="Cadastro">
                     <CardItem wrap={"initial"}>
                         <CardDescription>Eu sou um:</CardDescription>
                         <StyledRadixToggleGroup type="single" aria-label="usuario">

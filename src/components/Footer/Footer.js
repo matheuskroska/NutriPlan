@@ -78,7 +78,7 @@ export const Footer = () => {
                 {(!footerVisibility) ? (
                     <>
                         <FooterWrapper bgColor="var(--primary)">
-                            <FooterItem padding={"0 20px 10px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
+                            <FooterItem padding={"0 0 20px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
                         </FooterWrapper>
                     </>) : (
                         <>

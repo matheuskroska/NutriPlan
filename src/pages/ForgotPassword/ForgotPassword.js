@@ -70,7 +70,7 @@ export const ForgotPassword = () => {
     } else {
         return (
             <>
-                <Card margin={"140px 0"} cardTitle="Alterar a senha" >
+                <Card margin={"80px 0"} cardTitle="Alterar a senha" >
                     <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>
