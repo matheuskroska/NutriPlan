@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { collection, addDoc, getDocs, Timestamp, query, where, setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc } from 'firebase/firestore'
 import UserModel from './UserModel'
 
 class PatientModel extends UserModel {

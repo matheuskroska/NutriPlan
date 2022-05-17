@@ -8,7 +8,7 @@ import { AuthContext } from '../../firebase/Auth'
 import { Navigate, useNavigate } from "react-router-dom"
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 import Animated from "react-mount-animation";
-import Nutritionists from '../../db/Nutritionists'
+import NutritionistModel from '../../db/NutritionistModel'
 import PatientModel from '../../db/PatientModel'
 import { Errors } from '../../firebase/Errors'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
@@ -32,17 +32,6 @@ export const Register = () => {
         ddd: null,
         phone: null,
         cpf: null,
-        password: null,
-        conf_password: null,
-    })
-    const [nutritionist, setNutritionist] = useState({
-        uuid: null,
-        firstname: null,
-        lastname: null,
-        email: null,
-        ddd: null,
-        phone: null,
-        cpf: null,
         crn: null,
         password: null,
         conf_password: null,
@@ -58,14 +47,9 @@ export const Register = () => {
     
 
     const handleSubmit = async(e) => {
-        e.preventDefault();
-        if (!!userCategory) {
-            setLoader(true)
-            await registerNutritionist()
-        } else {
-            setLoader(true)
-            await registerUser()
-        }
+        e.preventDefault()
+        setLoader(true)
+        await registerUser()
     }
 
     const registerUser = async() => {
@@ -88,8 +72,17 @@ export const Register = () => {
                             setMessage("CPF já existente");
                             setModalMessage(true)
                         } else {
-                            let patientModel = new PatientModel()
-                            let ret = await patientModel.add(user)
+                            let nutritionistModel = null
+                            let patientModel = null
+                            let ret = null
+                            console.log(userCategory)
+                            if (!!userCategory) {
+                                nutritionistModel = new NutritionistModel()
+                                ret = await nutritionistModel.add(user) // recebe como retorno o ID documento ou a mensagem de erro
+                            } else {
+                                patientModel = new PatientModel()
+                                ret = await patientModel.add(user) // recebe como retorno o ID documento ou a mensagem de erro
+                            }
                             setLoader(false)
                             if (!!Errors[ret]) {
                                 setMessage(Errors[ret]);
@@ -103,43 +96,6 @@ export const Register = () => {
                         return
                     }
                 } else {
-                    return
-                }
-            }
-        }
-    }
-
-    const registerNutritionist = async() => {
-        let _password = null
-        for (let column in nutritionist) {
-            if (column === 'password') {
-                if (nutritionist[column] !== null) {
-                    _password = nutritionist[column]
-                } else {
-                    return
-                }
-            }
-
-            if (column === 'conf_password') {
-                if (nutritionist[column] !== null) {
-                    if (_password === nutritionist[column]) {
-                        let hasNutritionist = await Nutritionists.hasNutritionist(nutritionist)
-                        if (!!hasNutritionist) {
-                            setLoader(false)
-                        } else {
-                            let ret = await Nutritionists.addUser(nutritionist) // recebe como retorno o ID documento ou a mensagem de erro
-                            if (!!Errors[ret]) {
-                                setLoader(false)
-                                setMessage(Errors[ret]);
-                                setModalMessage(true)
-                            }   
-                        }
-                    } else {
-                        
-                        return
-                    }
-                } else {
-                    
                     return
                 }
             }
@@ -174,17 +130,10 @@ export const Register = () => {
             }))
         }
 
-        if (!!userCategory) {
-            setNutritionist(prev => ({
-                ...prev,
-                [name]: value
-            }))
-        } else {
-            setUser(prev => ({
-                ...prev,
-                [name]: value
-            }))
-        }
+        setUser(prev => ({
+            ...prev,
+            [name]: value
+        }))
     }
 
     const handleChangePwd = (e) => {
@@ -280,7 +229,7 @@ export const Register = () => {
                             </CardItem>
                                 <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
                                     <CardItem>
-                                        <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange}></CardInput>
+                                        <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange} autoComplete="off"></CardInput>
                                         <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                                     </CardItem>
                                 </Animated.div>

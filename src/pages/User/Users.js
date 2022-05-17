@@ -7,6 +7,7 @@ import { Card } from '../../components';
 import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
 import UserModel from '../../db/UserModel';
+import NutritionistModel from '../../db/NutritionistModel';
 
 export const Users = () => {
 
@@ -18,7 +19,11 @@ export const Users = () => {
     const userModel = new UserModel()
 
     const getUsers = async () => {
-        let users = await userModel.getUsers();
+        let users = await userModel.getUsers()
+        console.log(users)
+        // let nutritionistModel = new NutritionistModel()
+        // users = await nutritionistModel.existNutritionist(users)
+        // console.log(users)
         setUsersList(users)
     }
 
@@ -112,9 +117,9 @@ export const Users = () => {
                         </CardContentRow>
                         {!!usersList && search(usersList).map(data => {
                             return (
-                                <CardContentRow id={data.cpf}>
+                                <CardContentRow key={data.cpf}>
                                     <CardItem marginBottom={"0"}>
-                                        <CardContentCol justify={"start"} maxWidth={"250px"}><strong>{data.cpf}</strong> - {data.nome_completo}</CardContentCol>
+                                        <CardContentCol justify={"start"} maxWidth={"250px"}><strong>{data.cpf}</strong> - <i>{data.crn}</i> - {data.nome_completo}</CardContentCol>
                                     </CardItem>
                                     <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
                                         {data.acesso === 0 ? (
@@ -131,8 +136,8 @@ export const Users = () => {
                                                 )}
                                             </>
                                         )}
-                                        <CardContentCol maxWidth={"25px"}><StyledLink edit header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
-                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"}><StyledLink edit="true" header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit="true" header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
                                     </CardItem>
                                 </CardContentRow>
                             )

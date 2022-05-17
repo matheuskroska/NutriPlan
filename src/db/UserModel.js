@@ -1,6 +1,6 @@
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, addDoc, orderBy, onSnapshot, setDoc } from 'firebase/firestore'
+import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, orderBy, onSnapshot, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
 class UserModel {
@@ -199,6 +199,20 @@ class UserModel {
             ...doc.data(),
             id: doc.id
         }))
+
+        dataResult.forEach(async (user, index) => {
+            const qNutri = query(collection(db, this.table), where("usuario_uuid", "==", user.uuid))
+
+            const dataNutri = await getDocs(qNutri)
+            if (!!dataNutri && dataNutri.docs.length > 0) {
+                const dataResultNutri = dataNutri.docs.map((doc) => ({
+                    ...doc.data()
+                }))
+                dataResult[index].crn = dataResultNutri[0].crn
+            }
+        })
+        console.log(dataResult)
+
         return dataResult
     }
 
