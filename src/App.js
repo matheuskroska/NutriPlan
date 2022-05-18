@@ -8,6 +8,7 @@ import { Users } from './pages/User/Users';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 import { EditUser } from './pages/User/EditUser';
+import { Schedule } from './pages/Schedule/Schedule';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />
                 <Route exact path="/redefinir-senha" element={<ResetPassword/>} />
                 <Route exact path="/editar-usuario/:uuid" element={<EditUser/>} />
+                <Route exact path="/agendar-consulta" element={<Schedule/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>

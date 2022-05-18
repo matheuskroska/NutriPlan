@@ -30,19 +30,21 @@ class NutritionistModel extends UserModel {
         }
     }
     
-    async confUserNutritionist(users) {
-        users.map(async (user) => {
-            const q = query(collection(db, this.table), where("usuario_uuid", "==", user.uuid))
+    async getNutritionists() {
+        const q = query(collection(db, this.table))
 
-            const data = await getDocs(q)
-            if (!!data && data.docs.length > 0) {
-                const dataResult = data.docs.map((doc) => ({
-                    ...doc.data()
-                }))
-                user.crn = dataResult[0].crn
-            }
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+
+        let result = {}
+        dataResult.forEach((value) => {
+            result[value.usuario_uuid] = value
         })
-        return users
+
+        return result
     }
 
 }

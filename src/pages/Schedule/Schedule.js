@@ -1,16 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
-import { StyledLink, StyledRadixLink } from '../../components/Link/Link.elements';
+import { StyledLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
 import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
 import UserModel from '../../db/UserModel';
 import NutritionistModel from '../../db/NutritionistModel';
-import { StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
 
-export const Users = () => {
+export const Schedule = () => {
 
     const [usersList, setUsersList] = useState(null)
     const [nutriStringify, setNutriStringify] = useState(null)
@@ -105,19 +104,14 @@ export const Users = () => {
             <Card maxWidth={"100%"} cardTitle="Lista de usuários">
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <CardMenuContainer >
-                        <StyledRadixToggleGroup type="single" aria-label="usuario">
-                            <CardMenuHeader>
-                                <p>{currentUser.nome_completo}</p>
-                                <CardAvatar src={avatar} alt="avatar"></CardAvatar>
-                                <p>Editar perfil</p>
-                            </CardMenuHeader>
-                            {/* <CardMenuItem selected={true}><StyledLink to="/usuarios" menu="true" selected={true}>Lista de usuários</StyledLink></CardMenuItem>
-                            <CardMenuItem blocked={true}><StyledLink to="/notificacoes" menu="true">Notificações</StyledLink></CardMenuItem>
-                            <CardMenuItem><StyledLink to="/agendar-consulta" menu="true">Agendar consulta</StyledLink></CardMenuItem> */}
-                            <StyledRadixLink value="usuarios" aria-label="Lista de usuários">Lista de usuários</StyledRadixLink>
-                            <StyledRadixLink value="notificacoes" aria-label="Notificações">Notificações</StyledRadixLink>
-                            <StyledRadixLink value="agendar-consulta" aria-label="Agendar consulta">Agendar consulta</StyledRadixLink>
-                        </StyledRadixToggleGroup>
+                        <CardMenuHeader>
+                            <p>{currentUser.nome_completo}</p>
+                            <CardAvatar src={avatar} alt="avatar"></CardAvatar>
+                            <p>Editar perfil</p>
+                        </CardMenuHeader>
+                        <CardMenuItem selected={true}><StyledLink to="/usuarios" menu="true" selected={true}>Lista de usuários</StyledLink></CardMenuItem>
+                        <CardMenuItem blocked={true}><StyledLink to="/notificacoes" menu="true">Notificações</StyledLink></CardMenuItem>
+                        <CardMenuItem><StyledLink to="/agendar-consulta" menu="true">Agendar consulta</StyledLink></CardMenuItem>
                     </CardMenuContainer>
                     <CardContent>
                         <CardContentRow>

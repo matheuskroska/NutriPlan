@@ -1,5 +1,6 @@
 import styled, {css} from 'styled-components'
 import { Link } from 'react-router-dom';
+import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 const cssLink = css`
     font-size: 1.4em;
@@ -16,10 +17,18 @@ const cssLink = css`
 
 export const StyledLink = styled(Link)`
     ${cssLink};
-    ${props =>
-    props.header &&
+    ${props => props.header &&
     css`
       color: var(--font-dark);
+    `};
+    ${props => props.menu &&
+    css`
+      font-size: 1em;
+      color: var(--font-dark);
+    `};
+    ${props => props.selected &&
+    css`
+      color: var(--font-soft);
     `};
     ${props =>
     props.edit &&
@@ -35,4 +44,13 @@ export const StyledLink = styled(Link)`
         font-weight: 400;
       color: var(--font-soft);
     `};
+`
+
+export const StyledRadixLink = styled(ToggleGroupPrimitive.Item)`
+    ${cssLink};
+    color: var(--font-dark);
+    background-color: var(--primary);
+    &:hover { background-color: var(--tertiary);color: var(--font-soft) }
+    &[data-state=on] { background-color: var(--tertiary); color: var(--font-soft)}
+    &:focus { position: relative}
 `

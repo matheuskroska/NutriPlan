@@ -156,6 +156,11 @@ export const CardMenuItem = styled.div`
     css`
         color: var(--font-dark);
     `};
+    ${props => props.blocked && 
+    css`
+        pointer-events: none;
+    `
+    }
 `
 
 export const CardContent = styled.div`

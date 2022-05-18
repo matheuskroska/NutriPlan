@@ -200,18 +200,19 @@ class UserModel {
             id: doc.id
         }))
 
-        dataResult.forEach(async (user, index) => {
-            const qNutri = query(collection(db, this.table), where("usuario_uuid", "==", user.uuid))
+        // dataResult.forEach(async (user, index) => {
+        //     const qNutri = query(collection(db, "nutricionista"), where("usuario_uuid", "==", user.uuid))
 
-            const dataNutri = await getDocs(qNutri)
-            if (!!dataNutri && dataNutri.docs.length > 0) {
-                const dataResultNutri = dataNutri.docs.map((doc) => ({
-                    ...doc.data()
-                }))
-                dataResult[index].crn = dataResultNutri[0].crn
-            }
-        })
-        console.log(dataResult)
+        //     const dataNutri = await getDocs(qNutri)
+        //     if (!!dataNutri && dataNutri.docs.length > 0) {
+        //         const dataResultNutri = dataNutri.docs.map((doc) => ({
+        //             ...doc.data()
+        //         }))
+        //         dataResult[index].crn = dataResultNutri[0].crn
+        //         console.log('dataResult', dataResult)
+        //     }
+        // })
+        // console.log('dataResult depois foreach', dataResult)
 
         return dataResult
     }

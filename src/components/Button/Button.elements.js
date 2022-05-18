@@ -41,7 +41,6 @@ export const StyledRadixButton = styled(ToggleGroupPrimitive.Item)`
     &:focus { position: relative}
 `
 
-
 export const StyledButton = styled.button`
     ${cssButon};
     ${props =>
