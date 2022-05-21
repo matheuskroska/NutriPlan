@@ -110,6 +110,13 @@ export const CardDescription = styled.h2`
     margin-right: 15px;
 `
 
+export const CardParagraph = styled.p`
+    font-size: 1.6em;
+    padding: 5px;
+    font-weight: 500;
+    text-transform: capitalize;
+`
+
 export const CardMessage = styled.h2`
     font-size: 1.4em;
     line-height: 1.3em;
@@ -124,30 +131,32 @@ export const CardMenuContainer = styled.div`
     text-align: center;
     background-color: rgb(170 215 108 / 90%);
     border-radius: 5px;
-    min-width: 300px;
+    min-width: 255px;
     margin-right: 32px;
+    max-height: max-content;
 `
 
 export const CardMenuHeader = styled.div`
-    padding: 0.5em;
-    font-weight: bold;
-    border-radius: 5px;
-    background-color: rgb(255 255 255 / 90%);
+    width: 100%;
+    background-color: rgb(255 255 255 / 80%);
     color: var(--font-dark);
-    font-size: 2.5em;
+    padding: 20px 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 `
 
 export const CardAvatar = styled.img`
-        padding: 0.5em;
-    width: 4em;
-    height: 4em;
+    padding: 0.5em;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
 `
 
 export const CardMenuItem = styled.div`
+    width: ${props => props.width || "initial"};
     padding: 0.5em;
-    font-size: 1.6em;
+    font-size: ${props => props.fontSize || "1.6em"};
     ${props => props.selected ?
     css`
         background-color: rgb(111 140 67 / 90%);
@@ -170,14 +179,10 @@ export const CardContent = styled.div`
 `
 
 export const CardContentRow = styled.div`
-    padding: 0.5em;
-    /* border-radius: 5px; */
-    background-color: #ffffff;
+    padding: 1.5em;
+    background-color: rgb(255 255 255 / 80%);
     display: flex;
     justify-content: space-between;
-    /* :not(:first-child) {
-        margin-top: 2em;
-    } */
     :first-child {
         border-radius: 5px;
         margin-bottom: 10px;
@@ -204,9 +209,37 @@ export const CardContentHeader = styled.div`
     display: block;
     width: ${props => props.icon ? "5%" : "100%"};
 `
+export const CardColHeader = styled.div`
+    width: ${props => props.width || "initial"};
+    text-align: ${props => props.txAlign || "center"};
+    font-size: 1.6em;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--tertiary);
+
+    + div {
+        border-left: 1px solid var(--tertiary);
+    }
+
+`
+
+export const CardCol = styled.div`
+    width: ${props => props.width || "initial"};
+    display: ${props => props.display || "initial"};
+    justify-content: flex-end;
+    gap: 0 20px;
+    height: 35px;
+    + div {
+        border-left: 1px solid #c3c3c3;
+    }
+`
+
 
 export const CardContentCol = styled.div`
-    padding: 0.5em;
+    /* padding: 0.5em; */
     color: var(--font-dark);
     display: flex;
     font-size: ${props => props.fontSize ? "1em" : "1.6em"};
@@ -218,8 +251,9 @@ export const CardContentCol = styled.div`
     width: ${props => props.icon ? "5%" : "100%"};
     max-width: ${props => props.maxWidth || "initial"};
     min-width: ${props => props.maxWidth || "initial"};
+    height: 35px;
     strong {
-        font-weight: bold;
+        font-weight: 600;
     }
 
     svg {
@@ -231,7 +265,9 @@ export const CardContentCol = styled.div`
     }
 
     ${props => props.wSearchIcon &&
-    css`
+    css`    
+        width: 33.3%;
+
         input {
             width: 100%;
         }

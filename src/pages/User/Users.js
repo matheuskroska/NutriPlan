@@ -4,11 +4,12 @@ import { AuthContext } from '../../firebase/Auth';
 import { StyledLink, StyledRadixLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
-import { CardAvatar, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem } from '../../components/Card/Card.elements';
+import { CardAvatar, CardCol, CardColHeader, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem, CardParagraph } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
 import UserModel from '../../db/UserModel';
 import NutritionistModel from '../../db/NutritionistModel';
 import { StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
+import { EditUser } from './EditUser';
 
 export const Users = () => {
 
@@ -18,6 +19,7 @@ export const Users = () => {
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
+    const [menuState, setMenuState] = useState("Lista de Usuários");
     
     const userModel = new UserModel()
 
@@ -102,46 +104,49 @@ export const Users = () => {
 
     return (
         <>
-            <Card maxWidth={"100%"} cardTitle="Lista de usuários">
+            <Card maxWidth={"100%"} cardTitle={menuState}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <CardMenuContainer >
-                        <StyledRadixToggleGroup type="single" aria-label="usuario">
-                            <CardMenuHeader>
-                                <p>{currentUser.nome_completo}</p>
-                                <CardAvatar src={avatar} alt="avatar"></CardAvatar>
-                                <p>Editar perfil</p>
-                            </CardMenuHeader>
-                            {/* <CardMenuItem selected={true}><StyledLink to="/usuarios" menu="true" selected={true}>Lista de usuários</StyledLink></CardMenuItem>
-                            <CardMenuItem blocked={true}><StyledLink to="/notificacoes" menu="true">Notificações</StyledLink></CardMenuItem>
-                            <CardMenuItem><StyledLink to="/agendar-consulta" menu="true">Agendar consulta</StyledLink></CardMenuItem> */}
-                            <StyledRadixLink value="usuarios" aria-label="Lista de usuários">Lista de usuários</StyledRadixLink>
-                            <StyledRadixLink value="notificacoes" aria-label="Notificações">Notificações</StyledRadixLink>
-                            <StyledRadixLink value="agendar-consulta" aria-label="Agendar consulta">Agendar consulta</StyledRadixLink>
+                        <CardMenuHeader>
+                            <CardParagraph>{currentUser.nome_completo}</CardParagraph>
+                            <CardAvatar src={avatar} alt="avatar"></CardAvatar>
+                            <StyledLink menu to="#" onClick={()=>setMenuState("Editar perfil")}>Editar perfil</StyledLink>
+                        </CardMenuHeader>
+                        <StyledRadixToggleGroup value={menuState} onValueChange={(menuState) => {menuState && setMenuState(menuState)}} height="100%" flexDirection="column" type="single" aria-label="usuario" >
+                            <CardMenuItem fontSize="inherit" width="100%">
+                                <StyledRadixLink editUserButtons value="Lista de Usuários" aria-label="Lista de usuários">Lista de usuários</StyledRadixLink>
+                                <StyledRadixLink editUserButtons value="Notificações" aria-label="Notificações">Notificações</StyledRadixLink>
+                                <StyledRadixLink editUserButtons value="Agendar Consulta" aria-label="Agendar consulta">Agendar consulta</StyledRadixLink>
+                            </CardMenuItem>
                         </StyledRadixToggleGroup>
                     </CardMenuContainer>
-                    <CardContent>
+                    {
+                    (()=> {
+                        switch (menuState) {
+                        case "Lista de Usuários": return <>
+                            <CardContent>
                         <CardContentRow>
                             <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
                         </CardContentRow>
                         <CardContentRow>
-                            <CardContentCol justify={"start"} maxWidth={"250px"}>CPF - Nome completo</CardContentCol>
-                            <CardContentCol maxWidth={"250px"}>CRN</CardContentCol>
-                            <CardContentCol maxWidth={"240px"}>Ações</CardContentCol>
+                            <CardColHeader txAlign="left" width="33.3%">CPF - Nome completo</CardColHeader>
+                            <CardColHeader width="33.3%">CRN</CardColHeader>
+                            <CardColHeader width="33.3%">Ações</CardColHeader>
                         </CardContentRow>
                         {!!usersList && search(usersList).map(data => {
                             return (
                                 <CardContentRow key={data.cpf}>
-                                    <CardItem marginBottom={"0"}>
-                                        <CardContentCol justify={"start"} maxWidth={"250px"}><strong>{data.cpf}</strong> - {data.nome_completo}</CardContentCol>
-                                    </CardItem>
-                                    <CardItem marginBottom={"0"}>
+                                    <CardCol width="33.3%">
+                                        <CardContentCol justify={"start"}><strong>{data.cpf}</strong> - {data.nome_completo}</CardContentCol>
+                                    </CardCol>
+                                    <CardCol width="33.3%">
                                         {!!nutriStringify.includes(data.uuid) ? (
-                                            <CardContentCol maxWidth={"250px"}><strong>{nutritionistsList[data.uuid].crn}</strong></CardContentCol>
+                                            <CardContentCol><strong>{nutritionistsList[data.uuid].crn}</strong></CardContentCol>
                                         ) : (
-                                            <CardContentCol maxWidth={"250px"}><strong>-</strong></CardContentCol>
+                                            <CardContentCol><strong>-</strong></CardContentCol>
                                         )}
-                                    </CardItem>
-                                    <CardItem marginBottom={"0"} justifyContent={"flex-end"} width={"100%"} wrap={"initial"}>
+                                    </CardCol>
+                                    <CardCol width="33.3%" display="flex">
                                         {data.acesso === 0 ? (
                                             <>
                                                 <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
@@ -158,11 +163,26 @@ export const Users = () => {
                                         )}
                                         <CardContentCol maxWidth={"25px"}><StyledLink edit="true" header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
                                         <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit="true" header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
-                                    </CardItem>
+                                    </CardCol>
                                 </CardContentRow>
                             )
                         })}
-                    </CardContent>
+                            </CardContent>
+                        </>;
+                        case "Notificações": return <>
+                            <CardContent>
+                                <h1>Notificações</h1>
+                             </CardContent></>;
+                        case "Agendar Consulta": return <>
+                            <CardContent>
+                                <h1>Agendar Consulta</h1>
+                            </CardContent></>
+                        case "Editar perfil": return <>
+                            <EditUser></EditUser></>
+                        }
+                       
+                    })()
+                    }    
                 </CardContainer>
             </Card>
         </>

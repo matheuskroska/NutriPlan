@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 const cssLink = css`
-    font-size: 1.4em;
+    font-family: 'Raleway',sans-serif;
     font-weight: 600;
+    font-size: 1.4em;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -53,4 +54,21 @@ export const StyledRadixLink = styled(ToggleGroupPrimitive.Item)`
     &:hover { background-color: var(--tertiary);color: var(--font-soft) }
     &[data-state=on] { background-color: var(--tertiary); color: var(--font-soft)}
     &:focus { position: relative}
+
+
+    ${props =>
+    props.editUserButtons &&
+    css`
+      height: 35px;
+      border: 0;
+      width: 100%;
+      background-color: transparent;
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 1.6em;
+      &:hover { background-color: rgb(111 140 67 / 90%);color: var(--font-soft);text-decoration:none;cursor: pointer; }
+      &[data-state=on] { background-color: rgb(111 140 67 / 90%); color: var(--font-soft)}
+      &:focus { position: relative}
+
+    `};
 `

@@ -26,10 +26,12 @@ const cssButon = css`
 
 export const StyledRadixToggleGroup = styled(ToggleGroupPrimitive.Root)`
     display: flex;
-    justify-content: center;
+    justify-content: initial;
     width: 100%;
+    height: ${props => props.height || ""};
     gap: 0 8px;
     align-items: center;
+    flex-direction: ${props => props.flexDirection || "row"};
 ` 
 
 export const StyledRadixButton = styled(ToggleGroupPrimitive.Item)`
