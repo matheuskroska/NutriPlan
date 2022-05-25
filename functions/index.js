@@ -21,3 +21,17 @@ exports.createUser = functions.https.onCall(async (data, context) => {
     throw new functions.https.HttpsError('failed to create a user');
   }
 });
+
+// CREATE NEW USER IN FIREBASE BY FUNCTION
+exports.deleteUser = functions.https.onCall(async (uid) => {
+  try {
+    await admin.auth().deleteUser(uid).then(() => {
+      return 'Usuário deletado com sucesso';
+    })
+    .catch((error) => {
+      return error;
+    });
+} catch (error) {
+    throw new functions.https.HttpsError('failed to create a user');
+  }
+});

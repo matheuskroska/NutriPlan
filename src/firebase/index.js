@@ -21,3 +21,4 @@ export const db = getFirestore(app)
 
 const functions = getFunctions(app);
 export const createUser = httpsCallable(functions, 'createUser');
+export const deleteUser = httpsCallable(functions, 'deleteUser');

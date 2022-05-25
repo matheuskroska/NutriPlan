@@ -1,4 +1,4 @@
-import { auth } from "../firebase"
+import { auth, deleteUser } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, orderBy, onSnapshot, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -13,7 +13,8 @@ class UserModel {
         this.getUserByEmailAndPassword = this.getUserByEmailAndPassword.bind(this)
         this.getUserByEmail = this.getUserByEmail.bind(this)
         this.resetPassword = this.resetPassword.bind(this)
-        this.approveReproveLoginUser = this.approveReproveLoginUser.bind(this)
+        this.approveLoginUser = this.approveLoginUser.bind(this)
+        this.reproveLoginUser = this.reproveLoginUser.bind(this)
         this.activeDesactiveLoginUser = this.activeDesactiveLoginUser.bind(this)
         this.getUserByCpf = this.getUserByCpf.bind(this)
         this.getUserByCpf = this.getUserByCpf.bind(this)
@@ -147,24 +148,16 @@ class UserModel {
         })
     }
 
-    async approveReproveLoginUser(uuid, action) {
-        let access = 0
-        switch (action) {
-            case 'approve':
-                access = 1
-                break
-            case 'reprove':
-                access = 2
-                break
-            default:
-                console.log('Erro na action')
-                break
-        }
+    async approveLoginUser(uuid) {
         const user = await this.getUserByUid(uuid)
         const docRef = doc(db, user.dbName, user.docId)
         await updateDoc(docRef, {
-            acesso: access
+            acesso: 1
         })
+    }
+
+    async reproveLoginUser(uuid) {
+        await this.deleteUser(uuid)
     }
 
     async activeDesactiveLoginUser(uuid, active) {
@@ -187,7 +180,10 @@ class UserModel {
 
     async deleteUser(uuid) {
         const user = await this.getUserByUid(uuid)
-        await deleteDoc(doc(db, user.dbName, user.docId))
+        if (user.length === 1) {
+            await deleteDoc(doc(db, user.dbName, user.docId))
+            await deleteUser(uuid)
+        }
     }
 
     // Recupera todos os usuários da base
@@ -199,20 +195,6 @@ class UserModel {
             ...doc.data(),
             id: doc.id
         }))
-
-        // dataResult.forEach(async (user, index) => {
-        //     const qNutri = query(collection(db, "nutricionista"), where("usuario_uuid", "==", user.uuid))
-
-        //     const dataNutri = await getDocs(qNutri)
-        //     if (!!dataNutri && dataNutri.docs.length > 0) {
-        //         const dataResultNutri = dataNutri.docs.map((doc) => ({
-        //             ...doc.data()
-        //         }))
-        //         dataResult[index].crn = dataResultNutri[0].crn
-        //         console.log('dataResult', dataResult)
-        //     }
-        // })
-        // console.log('dataResult depois foreach', dataResult)
 
         return dataResult
     }
@@ -229,6 +211,8 @@ class UserModel {
         })
         return usersList
     }
+
+
 }
 
 export default UserModel

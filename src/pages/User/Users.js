@@ -4,12 +4,13 @@ import { AuthContext } from '../../firebase/Auth';
 import { StyledLink, StyledRadixLink } from '../../components/Link/Link.elements';
 import { Navigate } from 'react-router-dom';
 import { Card } from '../../components';
-import { CardAvatar, CardCol, CardColHeader, CardContainer, CardContent, CardContentCol, CardContentRow, CardItem, CardMenuContainer, CardMenuHeader, CardMenuItem, CardParagraph } from '../../components/Card/Card.elements';
+import { CardAvatar, CardCol, CardColHeader, CardContainer, CardContent, CardContentCol, CardContentRow, CardMenuContainer, CardMenuHeader, CardMenuItem, CardParagraph } from '../../components/Card/Card.elements';
 import avatar from '../../assets/images/user-test.png';
 import UserModel from '../../db/UserModel';
 import NutritionistModel from '../../db/NutritionistModel';
-import { StyledRadixButton, StyledRadixToggleGroup } from '../../components/Button/Button.elements';
+import { StyledRadixToggleGroup } from '../../components/Button/Button.elements';
 import { EditUser } from './EditUser';
+import PatientModel from '../../db/PatientModel';
 
 export const Users = () => {
 
@@ -22,6 +23,8 @@ export const Users = () => {
     const [menuState, setMenuState] = useState("Lista de Usuários");
     
     const userModel = new UserModel()
+    const patientModel = new PatientModel()
+    const nutritionistModel = new NutritionistModel()
 
     const getUsers = async () => {
         let users = await userModel.getUsers()
@@ -54,7 +57,7 @@ export const Users = () => {
 
     const handleApprove = async(e, uuid) => {
         if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await userModel.approveReproveLoginUser(uuid, 'approve')
+            await userModel.approveLoginUser(uuid)
             let users = userModel.getUsersSnapshot() //recupera lista atualizada
             setUsersList(users)
         }
@@ -62,7 +65,7 @@ export const Users = () => {
 
     const handleReprove = async(e, uuid) => {
         if (window.confirm('Reprovar acesso do usuário no sistema?')) {
-            await userModel.approveReproveLoginUser(uuid, 'reprove')
+            await userModel.reproveLoginUser(uuid)
             let users = userModel.getUsersSnapshot() //recupera lista atualizada
             setUsersList(users)
         }
@@ -95,7 +98,12 @@ export const Users = () => {
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
             if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
-                await userModel.deleteUser(uuid)
+                let retDelete = await patientModel.delete(uuid)
+                if (!!!retDelete) {
+                    retDelete = await nutritionistModel.delete(uuid)
+                }
+                console.log(retDelete)
+                // await userModel.deleteUser(uuid)
                 let users = userModel.getUsersSnapshot() //recupera lista atualizada
                 setUsersList(users)
             }
