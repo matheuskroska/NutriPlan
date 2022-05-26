@@ -14,7 +14,6 @@ class UserModel {
         this.getUserByEmail = this.getUserByEmail.bind(this)
         this.resetPassword = this.resetPassword.bind(this)
         this.approveLoginUser = this.approveLoginUser.bind(this)
-        this.reproveLoginUser = this.reproveLoginUser.bind(this)
         this.activeDesactiveLoginUser = this.activeDesactiveLoginUser.bind(this)
         this.getUserByCpf = this.getUserByCpf.bind(this)
         this.getUserByCpf = this.getUserByCpf.bind(this)
@@ -142,27 +141,21 @@ class UserModel {
 
     async resetPassword(email, newPassword) {
         const user = await this.getUserByEmail(email)
-        const docRef = doc(db, user.dbName, user.docId)
+        const docRef = doc(db, "usuario", user.docId)
         await updateDoc(docRef, {
             password: newPassword
         })
     }
 
     async approveLoginUser(uuid) {
-        const user = await this.getUserByUid(uuid)
-        const docRef = doc(db, user.dbName, user.docId)
+        const docRef = doc(db, "usuario", uuid)
         await updateDoc(docRef, {
             acesso: 1
         })
     }
 
-    async reproveLoginUser(uuid) {
-        await this.deleteUser(uuid)
-    }
-
     async activeDesactiveLoginUser(uuid, active) {
-        const user = await this.getUserByUid(uuid)
-        const docRef = doc(db, user.dbName, user.docId)
+        const docRef = doc(db, "usuario", uuid)
         await updateDoc(docRef, {
             ativo: active
         })
@@ -179,10 +172,16 @@ class UserModel {
     }
 
     async deleteUser(uuid) {
-        const user = await this.getUserByUid(uuid)
-        if (user.length === 1) {
-            await deleteDoc(doc(db, user.dbName, user.docId))
-            await deleteUser(uuid)
+        await deleteDoc(doc(db, "usuario", uuid))
+        await deleteUser(uuid)
+    }
+
+    async delete(uuid) {
+        const q = query(collection(db, this.table), where("usuario_uuid", "==", uuid))
+        const dataResult = await this.getAllDataUser(q, this.table)
+        if (dataResult.length === 1) {
+            await this.deleteUser(uuid)
+            await deleteDoc(doc(db, this.table, uuid))
         }
     }
 

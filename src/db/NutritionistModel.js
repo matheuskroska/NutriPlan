@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { collection, getDocs, query, where, setDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, query, setDoc, doc } from 'firebase/firestore'
 import UserModel from './UserModel'
 
 class NutritionistModel extends UserModel {
@@ -9,7 +9,6 @@ class NutritionistModel extends UserModel {
         this.table = "nutricionista"
     }
 
-    // Adiciona paciente na base
     async add(nutritionist) {
         try {
             const retUser = await createUser(nutritionist).then(function (result) {
@@ -27,19 +26,6 @@ class NutritionistModel extends UserModel {
             }
         } catch (e) {
             console.error("Error adding document: ", e)
-        }
-    }
-
-    async delete(uuid) {
-        const q = query(collection(db, this.table), where("usuario_uuid", "==", uuid))
-        const dataResult = await this.getAllDataUser(q, this.table)
-        console.log('dataResult', dataResult)
-        if (dataResult.length === 1) {
-            await this.deleteUser(uuid)
-            await deleteDoc(doc(db, this.table, uuid))
-            return true
-        } else {
-            return false
         }
     }
     

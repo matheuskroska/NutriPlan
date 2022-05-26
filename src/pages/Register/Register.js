@@ -44,6 +44,7 @@ export const Register = () => {
         setVisibility(true);
         setUserCategory(userCategory)
     }
+    
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -74,7 +75,6 @@ export const Register = () => {
                             let nutritionistModel = null
                             let patientModel = null
                             let ret = null
-                            console.log(userCategory)
                             if (!!userCategory) {
                                 nutritionistModel = new NutritionistModel()
                                 ret = await nutritionistModel.add(user) // recebe como retorno o ID documento ou a mensagem de erro

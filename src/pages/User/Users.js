@@ -23,7 +23,6 @@ export const Users = () => {
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
     const [menuState, setMenuState] = useState("Lista de Usuários");
     
-    
     const userModel = new UserModel()
     const patientModel = new PatientModel()
     const nutritionistModel = new NutritionistModel()
@@ -66,8 +65,9 @@ export const Users = () => {
     }
 
     const handleReprove = async(e, uuid) => {
-        if (window.confirm('Reprovar acesso do usuário no sistema?')) {
-            await userModel.reproveLoginUser(uuid)
+        if (window.confirm('Reprovar acesso do usuário no sistema?\nEsse usuário sera deletado do sistema.')) {
+            await patientModel.delete(uuid)
+            await nutritionistModel.delete(uuid)
             let users = userModel.getUsersSnapshot() //recupera lista atualizada
             setUsersList(users)
         }
@@ -100,12 +100,8 @@ export const Users = () => {
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
             if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
-                let retDelete = await patientModel.delete(uuid)
-                if (!!!retDelete) {
-                    retDelete = await nutritionistModel.delete(uuid)
-                }
-                console.log(retDelete)
-                // await userModel.deleteUser(uuid)
+                await patientModel.delete(uuid)
+                await nutritionistModel.delete(uuid)
                 let users = userModel.getUsersSnapshot() //recupera lista atualizada
                 setUsersList(users)
             }
