@@ -22,6 +22,7 @@ export const Users = () => {
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
     const [menuState, setMenuState] = useState("Lista de Usuários");
+    const [userData, setUserData] = useState(null);
     
     
     const userModel = new UserModel()
@@ -171,7 +172,7 @@ export const Users = () => {
                                                 )}
                                             </>
                                         )}
-                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to="" onClick={() => setMenuState("Editar usuario")}><Pencil2Icon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to="" onClick={() => {setMenuState("Editar usuario");setUserData(data)}}><Pencil2Icon/></StyledLink></CardContentCol>
                                         <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit="true" header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
                                     </CardCol>
                                 </CardContentRow>
@@ -190,7 +191,7 @@ export const Users = () => {
                         case "Editar perfil": return <>
                             <EditProfile user={currentUser}></EditProfile></>
                         case "Editar usuario": return <>
-                            <EditUser user={currentUser}></EditUser></>
+                            <EditUser user={userData}></EditUser></>
                         }
                     })()
                     }    

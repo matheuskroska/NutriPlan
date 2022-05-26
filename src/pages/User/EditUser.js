@@ -17,6 +17,8 @@ export const EditUser = (props) => {
         return <Navigate to="/login" replace />
     }
 
+    console.log(props.user)
+
     const handleEdit = async() => {
         alert('edit')
     }
