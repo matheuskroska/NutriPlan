@@ -9,7 +9,7 @@ import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
 import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import Animated from 'react-mount-animation';
 
-export const EditUser = (props) => {
+export const EditProfile = (props) => {
     const { currentUser } = useContext(AuthContext)
     const { uuid } = useParams();
 
@@ -23,7 +23,7 @@ export const EditUser = (props) => {
 
     return (
         <>
-            <Card margin={"80px auto"} showTitle={"none"}>
+            <Card margin={"0 auto"} showTitle={"none"}>
                 <CardItemContainer visibility={true}>
                     <form>
                     <CardItem>

@@ -9,6 +9,7 @@ import avatar from '../../assets/images/user-test.png';
 import UserModel from '../../db/UserModel';
 import NutritionistModel from '../../db/NutritionistModel';
 import { StyledRadixToggleGroup } from '../../components/Button/Button.elements';
+import { EditProfile } from './EditProfile';
 import { EditUser } from './EditUser';
 import PatientModel from '../../db/PatientModel';
 
@@ -21,6 +22,7 @@ export const Users = () => {
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
     const [menuState, setMenuState] = useState("Lista de Usuários");
+    
     
     const userModel = new UserModel()
     const patientModel = new PatientModel()
@@ -169,7 +171,7 @@ export const Users = () => {
                                                 )}
                                             </>
                                         )}
-                                        <CardContentCol maxWidth={"25px"}><StyledLink edit="true" header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to="" onClick={() => setMenuState("Editar usuario")}><Pencil2Icon/></StyledLink></CardContentCol>
                                         <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit="true" header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
                                     </CardCol>
                                 </CardContentRow>
@@ -186,9 +188,10 @@ export const Users = () => {
                                 <h1>Agendar Consulta</h1>
                             </CardContent></>
                         case "Editar perfil": return <>
-                            <EditUser></EditUser></>
+                            <EditProfile user={currentUser}></EditProfile></>
+                        case "Editar usuario": return <>
+                            <EditUser user={currentUser}></EditUser></>
                         }
-                       
                     })()
                     }    
                 </CardContainer>

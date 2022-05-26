@@ -44,7 +44,6 @@ export const Register = () => {
         setVisibility(true);
         setUserCategory(userCategory)
     }
-    
 
     const handleSubmit = async(e) => {
         e.preventDefault()

@@ -93,6 +93,7 @@ export const CardItemContainer = styled.div`
 `
 
 export const CardTitle = styled.h1`
+    display: ${props => props.showTitle || ""};
     font-weight: bold;
     font-size: 2.8em;
     color: var(--font-dark);
