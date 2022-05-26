@@ -12,6 +12,7 @@ import { StyledRadixToggleGroup } from '../../components/Button/Button.elements'
 import { EditProfile } from './EditProfile';
 import { EditUser } from './EditUser';
 import PatientModel from '../../db/PatientModel';
+import { Schedule } from '../Schedule/Schedule';
 
 export const Users = () => {
 
@@ -21,7 +22,7 @@ export const Users = () => {
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
-    const [menuState, setMenuState] = useState("Lista de Usuários");
+    const [menuState, setMenuState] = useState("Lista de usuários");	
     const [userData, setUserData] = useState(null);
     
     const userModel = new UserModel()
@@ -121,7 +122,7 @@ export const Users = () => {
                         </CardMenuHeader>
                         <StyledRadixToggleGroup value={menuState} onValueChange={(menuState) => {menuState && setMenuState(menuState)}} height="100%" flexDirection="column" type="single" aria-label="usuario" >
                             <CardMenuItem fontSize="inherit" width="100%">
-                                <StyledRadixLink editUserButtons value="Lista de Usuários" aria-label="Lista de usuários">Lista de usuários</StyledRadixLink>
+                                <StyledRadixLink editUserButtons value="Lista de usuários" aria-label="Lista de usuários">Lista de usuários</StyledRadixLink>
                                 <StyledRadixLink editUserButtons value="Notificações" aria-label="Notificações">Notificações</StyledRadixLink>
                                 <StyledRadixLink editUserButtons value="Agendar Consulta" aria-label="Agendar consulta">Agendar consulta</StyledRadixLink>
                             </CardMenuItem>
@@ -130,7 +131,7 @@ export const Users = () => {
                     {
                     (()=> {
                         switch (menuState) {
-                        case "Lista de Usuários": return <>
+                        case "Lista de usuários": return <>
                             <CardContent>
                         <CardContentRow>
                             <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
@@ -168,7 +169,7 @@ export const Users = () => {
                                                 )}
                                             </>
                                         )}
-                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to="" onClick={() => {setMenuState("Editar usuario");setUserData(data)}}><Pencil2Icon/></StyledLink></CardContentCol>
+                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to="" onClick={() => {setMenuState("Editar usuário");setUserData(data)}}><Pencil2Icon/></StyledLink></CardContentCol>
                                         <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit="true" header="true" to={"#  "}><TrashIcon/></StyledLink></CardContentCol>
                                     </CardCol>
                                 </CardContentRow>
@@ -181,12 +182,11 @@ export const Users = () => {
                                 <h1>Notificações</h1>
                              </CardContent></>;
                         case "Agendar Consulta": return <>
-                            <CardContent>
-                                <h1>Agendar Consulta</h1>
-                            </CardContent></>
+                            <Schedule></Schedule>
+                            </>
                         case "Editar perfil": return <>
                             <EditProfile user={currentUser}></EditProfile></>
-                        case "Editar usuario": return <>
+                        case "Editar usuário": return <>
                             <EditUser user={userData}></EditUser></>
                         }
                     })()

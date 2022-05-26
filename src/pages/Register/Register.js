@@ -209,8 +209,8 @@ export const Register = () => {
                             </CardItem>
                             <form onSubmit={handleSubmit}>
                             <CardItem>
-                                <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange}></CardInput>
-                                <CardInput autoComplete="off" pattern="[A-Za-z0-9]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange}></CardInput>
+                                <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange}></CardInput>
+                                <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange}></CardInput>
                                 <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
                             </CardItem>
                             <CardItem>
