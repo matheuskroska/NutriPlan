@@ -39,16 +39,13 @@ export const Login = () => {
     const pull_data = (data) => {
         setModalError(data);
     }
-
-    if (!!loader) {
         return (
             <>
-                <Loader/>
-            </>
-        )
-    } else {
-        return (
-            <>
+                {!!loader && (
+                    <>
+                        <Loader/>
+                    </>
+                )} 
                 {modalError && (
                     <>
                         <ModalMessage func={pull_data}>{error}</ModalMessage>
@@ -75,5 +72,5 @@ export const Login = () => {
                 </Card>
             </>
         )
-    }
+    
 }
