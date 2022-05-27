@@ -13,8 +13,8 @@ import { Errors } from '../../firebase/Errors';
 
 export const Login = () => {
 
-    const [email, setEmail] = useState(false)
-    const [password, setPassword] = useState(false)
+    const [email, setEmail] = useState(null)
+    const [password, setPassword] = useState(null)
     const [error, setError] = useState();
     const [loader, setLoader] = useState(false)
     const [modalError, setModalError] = useState(false)
@@ -55,11 +55,11 @@ export const Login = () => {
                     <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>
-                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
+                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)} defaultValue={email}></CardInput>
                                 <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInput required type="password" placeholder="Senha" inputWidth="100%" onChange={(e) => setPassword(e.target.value)}></CardInput>
+                                <CardInput required type="password" placeholder="Senha" inputWidth="100%" onChange={(e) => setPassword(e.target.value)} defaultValue={password}></CardInput>
                             </CardItem>
                             <CardItem>
                                 <Link to="/alterar-senha" forgotpwd>esqueci minha senha</Link>
