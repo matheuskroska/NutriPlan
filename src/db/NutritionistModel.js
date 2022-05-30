@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { collection, getDocs, query, setDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, query, setDoc, doc, getDoc } from 'firebase/firestore'
 import UserModel from './UserModel'
 
 class NutritionistModel extends UserModel {
@@ -28,7 +28,7 @@ class NutritionistModel extends UserModel {
             console.error("Error adding document: ", e)
         }
     }
-    
+
     async getNutritionists() {
         const q = query(collection(db, this.table))
 
@@ -46,6 +46,28 @@ class NutritionistModel extends UserModel {
         return result
     }
 
+    async isNutritionist(uuid) {
+        const docRef = doc(db, this.table, uuid)
+        const docSnap = await getDoc(docRef)
+ 
+        if (docSnap.exists()) {
+            return true
+        } else {
+            return false
+        }
+    }
+ 
+    async getCrnByUuid(uuid) {
+        const docRef = doc(db, this.table, uuid)
+        const docSnap = await getDoc(docRef)
+ 
+        if (docSnap.exists()) {
+            return docSnap.data().crn
+        } else {
+            return false
+        }
+    }
+ 
 }
 
 export default NutritionistModel

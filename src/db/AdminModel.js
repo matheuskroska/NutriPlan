@@ -1,3 +1,4 @@
+import { collection, doc, getDoc, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase'
 import UserModel from './UserModel'
 
@@ -18,6 +19,17 @@ class AdminModel extends UserModel {
         }
     }
 
+    async isAdmin(uuid) {
+        const docRef = doc(db, this.table, uuid)
+        const docSnap = await getDoc(docRef)
+ 
+        if (docSnap.exists()) {
+            return true
+        } else {
+            return false
+        }
+    }
+ 
 }
 
 export default AdminModel

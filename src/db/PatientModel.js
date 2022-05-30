@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc, getDoc } from 'firebase/firestore'
 import UserModel from './UserModel'
 
 class PatientModel extends UserModel {
@@ -30,6 +30,17 @@ class PatientModel extends UserModel {
         }
     }
 
+    async isPatient(uuid) {
+        const docRef = doc(db, this.table, uuid);
+        const docSnap = await getDoc(docRef);
+ 
+        if (docSnap.exists()) {
+            return true
+        } else {
+            return false
+        }
+    }
+ 
 }
 
 export default PatientModel

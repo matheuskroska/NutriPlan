@@ -1,6 +1,7 @@
 import React, {useEffect, useState } from "react"
 import { auth } from '.'
 import { Loader } from "../components"
+import AdminModel from "../db/AdminModel"
 import UserModel from "../db/UserModel"
 
 export const AuthContext = React.createContext()
@@ -14,6 +15,8 @@ export const AuthProvider = ({children}) => {
             if (!!user) {
                 let userModel = new UserModel()
                 let userInfo = await userModel.getUserByUid(user.uid)
+                let adminModel = new AdminModel()
+                userInfo.isAdmin = await adminModel.isAdmin(user.uid)
                 setCurrentUser(userInfo)
             } else {
                 setCurrentUser(user)

@@ -18,14 +18,14 @@ export const Home = () => {
     }
 
     const handleListUsers = () => {
-        navigate("/usuarios", { replace: true });
+        navigate("/lista-usuarios", { replace: true });
     }
 
     if (!!currentUser) {
         return (
             <>
                 <Card margin={"140px 0"}>
-                    <StyledButton onClick={handleListUsers} primary>lista de usuários</StyledButton>
+                    <StyledButton onClick={handleListUsers} primary>painel de informações</StyledButton>
                 </Card>
                 
             </>

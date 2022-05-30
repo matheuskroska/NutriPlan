@@ -21,9 +21,9 @@ export const InfoMenu = (props) => {
         </CardMenuHeader>
         <StyledRadixToggleGroup value={menuState} height="100%" flexDirection="column" type="single" aria-label="usuario" >
             <CardMenuItem fontSize="inherit" width="100%">
-                <StyledRadixLink editUserButtons value="Lista de usuários" aria-label="Lista de usuários"><StyledLink menu link to="/list-usuarios">Lista de usuários</StyledLink></StyledRadixLink>
+                <StyledRadixLink editUserButtons value="Lista de usuários" aria-label="Lista de usuários"><StyledLink menu link to="/lista-usuarios">Lista de usuários</StyledLink></StyledRadixLink>
                 <StyledRadixLink editUserButtons value="Notificações" aria-label="Notificações"><StyledLink menu link to="/notificacoes">Notificações</StyledLink></StyledRadixLink>
-                <StyledRadixLink editUserButtons value="Agendar Consulta" aria-label="Agendar consulta"><StyledLink menu link to="/agendar-consulta">Agendar Consulta</StyledLink></StyledRadixLink>
+                <StyledRadixLink editUserButtons value="Agendar consulta" aria-label="Agendar consulta"><StyledLink menu link to="/agendar-consulta">Agendar consulta</StyledLink></StyledRadixLink>
             </CardMenuItem>
         </StyledRadixToggleGroup>
         </CardMenuContainer>
