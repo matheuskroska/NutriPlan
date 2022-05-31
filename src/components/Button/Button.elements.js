@@ -31,7 +31,7 @@ export const StyledRadixToggleGroup = styled(ToggleGroupPrimitive.Root)`
     height: ${props => props.height || ""};
     gap: 0 8px;
     align-items: center;
-    flex-direction: ${props => props.flexDirection || "row"};
+    flex-direction: ${props => props.flexdirection || "row"};
 ` 
 
 export const StyledRadixButton = styled(ToggleGroupPrimitive.Item)`
@@ -67,5 +67,3 @@ export const StyledButton = styled.button`
     `};
 
 `
-
-

@@ -57,7 +57,7 @@ export const StyledRadixLink = styled(ToggleGroupPrimitive.Item)`
 
 
     ${props =>
-    props.editUserButtons &&
+    props.edituserbuttons &&
     css`
       height: 35px;
       border: 0;

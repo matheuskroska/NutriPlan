@@ -25,7 +25,7 @@ function App() {
                 <Route exact path="/" element={<Home/>} />
                 <Route exact path="/login" element={<Login/>} />
                 <Route exact path="/cadastro" element={<Register/>} />
-                <Route exact path="/usuarios" element={<InfoPanel/>} />
+                <Route exact path="/painel-informacoes" element={<InfoPanel/>} />
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />
                 <Route exact path="/redefinir-senha" element={<ResetPassword/>} />
                 <Route exact path="/editar-usuario/:uuid" element={<EditUser/>} />
