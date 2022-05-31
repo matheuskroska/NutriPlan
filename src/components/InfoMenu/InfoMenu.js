@@ -17,7 +17,7 @@ export const InfoMenu = (props) => {
         <CardMenuHeader>
             <CardParagraph>{currentUser.nome_completo}</CardParagraph>
             <CardAvatar src={avatar} alt="avatar"></CardAvatar>
-            <StyledLink menu to="/editar-perfil/:uuid">Editar perfil</StyledLink>
+            <StyledLink menu to={`/editar-perfil`}>Editar perfil</StyledLink>
         </CardMenuHeader>
         <StyledRadixToggleGroup value={menuState} height="100%" flexDirection="column" type="single" aria-label="usuario" >
             <CardMenuItem fontSize="inherit" width="100%">

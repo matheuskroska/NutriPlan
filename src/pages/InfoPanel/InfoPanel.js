@@ -13,14 +13,10 @@ export const InfoPanel = () => {
     const [menuState, setMenuState] = useState("Lista de usuários");	
     const [userData, setUserData] = useState(null);
 
-    const pull_userData = (data) => {
-        setUserData(data)
-        console.log(userData);
-    }
 
     return (
         <>
-            <Card maxWidth={"100%"} cardTitle={menuState}>
+            <Card maxWidth={"100%"} cardTitle={"Minha conta"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={null}/>
                     <h1>Info menu home</h1>

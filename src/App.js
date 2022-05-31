@@ -29,7 +29,7 @@ function App() {
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />
                 <Route exact path="/redefinir-senha" element={<ResetPassword/>} />
                 <Route exact path="/editar-usuario/:uuid" element={<EditUser/>} />
-                <Route exact path="/editar-perfil/:uuid" element={<EditProfile/>} />
+                <Route exact path="/editar-perfil" element={<EditProfile/>} />
                 <Route exact path="/lista-usuarios" element={<ListUser/>} />
                 <Route exact path="/agendar-consulta" element={<Schedule/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />

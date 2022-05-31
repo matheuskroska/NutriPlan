@@ -1,6 +1,6 @@
 import { auth, deleteUser } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, orderBy, onSnapshot, setDoc } from 'firebase/firestore'
+import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, orderBy, onSnapshot, setDoc, update} from 'firebase/firestore'
 import { db } from '../firebase'
 
 class UserModel {
@@ -65,6 +65,19 @@ class UserModel {
             .catch((error) => {
                 return error.code
             })
+    }
+
+    async updateUser(user) {
+        await updateDoc(doc(db, "usuario", user.uuid), {
+            nome: user.firstname,
+            sobrenome: user.lastname,
+            nome_completo: user.firstname + ' ' + user.lastname,
+            email: user.email,
+            ddd: user.ddd,
+            telefone: user.phone,
+            atualizado_em: Timestamp.now(),
+            atualizado_por: user.uuid,
+        })
     }
     
     async signIn(email, password) {

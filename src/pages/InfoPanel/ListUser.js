@@ -112,7 +112,7 @@ export const ListUser = (props) => {
     } 
 
   return (
-    <Card maxWidth={"100%"}>
+    <Card cardTitle={"Lista de usuários"} maxWidth={"100%"}>
         <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
             <InfoMenu menuState={"Lista de usuários"}/>
             <CardContent>
@@ -152,7 +152,7 @@ export const ListUser = (props) => {
                                         )}
                                     </>
                                 )}
-                                <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to="/editar-usuario/:uuid"><Pencil2Icon/></StyledLink></CardContentCol>
+                                <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/editar-usuario/`+data.uuid}><Pencil2Icon/></StyledLink></CardContentCol>
                                 <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.uuid)}><StyledLink edit="true" header="true" to={"#"}><TrashIcon/></StyledLink></CardContentCol>
                             </CardCol>
                         </CardContentRow>

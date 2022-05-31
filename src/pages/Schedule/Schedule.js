@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
-import { CardContent, CardContentRow, CardInput } from '../../components/Card/Card.elements';
+import { CardContainer, CardContent, CardContentRow, CardInput } from '../../components/Card/Card.elements';
 import { StyledButton } from '../../components/Button/Button.elements';
+import { Card, InfoMenu } from '../../components';
 
-export const Schedule = () => {
+export const Schedule = (props) => {
 
     const { currentUser } = useContext(AuthContext)
+    const [menuState, setMenuState] = useState("Lista de usuários");
     
     if (!!!currentUser) {
         return <Navigate to="/login" replace />
@@ -15,20 +17,25 @@ export const Schedule = () => {
 
     return (
         <>
-            <CardContent>
-                <form>
-                    <CardContentRow></CardContentRow>
-                    <CardContentRow>
-                        <CardInput required type="date" placeholder="Escolha uma data" inputWidth="100%" name="date" min="2022-05-26"></CardInput>
-                    </CardContentRow>
-                    <CardContentRow>
-                        <CardInput required type="time" placeholder="Escolha um horário" inputWidth="100%" name="time" min="08:00" max="18:00"></CardInput>
-                    </CardContentRow>
-                    <CardContentRow>
-                        <StyledButton primary hasIcon marginTop={"20px"}>marcar consulta<ArrowRightIcon/></StyledButton>
-                    </CardContentRow>
-                </form>
-            </CardContent>
+            <Card maxWidth={"100%"} cardTitle={menuState}>
+                <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
+                    <InfoMenu menuState={"Agendar consulta"}/>
+                    <CardContent>
+                        <form>
+                            <CardContentRow></CardContentRow>
+                            <CardContentRow>
+                                <CardInput required type="date" placeholder="Escolha uma data" inputWidth="100%" name="date" min="2022-05-26"></CardInput>
+                            </CardContentRow>
+                            <CardContentRow>
+                                <CardInput required type="time" placeholder="Escolha um horário" inputWidth="100%" name="time" min="08:00" max="18:00"></CardInput>
+                            </CardContentRow>
+                            <CardContentRow>
+                                <StyledButton primary hasIcon marginTop={"20px"}>marcar consulta<ArrowRightIcon/></StyledButton>
+                            </CardContentRow>
+                        </form>
+                    </CardContent>
+                </CardContainer>
+            </Card>
         </>
     )
 }
