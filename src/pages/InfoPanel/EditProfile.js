@@ -23,6 +23,8 @@ export const EditProfile = (props) => {
         crn: currentUser.crn,
     })
 
+    console.log(user)
+
     const handleChange = (e) => {
         const { name, value } = e.target
 
