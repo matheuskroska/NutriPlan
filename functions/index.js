@@ -22,7 +22,7 @@ exports.createUser = functions.https.onCall(async (data, context) => {
   }
 });
 
-// DELETE NEW USER IN FIREBASE BY FUNCTION
+// DELETE USER IN FIREBASE BY FUNCTION
 exports.deleteUser = functions.https.onCall(async (uid) => {
   try {
     await admin.auth().deleteUser(uid).then(() => {
