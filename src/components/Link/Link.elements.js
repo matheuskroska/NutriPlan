@@ -51,8 +51,10 @@ export const StyledRadixLink = styled(ToggleGroupPrimitive.Item)`
     ${cssLink};
     color: var(--font-dark);
     background-color: var(--primary);
-    &:hover { background-color: var(--tertiary);color: var(--font-soft) }
+    &:hover{ background-color: var(--tertiary);color: var(--font-soft) }
+    &:hover a{color: var(--font-soft) }
     &[data-state=on] { background-color: var(--tertiary); color: var(--font-soft)}
+    &[data-state=on] a {color: var(--font-soft)}
     &:focus { position: relative}
 
 
