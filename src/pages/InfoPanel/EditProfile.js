@@ -23,8 +23,6 @@ export const EditProfile = (props) => {
         crn: currentUser.crn,
     })
 
-    console.log(user)
-
     const handleChange = (e) => {
         const { name, value } = e.target
 
@@ -62,7 +60,7 @@ export const EditProfile = (props) => {
                             <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            <CardInput onChange={handleChange} defaultValue={currentUser.email} pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" autoComplete="off"></CardInput>
+                            <CardInput onChange={handleChange} disabled defaultValue={currentUser.email} pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" autoComplete="off"></CardInput>
                             <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                         </CardItem>
                         <CardItem>
