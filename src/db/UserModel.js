@@ -224,6 +224,16 @@ class UserModel {
         return usersList
     }
 
+    async getNameByUuid(uuid) {
+        const q = query(collection(db, "usuario"), where("uuid", "==", uuid))
+        const dataResult = await this.getAllDataUser(q, "usuario")
+        if (dataResult.length === 1) {
+            return dataResult[0].nome_completo
+        } else {
+            return null
+        }
+    }
+
 
 }
 

@@ -1,6 +1,7 @@
 import { createUser, db } from '../firebase'
-import { collection, getDocs, query, setDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { collection, getDocs, query, setDoc, doc, getDoc, updateDoc, where } from 'firebase/firestore'
 import UserModel from './UserModel'
+import ScheduleModel from './ScheduleModel'
 
 class NutritionistModel extends UserModel {
 
@@ -20,6 +21,8 @@ class NutritionistModel extends UserModel {
                     usuario_uuid: retUser.uid,
                     crn: nutritionist.crn,
                 })
+                let scheduleModel = new ScheduleModel()
+                await scheduleModel.add(retUser.uid)
                 return retUser.uid
             } else {
                 return retUser
@@ -44,6 +47,27 @@ class NutritionistModel extends UserModel {
         })
 
         return result
+    }
+
+    async getAllNutritionists() {
+        const q = query(collection(db, this.table))
+
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            id: doc.id
+        }))
+
+        let result = []
+        dataResult.forEach((value) => {
+            result.push(value.id)
+        })
+        const queryUser = query(collection(db, "usuario"), where('uuid', 'in', result));
+        const dataUser = await getDocs(queryUser)
+        const dataResultUser = dataUser.docs.map((doc) => ({
+            ...doc.data()
+        }))
+
+        return [dataResult, dataResultUser]
     }
 
     async isNutritionist(uuid) {
