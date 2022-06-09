@@ -38,7 +38,7 @@ export const EditProfile = (props) => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         await changeUserData()
-        setMessage("Os dados foram alterados");
+        setMessage("Os dados foram alterados com sucesso");
         setModalMessage(true)
     }
 

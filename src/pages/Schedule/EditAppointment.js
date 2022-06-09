@@ -4,7 +4,7 @@ import { AuthContext } from '../../firebase/Auth'
 import { Navigate, useParams } from 'react-router-dom'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { Card, InfoMenu } from '../../components'
+import { Card, InfoMenu, Loader } from '../../components'
 import DatePicker from "react-datepicker"
 import { addMonths, addDays, setHours, setMinutes, getDay } from 'date-fns'
 import "react-datepicker/dist/react-datepicker.css"
@@ -14,12 +14,13 @@ import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import UserModel from '../../db/UserModel'
 import ScheduleModel from '../../db/ScheduleModel'
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 registerLocale("pt-BR", pt)
 
 export const EditAppointment = () => {
     const { currentUser } = useContext(AuthContext)
-    const { uuid } = useParams();
+    const { docId } = useParams();
     const [startDate, setStartDate] = useState(null)
     const [minDate, setMinDate] = useState(null)
     const [excludedTimes, setExcludedTimes] = useState(null)
@@ -27,9 +28,25 @@ export const EditAppointment = () => {
     const [nutritionist, setNutritionist] = useState(null)
     const [minDay, setMinDay] = useState(null)
     const [minMonth, setMonth] = useState(null)
+    const [appoint, setAppoint] = useState(null)
+    const [modalMessage, setModalMessage] = useState(false);
+    const [loader, setLoader] = useState(false)
+    const [message, setMessage] = useState()
+
     const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
     const scheduleModel = new ScheduleModel()
+    const appointmentModel = new AppointmentModel()
+    
+    const selectDateAndNutri = async () => {
+        let appointment = await appointmentModel.getByDocId(docId)
+        let dateArr = appointment.data.split("/")
+        let timeArr = appointment.horario.split(":")
+        let date = new Date(dateArr[2], dateArr[1]-1, dateArr[0], timeArr[0]*1, timeArr[1]*1)
+        setNutritionist(appointment.nutricionista_uuid)
+        setAppoint(appointment)
+        setStartDate(date)
+    }
 
     const scrollToItem = () => {
         setTimeout(() => {
@@ -96,13 +113,6 @@ export const EditAppointment = () => {
         let nutritionistsList = await nutritionistModel.getAllNutritionists()
         setNutritionists(nutritionistsList)
     }
-    
-    if (!!!currentUser) {
-        return <Navigate to="/login" replace />
-    } else if (!!!minDate) {
-        selectMinDate()
-        getNutritionists()
-    }
 
     const isWeekday = (date) => {
         const day = getDay(date)
@@ -117,7 +127,7 @@ export const EditAppointment = () => {
             let stDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, date.getMinutes())
             setStartDate(stDate)
         } else {
-            setStartDate(date)            
+            setStartDate(date)
         }
     }
 
@@ -131,9 +141,11 @@ export const EditAppointment = () => {
         let minutes = (startDate.getMinutes() < 10) ? "0"+startDate.getMinutes() : startDate.getMinutes()
         let time = hours + ':' + minutes
         
-        let nutriId = document.getElementById('selectNutri').value
-        let appointmentModel = new AppointmentModel()
-        appointmentModel.add(currentUser.uuid, nutriId, date, time)
+        appoint.data = date
+        appoint.horario = time
+        appointmentModel.update(docId, appoint)
+        setMessage("Os dados foram alterados com sucesso");
+        setModalMessage(true)
     }
 
     const hangleChangeSelect = async (e) => {
@@ -169,16 +181,46 @@ export const EditAppointment = () => {
                 let opt = document.createElement('option')
                 opt.value = nutri.uuid
                 opt.textContent += nutri.nome_completo // or opt.innerHTML += user.name
+                console.log(nutri.uuid, nutritionist)
+                if (nutri.uuid === nutritionist) {
+                    opt.setAttribute("selected", "selected")
+                }
                 sel.appendChild(opt)
             })
-            sel.addEventListener("change", hangleChangeSelect)
+            sel.setAttribute("disabled", "disabled")
+            // sel.addEventListener("change", hangleChangeSelect)
         }
     }
 
-    (!nutritionist) && displayNutritionists()
+    const pull_data = (data, propsSuccess) => {
+        setModalMessage(data)
+        if (!!propsSuccess) {
+            window.location.reload()
+        }
+    }
+    
+    if (!!!currentUser) {
+        return <Navigate to="/login" replace />
+    } else if (!!!minDate) {
+        selectDateAndNutri()
+        selectMinDate()
+        getNutritionists()
+    }
+
+    displayNutritionists()
 
     return (
         <>
+        {!!loader && (
+            <>
+                <Loader/>
+            </>
+        )}
+        {modalMessage && (
+            <>
+                <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
+            </>
+        )}
             <Card maxWidth={"100%"} cardTitle={"Agendar consulta"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={"Agendar consulta"}/>

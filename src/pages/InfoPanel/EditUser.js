@@ -43,7 +43,7 @@ export const EditUser = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        setMessage("Os dados foram alterados");
+        setMessage("Os dados foram alterados com sucesso");
         setModalMessage(true)
         await changeUserData()
     }

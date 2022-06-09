@@ -36,7 +36,7 @@ function App() {
                 <Route exact path="/info-panel" element={<InfoPanel/>} />
                 <Route exact path="/agendar-consulta" element={<ScheduleAppointment/>} />
                 <Route exact path="/minhas-consultas" element={<ListAppointment/>} />
-                <Route exact path="/editar-consulta/:uuid" element={<EditAppointment/>} />
+                <Route exact path="/editar-consulta/:docId" element={<EditAppointment/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>

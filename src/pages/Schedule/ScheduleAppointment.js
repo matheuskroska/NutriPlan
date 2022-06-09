@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import { AuthContext } from '../../firebase/Auth'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { Card, InfoMenu } from '../../components'
+import { Card, InfoMenu, Loader } from '../../components'
 import DatePicker from "react-datepicker"
 import { addMonths, addDays, setHours, setMinutes, getDay } from 'date-fns'
 import "react-datepicker/dist/react-datepicker.css"
@@ -14,7 +14,8 @@ import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import UserModel from '../../db/UserModel'
 import ScheduleModel from '../../db/ScheduleModel'
-import moment from "moment";
+import moment from "moment"
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 registerLocale("pt-BR", pt)
 
@@ -28,6 +29,11 @@ export const ScheduleAppointment = () => {
     const [minDay, setMinDay] = useState(null)
     const [minMonth, setMonth] = useState(null)
     const [nutriDates, setNutriDates] = useState(null)
+    const [modalMessage, setModalMessage] = useState(false);
+    const [loader, setLoader] = useState(false)
+    const [message, setMessage] = useState()
+
+    const navigate = useNavigate()
     const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
     const scheduleModel = new ScheduleModel()
@@ -107,13 +113,6 @@ export const ScheduleAppointment = () => {
         let nutritionistsList = await nutritionistModel.getAllNutritionists()
         setNutritionists(nutritionistsList)
     }
-    
-    if (!!!currentUser) {
-        return <Navigate to="/login" replace />
-    } else if (!!!minDate) {
-        selectMinDate()
-        getNutritionists()
-    }
 
     const isWeekday = (date) => {
         const day = getDay(date)
@@ -145,6 +144,8 @@ export const ScheduleAppointment = () => {
         let nutriId = document.getElementById('selectNutri').value
         await appointmentModel.add(currentUser.uuid, nutriId, date, time)
         await scheduleModel.addNew(nutriId, date, time)
+        setMessage("Os dados foram salvos com sucesso")
+        setModalMessage(true)
     }
 
     const hangleChangeSelect = async (e) => {
@@ -222,10 +223,34 @@ export const ScheduleAppointment = () => {
         }
     }
 
+    const pull_data = (data, propsSuccess) => {
+        setModalMessage(data)
+        if (!!propsSuccess) {
+            navigate("/minhas-consultas", { replace: true });
+        }
+    }
+    
+    if (!!!currentUser) {
+        return <Navigate to="/login" replace />
+    } else if (!!!minDate) {
+        selectMinDate()
+        getNutritionists()
+    }
+
     (!nutritionist) && displayNutritionists()
 
     return (
         <>
+        {!!loader && (
+            <>
+                <Loader/>
+            </>
+        )}
+        {modalMessage && (
+            <>
+                <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
+            </>
+        )}
             <Card maxWidth={"100%"} cardTitle={"Agendar consulta"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={"Agendar consulta"}/>

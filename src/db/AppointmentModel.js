@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
 
 class AppointmentModel {
 
@@ -41,16 +41,25 @@ class AppointmentModel {
     // }
 
     async getByDocId(docId) {
-        const docRef = doc(db, this.table, docId);
-        const docSnap = await getDoc(docRef);
+        const docRef = doc(db, this.table, docId)
+        const docSnap = await getDoc(docRef)
 
         if (docSnap.exists()) {
-            return docSnap.data();
+            return docSnap.data()
         }
     }
 
     async delete(docId) {
         await deleteDoc(doc(db, this.table, docId))
+    }
+
+    async update(docId, appoint) {
+        await updateDoc(doc(db, this.table, docId), {
+            nutricionista_uuid: appoint.nutricionista_uuid,
+            paciente_uuid: appoint.paciente_uuid,
+            data: appoint.data,
+            horario: appoint.horario
+        })
     }
  
 }

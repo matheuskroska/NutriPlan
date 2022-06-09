@@ -84,7 +84,7 @@ export const ListAppointment = () => {
                 </CardContentRow>
                 {!!scheduleList && search(scheduleList).map(data => {
                     return (
-                        <CardContentRow key={data.uuid}>
+                        <CardContentRow key={data.id}>
                             <CardCol width="33.3%">
                                 <CardContentCol justify={"start"}><strong>{data.data}</strong> - {data.horario}</CardContentCol>
                             </CardCol>
@@ -92,7 +92,7 @@ export const ListAppointment = () => {
                                 <CardContentCol><strong>{usersName[data.nutricionista_uuid]}</strong></CardContentCol>
                             </CardCol>
                             <CardCol width="33.3%" display="flex">
-                                <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/editar-consulta/`+data.id}><Pencil2Icon/></StyledLink></CardContentCol>
+                                <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.id} edit="true" header="true" to={`/editar-consulta/`+data.id}><Pencil2Icon/></StyledLink></CardContentCol>
                                 <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.id)}><StyledLink edit="true" header="true" to={"#"}><TrashIcon/></StyledLink></CardContentCol>
                             </CardCol>
                         </CardContentRow>
