@@ -221,9 +221,9 @@ export const EditAppointment = () => {
                 <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
             </>
         )}
-            <Card maxWidth={"100%"} cardTitle={"Agendar consulta"}>
+            <Card maxWidth={"100%"} cardTitle={"Editar consulta"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={"Agendar consulta"}/>
+                    <InfoMenu menuState={"Editar consulta"}/>
                     <CardContent>
                         <form>
                             <CardContentRow>
