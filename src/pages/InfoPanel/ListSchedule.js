@@ -46,7 +46,7 @@ export const ListSchedule = (props) => {
 
     if (!!currentUser && !!!usersList) {
         getUsers()
-        !currentUser.isNutritionist ? getSchedules() : console.log("não é");
+        !currentUser.isNutritionist && getSchedules();
     } else if (!!!currentUser) {
         return <Navigate to="/login" replace />
     }
