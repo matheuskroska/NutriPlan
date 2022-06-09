@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../firebase/Auth';
-import { Card, InfoMenu } from '../../components';
+import { Card, InfoMenu, Loader } from '../../components';
 import { CardContainer, CardInput, CardInputMask, CardItem, CardItemContainer } from '../../components/Card/Card.elements';
 import { StyledButton } from '../../components/Button/Button.elements';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
 import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import Animated from 'react-mount-animation';
 import UserModel from '../../db/UserModel';
-
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
 
 export const EditProfile = (props) => {
     const { currentUser } = useContext(AuthContext)
@@ -22,6 +22,13 @@ export const EditProfile = (props) => {
         cpf: currentUser.cpf,
         crn: currentUser.crn,
     })
+    const [modalMessage, setModalMessage] = useState(false);
+    const [loader, setLoader] = useState(false)
+    const navigate = useNavigate()
+    const [message, setMessage] = useState();
+    const [success, setSuccess] = useState(false)
+
+    console.log(user)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -35,11 +42,20 @@ export const EditProfile = (props) => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         await changeUserData()
+        setMessage("Os dados foram alterados");
+        setModalMessage(true)
     }
 
     const changeUserData = async() => {
         let userModel = new UserModel();
         await userModel.updateUser(user);
+    }
+
+    const pull_data = (data, propsSuccess) => {
+        setModalMessage(data)
+        // if (!!propsSuccess) {
+        //     navigate("/login", { replace: true });
+        // }
     }
 
     if (!!!currentUser) {
@@ -48,6 +64,16 @@ export const EditProfile = (props) => {
 
     return (
         <>
+        {!!loader && (
+            <>
+                <Loader/>
+            </>
+        )}
+        {modalMessage && (
+            <>
+                <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
+            </>
+        )}
             <Card cardTitle={"Editar perfil"} maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu/>
