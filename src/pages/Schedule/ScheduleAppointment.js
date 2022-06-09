@@ -19,7 +19,7 @@ import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 registerLocale("pt-BR", pt)
 
-export const ScheduleAppointment = () => {
+export const MakeAppointment = () => {
     const { currentUser } = useContext(AuthContext)
     const [startDate, setStartDate] = useState(null)
     const [minDate, setMinDate] = useState(null)

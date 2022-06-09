@@ -23,7 +23,7 @@ export const InfoMenu = (props) => {
             <CardMenuItem fontSize="inherit" width="100%">
                 {currentUser.isAdmin && <StyledRadixLink edituserbuttons="true" value="Lista de usuários" aria-label="Lista de usuários"><StyledLink menu="true" link="true" to="/lista-usuarios">Lista de usuários</StyledLink></StyledRadixLink>}
                 {/* <StyledRadixLink edituserbuttons="true" value="Notificações" aria-label="Notificações"><StyledLink menu="true" link="true" to="/notificacoes">Notificações</StyledLink></StyledRadixLink> */}
-                <StyledRadixLink edituserbuttons="true" value="Agendar consulta" aria-label="Agendar consulta"><StyledLink menu="true" link="true" to="/agendar-consulta">Agendar consulta</StyledLink></StyledRadixLink>
+                {!currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value="Agendar consulta" aria-label="Agendar consulta"><StyledLink menu="true" link="true" to="/agendar-consulta">Agendar consulta</StyledLink></StyledRadixLink>}
                 <StyledRadixLink edituserbuttons="true" value="Minhas consultas" aria-label="Minhas consultas"><StyledLink menu="true" link="true" to="/minhas-consultas">Minhas consultas</StyledLink></StyledRadixLink>
             </CardMenuItem>
         </StyledRadixToggleGroup>
