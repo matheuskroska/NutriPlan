@@ -52,22 +52,35 @@ class NutritionistModel extends UserModel {
     async getAllNutritionists() {
         const q = query(collection(db, this.table))
 
-        const data = await getDocs(q)
-        const dataResult = data.docs.map((doc) => ({
+        const docsNutri = await getDocs(q)
+        const dataNutri = docsNutri.docs.map((docNutri) => ({
+            ...docNutri.data(),
             id: doc.id
         }))
 
         let result = []
-        dataResult.forEach((value) => {
-            result.push(value.id)
+        let uuids = []
+        dataNutri.forEach((value) => {
+            result[value.usuario_uuid] = value
+            uuids.push(value.usuario_uuid)
         })
-        const queryUser = query(collection(db, "usuario"), where('uuid', 'in', result));
-        const dataUser = await getDocs(queryUser)
-        const dataResultUser = dataUser.docs.map((doc) => ({
-            ...doc.data()
+        
+        const queryUser = query(collection(db, "usuario"), where('uuid', 'in', uuids))
+        const docsUser = await getDocs(queryUser)
+        const dataUser = docsUser.docs.map((docUser) => ({
+            ...docUser.data()
         }))
+        
+        let dataTemp = []
+        let merge = null
+        let fullData = []
+        dataUser.forEach((valueResultUser) => {
+            dataTemp[valueResultUser.uuid] = valueResultUser
+            merge = Object.assign(dataTemp[valueResultUser.uuid], result[valueResultUser.uuid])
+            fullData.push(merge)
+        })
 
-        return [dataResult, dataResultUser]
+        return fullData
     }
 
     async isNutritionist(uuid) {

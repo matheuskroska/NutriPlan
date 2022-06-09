@@ -13,6 +13,7 @@ import pt from "date-fns/locale/pt-BR"
 import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import UserModel from '../../db/UserModel'
+import ScheduleModel from '../../db/ScheduleModel'
 
 registerLocale("pt-BR", pt)
 
@@ -23,7 +24,24 @@ export const Schedule = (props) => {
     const [minDate, setMinDate] = useState(null)
     const [excludedTimes, setExcludedTimes] = useState(null)
     const [nutritionists, setNutritionists] = useState(null)
+    const [nutritionist, setNutritionist] = useState(null)
+    const [minDay, setMinDay] = useState(null)
+    const [minMonth, setMonth] = useState(null)
     const userModel = new UserModel()
+    const nutritionistModel = new NutritionistModel()
+    const scheduleModel = new ScheduleModel()
+
+    const scrollToItem = () => {
+        setTimeout(() => {
+            // let items = document.getElementsByClassName('react-datepicker__time-list-item--disabled')
+            let items = document.getElementsByClassName('react-datepicker__time-list-item')
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].innerHTML == '07:30') {
+                    items[i].scrollIntoView()
+                }
+            }
+        }, 250)
+    }
 
     const selectMinDate = () => {
         let date = new Date()
@@ -31,17 +49,17 @@ export const Schedule = (props) => {
         let minutes = date.getMinutes()
         if (date.getDay() === 6) { //Sábado, seta data minima para segunda
             setMinDate(addDays(date, 2))
-            // setStartDate(addDays(date, 2)) 
-        } else if (date.getDay() === 0) { //Domingo, seta data minima para segunda
+            setMinDay(addDays(date, 2).getDate())
+            setMonth(addDays(date, 2).getMonth())
+        } else if (date.getDay() === 0 || hours + 3 > 17) { //Domingo, seta data minima para segunda, ou hora + 3 > 17, seta proximo dia
             setMinDate(addDays(date, 1))
-            // setStartDate(addDays(date, 1))
-        } else if (hours + 3 > 17) {
-            setMinDate(addDays(date, 1))
-            // setStartDate(addDays(date, 1))
+            setMinDay(addDays(date, 1).getDate())
+            setMonth(addDays(date, 1).getMonth())
         } else {
             if (minutes > 30) {
                 setMinDate(addDays(date, 1))
-                // setStartDate(addDays(date, 1))
+                setMinDay(addDays(date, 1).getDate())
+                setMonth(addDays(date, 1).getMonth())
             } else {
                 //exclui as próximas 3 horas da listagem
                 setExcludedTimes([
@@ -55,15 +73,28 @@ export const Schedule = (props) => {
                     setHours(setMinutes(date, 30), hours + 3),
                 ])
                 setMinDate(date)
+                setMinDay(date.getDate())
+                setMonth(date.getMonth())
+            }
+        }
+    }
+
+    const handleCalendarOpen = () => {
+        let date = new Date()
+        let hours = date.getHours()
+        let minutes = date.getMinutes()
+        console.log('handleOpen')
+        if (date.getDay() === 6 || date.getDay() === 0 || hours + 3 > 17) {
+            scrollToItem()
+        } else {
+            if (minutes > 30) {
+                scrollToItem()
             }
         }
     }
 
     const getNutritionists = async () => {
-        let nutritionistModel = new NutritionistModel()
         let nutritionistsList = await nutritionistModel.getAllNutritionists()
-        let userModel = new UserModel()
-        let nome = await userModel.getNameByUuid("ViiNzvN8zBdwEg4NRHJsm63rgmz2")
         setNutritionists(nutritionistsList)
     }
     
@@ -80,8 +111,15 @@ export const Schedule = (props) => {
     }
 
     const handleChange = (date, event) => {
-        console.log('onChange', date, event)
-        setStartDate(date)
+        if (date.getDate() <= minDay && date.getMonth() <= minMonth) {
+            let stDate = new Date(date.getFullYear(), date.getMonth(), minDay, date.getHours(), date.getMinutes())
+            setStartDate(stDate)
+        } else if (date.getHours() === 0) {
+            let stDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, date.getMinutes())
+            setStartDate(stDate)
+        } else {
+            setStartDate(date)            
+        }
     }
 
     const handleClick = (e) => {
@@ -92,9 +130,51 @@ export const Schedule = (props) => {
 
         let time = startDate.getHours() + ':' + startDate.getMinutes()
         
-        // AppointmentModel.saveAppointment(date, time)
-        console.log(date + ' ' + time)
+        let nutriId = document.getElementById('selectNutri').value
+        let appointmentModel = new AppointmentModel()
+        appointmentModel.add(currentUser.uuid, nutriId, date, time)
     }
+
+    const hangleChangeSelect = async (e) => {
+        setNutritionist(e.target.value)
+        let scheduleNutri = await scheduleModel.getAll(e.target.value)
+        if (scheduleNutri.length > 0) {
+            let dates = []
+            scheduleNutri.map(sched => {
+                let dateArr = sched.data.split("/")
+                let timeArr = sched.horario.split(":")
+                let date = new Date(dateArr[2], dateArr[1], dateArr[0], timeArr[0], timeArr[1])
+                dates.push(date)
+            })
+            setExcludedTimes(dates)
+        } else {
+            setExcludedTimes([])
+        }
+        
+    }
+
+    const displayNutritionists = () => {
+        var sel = document.getElementById('selectNutri')
+        if (!!sel) {
+            while (sel.hasChildNodes()) {
+                sel.removeChild(sel.firstChild);
+            }    
+        }
+        if (!!nutritionists) {
+            let opt = document.createElement('option')
+            opt.textContent += 'Selecione um nutricionista' // or opt.innerHTML += user.name
+            sel.appendChild(opt)
+            nutritionists.forEach(nutri => {
+                let opt = document.createElement('option')
+                opt.value = nutri.uuid
+                opt.textContent += nutri.nome_completo // or opt.innerHTML += user.name
+                sel.appendChild(opt)
+            })
+            sel.addEventListener("change", hangleChangeSelect)
+        }
+    }
+
+    (!nutritionist) && displayNutritionists()
 
     return (
         <>
@@ -104,20 +184,14 @@ export const Schedule = (props) => {
                     <CardContent>
                         <form>
                             <CardContentRow>
-                                <select>
-                                {/* {!!nutritionists && nutritionists.map(key => {
+                                
+                                <select className="select-nutri" id="selectNutri"></select>
+                                {/* {!!nutritionists && nutritionists.forEach(nutri => {
+                                    console.log('nutri.nome_completo', nutri.nome_completo)
                                     return (
-                                        <option>{nutritionists[key].nome_completo}</option>
+                                        <option value="Teste">Teste - {nutri.nome_completo}</option>
                                     )
                                 })} */}
-                                {!!nutritionists && nutritionists.forEach(async (value) => {
-                                    let user = await userModel.getUserByUid(value.usuario_uuid)
-                                    console.log(user.nome_completo)
-                                    return (
-                                        <option>{user.nome_completo}</option>
-                                    )
-                                })}
-                                </select>
                             </CardContentRow>
                             <CardContentRow>
                                 <DatePicker 
@@ -129,12 +203,13 @@ export const Schedule = (props) => {
                                     maxDate={addMonths(new Date(), 3)}
                                     filterDate={isWeekday}
                                     // excludeDates={excludedDates}
-                                    minTime={setHours(setMinutes(new Date(), 0), 8)}
-                                    maxTime={setHours(setMinutes(new Date(), 30), 17)}
+                                    minTime={setHours(setMinutes(minDate, 0), 8)}
+                                    maxTime={setHours(setMinutes(minDate, 30), 17)}
                                     excludeTimes={excludedTimes}
                                     placeholderText="Selecione uma data e um horário"
                                     showTimeSelect
                                     dateFormat="dd/MM/yyyy HH:mm"
+                                    onCalendarOpen={handleCalendarOpen}
                                     withPortal
                                 />
                             </CardContentRow>

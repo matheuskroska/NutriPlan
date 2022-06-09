@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { addDays } from 'date-fns'
 
 class ScheduleModel {
@@ -17,11 +17,21 @@ class ScheduleModel {
             let month = ((dates[randomD].getMonth()+1) < 10) ? "0"+(dates[randomD].getMonth()+1) : (dates[randomD].getMonth()+1) 
             let date = day + '/' + month + '/' + dates[randomD].getFullYear()
             await addDoc(collection(db, this.table), {
-                nutritionist_uuid: nutritionist_uuid,
+                nutricionista_uuid: nutritionist_uuid,
                 data: date,
                 horario: times[i]
             })
         }
+    }
+
+    async getAll(nutriId) {
+        const q = query(collection(db, this.table), where("nutricionista_uuid", "==", nutriId))
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            docId: doc.id
+        }))
+        return dataResult
     }
 }
 
