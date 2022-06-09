@@ -8,6 +8,7 @@ import NutritionistModel from '../../db/NutritionistModel';
 import PatientModel from '../../db/PatientModel';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu } from '../../components';
+import AppointmentModel from '../../db/AppointmentModel';
 
 
 export const ListSchedule = (props) => {
@@ -25,6 +26,7 @@ export const ListSchedule = (props) => {
     const userModel = new UserModel()
     const patientModel = new PatientModel()
     const nutritionistModel = new NutritionistModel()
+    const appointmentModel = new AppointmentModel()
 
     const getUsers = async () => {
         let users = await userModel.getUsers()
@@ -37,14 +39,14 @@ export const ListSchedule = (props) => {
     }
 
     const getSchedules = async () => {
-        let schedules = await userModel.getSchedules(currentUser.uuid)
+        let schedules = await appointmentModel.getByPatientUuid(currentUser.uuid)
         setScheduleList(schedules);
     }
 
 
     if (!!currentUser && !!!usersList) {
         getUsers()
-        currentUser.isNutritionist ? getSchedules() : console.log("não é");
+        !currentUser.isNutritionist ? getSchedules() : console.log("não é");
     } else if (!!!currentUser) {
         return <Navigate to="/login" replace />
     }
@@ -61,47 +63,6 @@ export const ListSchedule = (props) => {
             });
         });
     }
-
-    const handleApprove = async(e, uuid) => {
-        if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await userModel.approveLoginUser(uuid)
-            let users = userModel.getUsersSnapshot() //recupera lista atualizada
-            setUsersList(users)
-        }
-    }
-
-    const handleReprove = async(e, uuid) => {
-        if (window.confirm('Reprovar acesso do usuário no sistema?\nEsse usuário sera deletado do sistema.')) {
-            await patientModel.delete(uuid)
-            await nutritionistModel.delete(uuid)
-            let users = userModel.getUsersSnapshot() //recupera lista atualizada
-            setUsersList(users)
-        }
-    }
-
-    const handleActiveDesactive = async(e, uuid, action) => {
-        e.preventDefault()
-        let question = null
-        let active = null
-        switch (action) {
-            case 'desactive':
-                question = 'Deseja desativar login desse usuário?'
-                active = false
-                break
-            case 'active':
-                question = 'Deseja ativar login desse usuário?'
-                active = true
-                break
-            default:
-                console.log('Erro na action')
-                break
-        }
-        if (window.confirm(question)) {
-            await userModel.activeDesactiveLoginUser(uuid, active)
-            let users = userModel.getUsersSnapshot() //recupera lista atualizada
-            setUsersList(users)
-        }
-    }
     
     const handleDelete = async(e, uuid) => {
         if (window.confirm('Deseja deletar esse usuário do sistema?')) {
@@ -113,11 +74,6 @@ export const ListSchedule = (props) => {
             }
         }
     }
-
-    const pull_userData = (data) => {
-        setUserData(data);
-        props.func(userData);
-    } 
 
   return (
     <Card cardTitle={"Minhas consultas"} maxWidth={"100%"}>

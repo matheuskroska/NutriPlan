@@ -128,7 +128,9 @@ export const Schedule = (props) => {
         let month = ((startDate.getMonth()+1) < 10) ? "0"+(startDate.getMonth()+1) : (startDate.getMonth()+1) 
         let date = day + '/' + month + '/' + startDate.getFullYear()
 
-        let time = startDate.getHours() + ':' + startDate.getMinutes()
+        let hours = (startDate.getHours() < 10) ? "0"+startDate.getHours() : startDate.getHours()
+        let minutes = (startDate.getMinutes() < 10) ? "0"+startDate.getMinutes() : startDate.getMinutes()
+        let time = hours + ':' + minutes
         
         let nutriId = document.getElementById('selectNutri').value
         let appointmentModel = new AppointmentModel()
