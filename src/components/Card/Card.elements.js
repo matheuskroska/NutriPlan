@@ -45,11 +45,20 @@ export const CardInputMask = styled(InputMask)`
 
 
 export const CardWrapper = styled.div`
+    margin: ${props => props.margin2 || "0"};
     display: block;
-    padding: 26px 32px;
+    padding: ${props => props.padding || "26px 32px"};
     box-shadow: ${props => props.boxShadow || "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"};
-    background-color: rgb(111 140 67 / 90%);
+    background-color: ${props => props.bgColor || "rgb(111 140 67 / 90%)"}; 
     border-radius: ${props => props.borderRadius || "0 0 5px 5px"};
+`
+
+export const CardImg = styled.img`
+    width: 100%;
+    object-fit: cover;
+    max-height: 230px;
+    height: 100%;
+    border-radius: 5px;
 `
 
 export const CardItem = styled.div`
@@ -312,4 +321,15 @@ export const CardContentCol = styled.div`
             color: var(--font-soft);
         }
     `};
+`
+
+export const CardSlider = styled.div`
+   a {
+        margin-bottom: 10px;
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+        display: block;
+        color: #fff;
+   }
 `

@@ -11,6 +11,7 @@ import { EditUser } from './pages/InfoPanel/EditUser';
 import { Schedule } from './pages/Schedule/Schedule';
 import { EditProfile } from './pages/InfoPanel/EditProfile';
 import { ListUser } from './pages/InfoPanel/ListUser';
+import { ListSchedule } from './pages/InfoPanel/ListSchedule';
 
 function App() {
 
@@ -31,7 +32,9 @@ function App() {
                 <Route exact path="/editar-usuario/:uuid" element={<EditUser/>} />
                 <Route exact path="/editar-perfil" element={<EditProfile/>} />
                 <Route exact path="/lista-usuarios" element={<ListUser/>} />
+                <Route exact path="/info-panel" element={<InfoPanel/>} />
                 <Route exact path="/agendar-consulta" element={<Schedule/>} />
+                <Route exact path="/minhas-consultas" element={<ListSchedule/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>
