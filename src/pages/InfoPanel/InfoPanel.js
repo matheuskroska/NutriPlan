@@ -4,7 +4,7 @@ import { Card, InfoMenu } from '../../components';
 import {CardContainer, CardContent} from '../../components/Card/Card.elements';
 import { EditProfile } from './EditProfile';
 import { EditUser } from './EditUser';
-import { Schedule } from '../Schedule/Schedule';
+import { Schedule } from '../Schedule/ScheduleAppointment';
 import { ListUser } from './ListUser';
 
 export const InfoPanel = () => {

@@ -14,11 +14,11 @@ import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import UserModel from '../../db/UserModel'
 import ScheduleModel from '../../db/ScheduleModel'
+import moment from "moment";
 
 registerLocale("pt-BR", pt)
 
-export const Schedule = (props) => {
-
+export const ScheduleAppointment = () => {
     const { currentUser } = useContext(AuthContext)
     const [startDate, setStartDate] = useState(null)
     const [minDate, setMinDate] = useState(null)
@@ -27,9 +27,11 @@ export const Schedule = (props) => {
     const [nutritionist, setNutritionist] = useState(null)
     const [minDay, setMinDay] = useState(null)
     const [minMonth, setMonth] = useState(null)
+    const [nutriDates, setNutriDates] = useState(null)
     const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
     const scheduleModel = new ScheduleModel()
+    const appointmentModel = new AppointmentModel()
 
     const scrollToItem = () => {
         setTimeout(() => {
@@ -51,17 +53,15 @@ export const Schedule = (props) => {
             setMinDate(addDays(date, 2))
             setMinDay(addDays(date, 2).getDate())
             setMonth(addDays(date, 2).getMonth())
-        } else if (date.getDay() === 0 || hours + 3 > 17) { //Domingo, seta data minima para segunda, ou hora + 3 > 17, seta proximo dia
+        } else if (date.getDay() === 0 || (hours + 3 > 17)) { //Domingo, seta data minima para segunda, ou hora + 3 > 17, seta proximo dia
             setMinDate(addDays(date, 1))
             setMinDay(addDays(date, 1).getDate())
             setMonth(addDays(date, 1).getMonth())
         } else {
-            if (minutes > 30) {
-                setMinDate(addDays(date, 1))
-                setMinDay(addDays(date, 1).getDate())
-                setMonth(addDays(date, 1).getMonth())
-            } else {
-                //exclui as próximas 3 horas da listagem
+            if (hours + 3 == 17 && minutes > 30) {
+                // setMinDate(addDays(date, 1))
+                // setMinDay(addDays(date, 1).getDate())
+                // setMonth(addDays(date, 1).getMonth())
                 setExcludedTimes([
                     setHours(setMinutes(date, 0), hours),
                     setHours(setMinutes(date, 30), hours),
@@ -75,6 +75,17 @@ export const Schedule = (props) => {
                 setMinDate(date)
                 setMinDay(date.getDate())
                 setMonth(date.getMonth())
+            } else {
+                //exclui as horas passadas da listagem
+                let timesExclude = []
+                for (let i = hours - 8; i >= 0; i--) {
+                    timesExclude.push(setHours(setMinutes(date, 0), hours - i))
+                    timesExclude.push(setHours(setMinutes(date, 30), hours - i))
+                }
+                setExcludedTimes(timesExclude)
+                setMinDate(date)
+                setMinDay(date.getDate())
+                setMonth(date.getMonth())
             }
         }
     }
@@ -83,7 +94,6 @@ export const Schedule = (props) => {
         let date = new Date()
         let hours = date.getHours()
         let minutes = date.getMinutes()
-        console.log('handleOpen')
         if (date.getDay() === 6 || date.getDay() === 0 || hours + 3 > 17) {
             scrollToItem()
         } else {
@@ -122,7 +132,7 @@ export const Schedule = (props) => {
         }
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault()
         let day = (startDate.getDate() < 10) ? "0"+startDate.getDate() : startDate.getDate()
         let month = ((startDate.getMonth()+1) < 10) ? "0"+(startDate.getMonth()+1) : (startDate.getMonth()+1) 
@@ -133,8 +143,8 @@ export const Schedule = (props) => {
         let time = hours + ':' + minutes
         
         let nutriId = document.getElementById('selectNutri').value
-        let appointmentModel = new AppointmentModel()
-        appointmentModel.add(currentUser.uuid, nutriId, date, time)
+        await appointmentModel.add(currentUser.uuid, nutriId, date, time)
+        await scheduleModel.addNew(nutriId, date, time)
     }
 
     const hangleChangeSelect = async (e) => {
@@ -145,15 +155,51 @@ export const Schedule = (props) => {
             scheduleNutri.map(sched => {
                 let dateArr = sched.data.split("/")
                 let timeArr = sched.horario.split(":")
-                let date = new Date(dateArr[2], dateArr[1], dateArr[0], timeArr[0], timeArr[1])
+                let date = new Date(dateArr[2], dateArr[1]-1, dateArr[0], timeArr[0]*1, timeArr[1]*1)
                 dates.push(date)
             })
+            setNutriDates(dates)
             setExcludedTimes(dates)
         } else {
-            setExcludedTimes([])
+            setExcludedTimes(excludedTimes)
         }
-        
     }
+
+    const hangleChangeDateTime = async (dateSel) => {
+        let scheduleNutri = await scheduleModel.getAll(nutritionist)
+        if (scheduleNutri.length > 0) {
+            let dates = []
+            scheduleNutri.map(sched => {
+                let dateArr = sched.data.split("/")
+                let timeArr = sched.horario.split(":")
+                if (dateArr[0]*1 === dateSel.getDate()) {
+                    let date = new Date(dateArr[2], dateArr[1]-1, dateArr[0], timeArr[0]*1, timeArr[1]*1)
+                    dates.push(date)
+                }
+            })
+            setNutriDates(dates)
+            setExcludedTimes(dates)
+        } else {
+            setExcludedTimes(excludedTimes)
+        }
+    }
+
+    // const getExcludedTimes = () => {
+    //     let arrSpecificDates = []
+    //     for (let i = 0; i < nutriDates.length; i++) {
+    //       if (moment(startDate, moment.ISO_8601).format("YYYY/MM/DD") === moment(nutriDates[i], moment.ISO_8601).format("YYYY/MM/DD")) {
+    //         arrSpecificDates.push(moment(nutriDates[i], moment.ISO_8601).toObject())
+    //       }
+    //     }
+
+    //     let arrExcludedTimes = []
+    //     // arrExcludedTimes.push(excludedTimes)
+    //     for (let i = 0; i < arrSpecificDates.length; i++) {
+    //       arrExcludedTimes.push(setHours(setMinutes(new Date(arrSpecificDates[i].minutes),arrSpecificDates[i].hours)));
+    //       console.log(arrExcludedTimes)
+    //       setExcludedTimes(arrExcludedTimes)
+    //     }
+    // }
 
     const displayNutritionists = () => {
         var sel = document.getElementById('selectNutri')
@@ -189,7 +235,6 @@ export const Schedule = (props) => {
                                 
                                 <select className="select-nutri" id="selectNutri"></select>
                                 {/* {!!nutritionists && nutritionists.forEach(nutri => {
-                                    console.log('nutri.nome_completo', nutri.nome_completo)
                                     return (
                                         <option value="Teste">Teste - {nutri.nome_completo}</option>
                                     )
@@ -200,6 +245,7 @@ export const Schedule = (props) => {
                                     // disabled
                                     selected={startDate}
                                     onChange={handleChange}
+                                    onSelect={hangleChangeDateTime}
                                     locale={pt}
                                     minDate={minDate}
                                     maxDate={addMonths(new Date(), 3)}

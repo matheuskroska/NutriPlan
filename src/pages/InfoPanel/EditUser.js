@@ -24,8 +24,6 @@ export const EditUser = () => {
     const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
 
-    console.log(user)
-
     const getUserData = async () => {
         let userData = await userModel.getUserByUid(uuid)
         let crnTemp = await nutritionistModel.getCrnByUuid(uuid)

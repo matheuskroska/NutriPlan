@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
 import { addDays } from 'date-fns'
 
 class ScheduleModel {
@@ -24,14 +24,34 @@ class ScheduleModel {
         }
     }
 
-    async getAll(nutriId) {
-        const q = query(collection(db, this.table), where("nutricionista_uuid", "==", nutriId))
+    async addNew(nutritionist_uuid, date, time) {
+        await addDoc(collection(db, this.table), {
+            nutricionista_uuid: nutritionist_uuid,
+            data: date,
+            horario: time
+        })
+    }
+
+    async getAll(nutriUuid) {
+        const q = query(collection(db, this.table), where("nutricionista_uuid", "==", nutriUuid))
         const data = await getDocs(q)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
-            docId: doc.id
+            id: doc.id
         }))
         return dataResult
+    }
+
+    async removeDateTime(date, time, nutriUuid) {
+        const q = query(collection(db, this.table), where("data", "==", date), where("horario", "==", time), where("nutricionista_uuid", "==", nutriUuid))
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+        if (dataResult.length === 1) {
+            await deleteDoc(doc(db, this.table, dataResult[0].id))
+        }
     }
 }
 
