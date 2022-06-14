@@ -5,9 +5,6 @@ import { StyledLink, StyledRadixLink } from "../Link/Link.elements"
 import avatar from '../../assets/images/user-test.png';
 import { AuthContext } from '../../firebase/Auth';
 
-
-
-
 export const InfoMenu = (props) => {
     const [menuState, setMenuState] = useState(props.menuState);
     const { currentUser } = useContext(AuthContext)	

@@ -7,7 +7,6 @@ import { StyledButton } from '../../components/Button/Button.elements';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
 import { ArrowRightIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import UserModel from '../../db/UserModel';
-import Animated from 'react-mount-animation';
 import NutritionistModel from '../../db/NutritionistModel';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
 
@@ -76,7 +75,7 @@ export const EditUser = () => {
         getUserData()
     }
   
-        return (
+    return (
         <>  
             {!!loader && (
                 <>
@@ -168,6 +167,5 @@ export const EditUser = () => {
                 </CardContainer>
             </Card>   
         </>
-        )
-    
+    )
 }

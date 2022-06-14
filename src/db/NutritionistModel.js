@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { collection, getDocs, query, setDoc, doc, getDoc, updateDoc, where } from 'firebase/firestore'
+import { collection, getDocs, query, setDoc, doc, getDoc, where } from 'firebase/firestore'
 import UserModel from './UserModel'
 import ScheduleModel from './ScheduleModel'
 

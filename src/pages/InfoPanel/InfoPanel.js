@@ -1,12 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../firebase/Auth';
+import React from 'react';
 import { Card, InfoMenu } from '../../components';
 import {CardContainer} from '../../components/Card/Card.elements';
 
 export const InfoPanel = () => {
-
-    const { currentUser } = useContext(AuthContext)
-
     return (
         <>
             <Card maxWidth={"100%"} cardTitle={"Minha conta"}>

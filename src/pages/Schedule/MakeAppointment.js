@@ -34,14 +34,12 @@ export const MakeAppointment = () => {
     const [message, setMessage] = useState()
 
     const navigate = useNavigate()
-    const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
     const scheduleModel = new ScheduleModel()
     const appointmentModel = new AppointmentModel()
 
     const scrollToItem = () => {
         setTimeout(() => {
-            // let items = document.getElementsByClassName('react-datepicker__time-list-item--disabled')
             let items = document.getElementsByClassName('react-datepicker__time-list-item')
             for (let i = 0; i < items.length; i++) {
                 if (items[i].innerHTML == '07:30') {

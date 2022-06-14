@@ -12,7 +12,6 @@ import { registerLocale } from 'react-datepicker'
 import pt from "date-fns/locale/pt-BR"
 import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
-import UserModel from '../../db/UserModel'
 import ScheduleModel from '../../db/ScheduleModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
@@ -33,7 +32,6 @@ export const EditAppointment = () => {
     const [loader, setLoader] = useState(false)
     const [message, setMessage] = useState()
 
-    const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
     const scheduleModel = new ScheduleModel()
     const appointmentModel = new AppointmentModel()

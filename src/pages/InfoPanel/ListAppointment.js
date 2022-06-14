@@ -9,9 +9,7 @@ import { Card, InfoMenu } from '../../components';
 import AppointmentModel from '../../db/AppointmentModel';
 import ScheduleModel from '../../db/ScheduleModel';
 
-
 export const ListAppointment = () => {
-
     const [usersList, setUsersList] = useState(null)
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");

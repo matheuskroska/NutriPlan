@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu, Loader } from '../../components';
 import { CardContainer, CardInput, CardInputMask, CardItem, CardItemContainer } from '../../components/Card/Card.elements';
@@ -10,7 +10,7 @@ import Animated from 'react-mount-animation';
 import UserModel from '../../db/UserModel';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
 
-export const EditProfile = (props) => {
+export const EditProfile = () => {
     const { currentUser } = useContext(AuthContext)
     const [user, setUser] = useState({
         uuid: currentUser.uuid,
