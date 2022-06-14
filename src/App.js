@@ -8,11 +8,11 @@ import { InfoPanel } from './pages/InfoPanel/InfoPanel';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 import { EditUser } from './pages/InfoPanel/EditUser';
-import { MakeAppointment } from './pages/Schedule/MakeAppointment';
+import { MakeAppointment } from './pages/Appointment/MakeAppointment';
 import { EditProfile } from './pages/InfoPanel/EditProfile';
 import { ListUser } from './pages/InfoPanel/ListUser';
 import { ListAppointment } from './pages/InfoPanel/ListAppointment';
-import { EditAppointment } from './pages/Schedule/EditAppointment';
+import { EditAppointment } from './pages/Appointment/EditAppointment';
 
 function App() {
 

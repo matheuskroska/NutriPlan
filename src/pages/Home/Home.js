@@ -1,8 +1,6 @@
 import React, { useContext } from "react"
-import { useNavigate } from "react-router-dom"
 import UserModel from "../../db/UserModel"
 import { AuthContext } from "../../firebase/Auth"
-import slider1 from '../../assets/images/homeslider01.png';
 import slider2 from '../../assets/images/homeslider02.png';
 import slider3 from '../../assets/images/homeslider03.png';
 import Slider from "react-slick";
@@ -16,17 +14,12 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 export const Home = () => {
 
     const { currentUser } = useContext(AuthContext)
-    const navigate = useNavigate();
 
     if (!!currentUser) {
         if (currentUser.acesso === 0 && currentUser.ativo === false) {
             let userModel = new UserModel()
             userModel.logout()
         }
-    }
-
-    const handleListUsers = () => {
-        navigate("/lista-usuarios", { replace: true });
     }
 
     var settings = {

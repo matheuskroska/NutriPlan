@@ -36,10 +36,12 @@ export const EditProfile = () => {
     }
 
     const handleSubmit = async(e) => {
+        setLoader(true)
         e.preventDefault()
         await changeUserData()
         setMessage("Os dados foram alterados com sucesso");
         setModalMessage(true)
+        setLoader(false)
     }
 
     const changeUserData = async() => {

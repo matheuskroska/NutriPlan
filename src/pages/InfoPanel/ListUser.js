@@ -9,15 +9,13 @@ import PatientModel from '../../db/PatientModel';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu } from '../../components';
 
-export const ListUser = (props) => {
+export const ListUser = () => {
     const [usersList, setUsersList] = useState(null)
     const [nutriStringify, setNutriStringify] = useState(null)
     const [nutritionistsList, setNutritionistsList] = useState(null)
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
-    const [menuState, setMenuState] = useState("Lista de usuários");	
-    const [userData, setUserData] = useState(null);
     
     const userModel = new UserModel()
     const patientModel = new PatientModel()

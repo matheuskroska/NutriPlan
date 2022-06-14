@@ -12,7 +12,6 @@ import { registerLocale } from 'react-datepicker'
 import pt from "date-fns/locale/pt-BR"
 import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
-import ScheduleModel from '../../db/ScheduleModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 registerLocale("pt-BR", pt)
@@ -33,7 +32,6 @@ export const EditAppointment = () => {
     const [message, setMessage] = useState()
 
     const nutritionistModel = new NutritionistModel()
-    const scheduleModel = new ScheduleModel()
     const appointmentModel = new AppointmentModel()
     
     const selectDateAndNutri = async () => {
@@ -51,7 +49,7 @@ export const EditAppointment = () => {
             // let items = document.getElementsByClassName('react-datepicker__time-list-item--disabled')
             let items = document.getElementsByClassName('react-datepicker__time-list-item')
             for (let i = 0; i < items.length; i++) {
-                if (items[i].innerHTML == '07:30') {
+                if (items[i].innerHTML === '07:30') {
                     items[i].scrollIntoView()
                 }
             }
@@ -129,7 +127,8 @@ export const EditAppointment = () => {
         }
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
+        setLoader(true)
         e.preventDefault()
         let day = (startDate.getDate() < 10) ? "0"+startDate.getDate() : startDate.getDate()
         let month = ((startDate.getMonth()+1) < 10) ? "0"+(startDate.getMonth()+1) : (startDate.getMonth()+1) 
@@ -141,27 +140,10 @@ export const EditAppointment = () => {
         
         appoint.data = date
         appoint.horario = time
-        appointmentModel.update(docId, appoint)
+        await appointmentModel.update(docId, appoint)
         setMessage("Os dados foram alterados com sucesso");
         setModalMessage(true)
-    }
-
-    const hangleChangeSelect = async (e) => {
-        setNutritionist(e.target.value)
-        let scheduleNutri = await scheduleModel.getAll(e.target.value)
-        if (scheduleNutri.length > 0) {
-            let dates = []
-            scheduleNutri.map(sched => {
-                let dateArr = sched.data.split("/")
-                let timeArr = sched.horario.split(":")
-                let date = new Date(dateArr[2], dateArr[1], dateArr[0], timeArr[0], timeArr[1])
-                dates.push(date)
-            })
-            setExcludedTimes(dates)
-        } else {
-            setExcludedTimes([])
-        }
-        
+        setLoader(false)
     }
 
     const displayNutritionists = () => {
@@ -186,7 +168,6 @@ export const EditAppointment = () => {
                 sel.appendChild(opt)
             })
             sel.setAttribute("disabled", "disabled")
-            // sel.addEventListener("change", hangleChangeSelect)
         }
     }
 

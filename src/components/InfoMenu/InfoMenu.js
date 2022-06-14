@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StyledRadixToggleGroup } from "../Button/Button.elements"
 import { CardAvatar, CardMenuContainer, CardMenuHeader, CardMenuItem, CardParagraph } from "../Card/Card.elements"
 import { StyledLink, StyledRadixLink } from "../Link/Link.elements"
 import avatar from '../../assets/images/user-test.png';
-import { AuthContext } from '../../firebase/Auth';
+import { AuthContext } from '../../firebase/Auth'
 
 export const InfoMenu = (props) => {
-    const [menuState, setMenuState] = useState(props.menuState);
+    const menuState = props.menuState
     const { currentUser } = useContext(AuthContext)	
 
     return (

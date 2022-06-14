@@ -12,9 +12,7 @@ import { registerLocale } from 'react-datepicker'
 import pt from "date-fns/locale/pt-BR"
 import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
-import UserModel from '../../db/UserModel'
 import ScheduleModel from '../../db/ScheduleModel'
-import moment from "moment"
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 registerLocale("pt-BR", pt)
@@ -42,7 +40,7 @@ export const MakeAppointment = () => {
         setTimeout(() => {
             let items = document.getElementsByClassName('react-datepicker__time-list-item')
             for (let i = 0; i < items.length; i++) {
-                if (items[i].innerHTML == '07:30') {
+                if (items[i].innerHTML === '07:30') {
                     items[i].scrollIntoView()
                 }
             }
@@ -62,7 +60,7 @@ export const MakeAppointment = () => {
             setMinDay(addDays(date, 1).getDate())
             setMonth(addDays(date, 1).getMonth())
         } else {
-            if (hours + 3 == 17 && minutes > 30) {
+            if (hours + 3 === 17 && minutes > 30) {
                 // setMinDate(addDays(date, 1))
                 // setMinDay(addDays(date, 1).getDate())
                 // setMonth(addDays(date, 1).getMonth())
@@ -130,6 +128,7 @@ export const MakeAppointment = () => {
     }
 
     const handleClick = async (e) => {
+        setLoader(true)
         e.preventDefault()
         let day = (startDate.getDate() < 10) ? "0"+startDate.getDate() : startDate.getDate()
         let month = ((startDate.getMonth()+1) < 10) ? "0"+(startDate.getMonth()+1) : (startDate.getMonth()+1) 
@@ -144,6 +143,7 @@ export const MakeAppointment = () => {
         await scheduleModel.addNew(nutriId, date, time)
         setMessage("Os dados foram salvos com sucesso")
         setModalMessage(true)
+        setLoader(false)
     }
 
     const hangleChangeSelect = async (e) => {
