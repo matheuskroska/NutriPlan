@@ -14,6 +14,15 @@ import './index.css'
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
     const [text, updateText] = useState([])
+    const [textList, setTextList] = useState({
+        sunday: '',
+        monday: '',
+        tuesday: '',
+        wednesday: '',
+        thursday: '',
+        friday: '',
+        saturday: '',
+    })
 
     const item = {
         id: v4(),
@@ -96,23 +105,45 @@ export const Create = () => {
         })
     }
 
-    const addItem = () => {
+    const addItem = (e) => {
+        const { name } = e.target
+        const key = name
+        if (!textList[key]['value']) {
+            return false
+        }
         updateItemsList(prev => {
             return {
                 ...prev,
-                sunday: {
-                    title: "Domingo",
+                [key]: {
+                    title: textList[key]['title'],
                     items: [
                         {
                             id: v4(),
-                            name: text
+                            name: textList[key]['value']
                         },
-                        ...prev.sunday.items
+                        ...prev[key].items
                     ]
                 }
             }
         })
-        updateText("")
+        setTextList(prev => ({
+            ...prev,
+            [key]: {
+                title: textList[key]['title'],
+                value: ''
+            }
+        }))
+    }
+
+    const handleChange = (e) => {
+        const { name, value, title } = e.target
+        setTextList(prev => ({
+            ...prev,
+            [name]: {
+                title: title,
+                value: value
+            }
+        }))
     }
 
     if (!!!currentUser) {
@@ -162,6 +193,8 @@ export const Create = () => {
                                                             )
                                                         })}
                                                         {provided.placeholder}
+                                                        <input type="text" value={textList[`${key}`]['value']} name={key} title={data.title} onChange={handleChange} autoComplete="off"></input>
+                                                        <StyledButton onClick={(e) => addItem(e)} name={key} primary>Adicionar</StyledButton>
                                                     </div>
                                                 )
                                             }}
