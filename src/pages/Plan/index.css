@@ -1,22 +1,16 @@
-.App {
-	display: flex;
-	width: 100%;
-	justify-content: space-around;
-}
-
-.App .column {
-	width: 100px;
-	min-height: 200px;
-    max-height: 300px;
-	margin: 20px;
-    border-radius: 5px;
-    text-align: center;
-    background-color: #fff;
-    color: #4A4D26; /* var(--font-dark) */
-}
-
 .column>h3 {
     padding: 5px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin: 5px 0;
+}
+
+.column {
+	width: 100%;
+	background-color: #fff;
+	padding: 0 10px;
+	border-radius: 10px;
 }
 
 .droppable-col {
@@ -24,24 +18,17 @@
 	flex-direction: column;
 }
 
-/* .droppable-col:nth-child(4n - 3), .droppable-col:nth-child(4n) {
-     background-color: red;
-}
- .droppable-col:nth-child(odd) {
-     background-color: blue;
-}
- */
 .droppable-col {
     height: 100%;
     width: 100%;
 }
 
 .item {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 	color: white;
 	border: 1px solid white;
 	padding: 5px;
-	border-radius: 7px;
+	border-radius: 10px;
 }
 
 .item:nth-child(even) {

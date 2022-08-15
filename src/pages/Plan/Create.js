@@ -3,6 +3,10 @@ import React, { useContext, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { Navigate } from 'react-router-dom'
 import { v4 } from 'uuid'
+import { Card, InfoMenu } from '../../components'
+import { StyledButton } from '../../components/Button/Button.elements'
+import { CardContainer, CardContent, CardContentCol, CardContentRow } from '../../components/Card/Card.elements'
+import { Dialog } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
 import './index.css'
 
@@ -117,45 +121,57 @@ export const Create = () => {
     }
 
     return (
-        <div>
-            <div className={text}>
-                <input type="text" value={text} onChange={(e) => updateText(e.target.value)}></input>
-                <button onClick={addItem}>Adicionar</button>
-            </div>
-            <br />
-            <div className="App">
-                <DragDropContext onDragEnd={handleDragEnd}>
-                    {_.map(itemsList, (data, key) => {
-                        return (
-                            <div key={key} className={"column"}>
-                                <h3>{data.title}</h3>
-                                <Droppable droppableId={key}>
-                                    {(provided) => {
-                                        return (
-                                            <div ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
-                                                {data.items.map((el, index) => {
-                                                    return (
-                                                        <Draggable key={el.id} index={index} draggableId={el.id}>
-                                                            {(provided, snapshot) => {
-                                                                return (
-                                                                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`}>
-                                                                        {el.name}
-                                                                    </div>
-                                                                )
-                                                            }}
-                                                        </Draggable>
-                                                    )
-                                                })}
-                                                {provided.placeholder}
-                                            </div>
-                                        )
-                                    }}
-                                </Droppable>
-                            </div>
-                        )
-                    })}
-                </DragDropContext>
-            </div>
-        </div>
+        <Card cardTitle={"Criar plano nutricional"} maxWidth={"100%"}>
+            <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
+                <InfoMenu menuState={"Criar plano nutricional"}/>
+                <CardContent>
+                    <CardContentRow className={text}>
+                        <CardContentCol>
+                            <input type="text" value={text} onChange={(e) => updateText(e.target.value)}></input>
+                            <StyledButton onClick={addItem} primary>Adicionar</StyledButton>
+                        </CardContentCol>
+                    </CardContentRow>
+                    <CardContentRow>
+                        <CardContentCol>
+                            <Dialog></Dialog>
+                        </CardContentCol>
+                    </CardContentRow>
+                    <CardContentRow gap={"0 10px"}>
+                        <DragDropContext onDragEnd={handleDragEnd}>
+                            {_.map(itemsList, (data, key) => {
+                                return (
+                                    <div key={key} className={"column"}>
+                                        <h3>{data.title}</h3>
+                                        <Droppable droppableId={key}>
+                                            {(provided) => {
+                                                return (
+                                                    <div ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
+                                                        {data.items.map((el, index) => {
+                                                            return (
+                                                                <Draggable key={el.id} index={index} draggableId={el.id}>
+                                                                    {(provided, snapshot) => {
+                                                                        return (
+                                                                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`}>
+                                                                                {el.name}
+                                                                            </div>
+                                                                        )
+                                                                    }}
+                                                                </Draggable>
+                                                            )
+                                                        })}
+                                                        {provided.placeholder}
+                                                    </div>
+                                                )
+                                            }}
+                                        </Droppable>
+                                    </div>
+                                )
+                            })}
+                        </DragDropContext>
+                    </CardContentRow>
+                </CardContent>
+            </CardContainer>
+        </Card>
+
     )
 }
