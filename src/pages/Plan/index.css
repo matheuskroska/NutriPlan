@@ -1,14 +1,15 @@
 .column>h3 {
     padding: 5px;
-	font-weight: bold;
-	font-size: 14px;
+	font-size: 1.6em;
 	text-align: center;
-	margin: 5px 0;
+	margin: 5px 0 10px 0;
+	color: var(--font-dark);
+	font-weight: 500;
 }
 
 .column {
 	width: 100%;
-	background-color: #fff;
+	background-color: #d7d7d7;
 	padding: 0 10px;
 	border-radius: 10px;
 }
@@ -29,6 +30,12 @@
 	border: 1px solid white;
 	padding: 5px;
 	border-radius: 10px;
+	font-size: 1.3em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    overflow: hidden;
+	text-transform: uppercase;
 }
 
 .item:nth-child(even) {

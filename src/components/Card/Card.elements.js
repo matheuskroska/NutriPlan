@@ -137,6 +137,9 @@ export const CardMessage = styled.h2`
 `
 
 export const CardMenuContainer = styled.div`
+    min-width: ${props => props.mState ? "0!important" : "255px!important"};
+    width: ${props => props.mState ?  "0!important" : "100%"};
+    position: relative;
     color: var(--font-dark);
     text-align: center;
     background-color: rgb(170 215 108 / 90%);
@@ -144,9 +147,17 @@ export const CardMenuContainer = styled.div`
     min-width: 255px;
     margin-right: 32px;
     max-height: max-content;
+    transition: 0.5s;
+`
+
+export const CardCloseButton = styled.button`
+    position: absolute;
+    top: -20px;
+    left: 0;
 `
 
 export const CardMenuHeader = styled.div`
+    opacity: ${props => props.mState ? "1" : "0"};
     width: 100%;
     background-color: rgb(255 255 255 / 80%);
     color: var(--font-dark);
@@ -192,6 +203,7 @@ export const CardContentRow = styled.div`
     padding: 1.5em;
     background-color: rgb(255 255 255 / 80%);
     display: flex;
+    gap: ${props => props.gap};
     justify-content: space-between;
     :first-child {
         border-radius: 5px;
@@ -256,7 +268,7 @@ export const CardContentCol = styled.div`
     white-space: nowrap;
     align-items: center;
     justify-content: ${props => props.justify || "center"};
-    overflow: hidden;
+    overflow: ${props => props.overflowVisible || "hidden"};
     text-overflow: ellipsis;
     width: ${props => props.icon ? "5%" : "100%"};
     max-width: ${props => props.maxWidth || "initial"};
@@ -289,8 +301,9 @@ export const CardContentCol = styled.div`
         }
         input {
             border: 1px solid var(--secondary);
-            padding: 5px 10px;
+            height: 35px;
             border-radius: 5px;
+            padding: 0 15px;
         }
     `
     };

@@ -18,13 +18,15 @@ const cssButon = css`
     border: 0;
     gap: 0 10px;
     padding: ${props => props.hasIconRight ? "0 5px 0 15px" : (props.hasIconLeft ? "0 15px 0 5px" : "0 15px")};
-    width: 100%;
+    width: ${props => props.width || "100%"};
     font-family: inherit;
     margin: 0 auto;
     margin-top: ${props => props.marginTop ? props.marginTop : "0"};
+    margin-left: ${props => props.mLeft};
 `
 
 export const StyledRadixToggleGroup = styled(ToggleGroupPrimitive.Root)`
+    opacity: ${props => props.mState ? "1" : "0"};
     display: flex;
     justify-content: initial;
     width: 100%;
