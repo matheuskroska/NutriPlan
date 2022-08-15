@@ -1,19 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../firebase/Auth';
+import React from 'react';
 import { Card, InfoMenu } from '../../components';
-import {CardContainer, CardContent} from '../../components/Card/Card.elements';
-import { EditProfile } from './EditProfile';
-import { EditUser } from './EditUser';
-import { Schedule } from '../Schedule/Schedule';
-import { ListUser } from './ListUser';
+import {CardContainer} from '../../components/Card/Card.elements';
 
 export const InfoPanel = () => {
-
-    const { currentUser } = useContext(AuthContext)
-    const [menuState, setMenuState] = useState("Lista de usuários");	
-    const [userData, setUserData] = useState(null);
-
-
     return (
         <>
             <Card maxWidth={"100%"} cardTitle={"Minha conta"}>

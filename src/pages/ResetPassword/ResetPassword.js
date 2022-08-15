@@ -7,7 +7,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import ResetPasswordModel from '../../db/ResetPasswordModel'
 
 export const ResetPassword = () => {
-
     const [email, setEmail] = useState(null)
     const [showBtnLogin, setShowBtnLogin] = useState(false)
     const [showNewPwd, setShowNewPwd] = useState(false)

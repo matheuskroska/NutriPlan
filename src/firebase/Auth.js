@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
                 let adminModel = new AdminModel()
                 userInfo.isAdmin = await adminModel.isAdmin(user.uid)
                 let nutritionistModel = new NutritionistModel()
-                userInfo.isNutritionist = await nutritionistModel.isNutritionist(user.uid)
+                userInfo.isNutri = await nutritionistModel.isNutritionist(user.uid)
                 let patientModel = new PatientModel()
                 userInfo.isPatient = await patientModel.isPatient(user.uid)
                 setCurrentUser(userInfo)

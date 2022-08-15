@@ -1,40 +1,30 @@
 import React, { useContext, useState } from 'react';
 import { CardCol, CardColHeader, CardContainer, CardContent, CardContentCol, CardContentRow } from '../../components/Card/Card.elements';
-import { CheckIcon, Cross2Icon, MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
+import { MagnifyingGlassIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 import { Navigate } from 'react-router-dom';
 import { StyledLink} from '../../components/Link/Link.elements';
 import UserModel from '../../db/UserModel';
-import NutritionistModel from '../../db/NutritionistModel';
-import PatientModel from '../../db/PatientModel';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu } from '../../components';
 import AppointmentModel from '../../db/AppointmentModel';
+import ScheduleModel from '../../db/ScheduleModel';
 
-
-export const ListSchedule = (props) => {
-
+export const ListAppointment = () => {
     const [usersList, setUsersList] = useState(null)
-    const [nutriStringify, setNutriStringify] = useState(null)
-    const [nutritionistsList, setNutritionistsList] = useState(null)
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["data", "horario"]); //colunas da base para realizar busca
-    const [menuState, setMenuState] = useState("Lista de usuários");	
-    const [userData, setUserData] = useState(null);
+    const [usersName, setUsersName] = useState([]);
     const [scheduleList, setScheduleList] = useState(null)
     
     const userModel = new UserModel()
-    const patientModel = new PatientModel()
-    const nutritionistModel = new NutritionistModel()
     const appointmentModel = new AppointmentModel()
+    const scheduleModel = new ScheduleModel()
 
     const getUsers = async () => {
         let users = await userModel.getUsers()
-        let nutritionistModel = new NutritionistModel()
-        let nutritionists = await nutritionistModel.getNutritionists(users)
-        setNutritionistsList(nutritionists)
-        let nutriStr = JSON.stringify(nutritionists)
-        setNutriStringify(nutriStr)
+        let usersNameTmp = await userModel.getUsersName()
+        setUsersName(usersNameTmp)
         setUsersList(users)
     }
 
@@ -46,7 +36,7 @@ export const ListSchedule = (props) => {
 
     if (!!currentUser && !!!usersList) {
         getUsers()
-        !currentUser.isNutritionist && getSchedules();
+        !currentUser.isNutri && getSchedules();
     } else if (!!!currentUser) {
         return <Navigate to="/login" replace />
     }
@@ -64,13 +54,15 @@ export const ListSchedule = (props) => {
         });
     }
     
-    const handleDelete = async(e, uuid) => {
-        if (window.confirm('Deseja deletar esse usuário do sistema?')) {
-            if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
-                await patientModel.delete(uuid)
-                await nutritionistModel.delete(uuid)
-                let users = userModel.getUsersSnapshot() //recupera lista atualizada
-                setUsersList(users)
+    const handleDelete = async(e, docId) => {
+        if (window.confirm('Deseja deletar essa consulta?')) {
+            if (window.confirm('Tem certeza que deseja deletar essa consulta?')) {
+                let dataDoc = await appointmentModel.getByDocId(docId)
+                await scheduleModel.removeDateTime(dataDoc.data, dataDoc.horario, dataDoc.nutricionista_uuid)
+                await appointmentModel.delete(docId)
+                // let appointments = appointmentModel.getAllSnapshot(currentUser.uuid) //recupera lista atualizada
+                // console.log(appointments)
+                // setScheduleList(appointments)
             }
         }
     }
@@ -90,16 +82,16 @@ export const ListSchedule = (props) => {
                 </CardContentRow>
                 {!!scheduleList && search(scheduleList).map(data => {
                     return (
-                        <CardContentRow key={"1"}>
+                        <CardContentRow key={data.id}>
                             <CardCol width="33.3%">
                                 <CardContentCol justify={"start"}><strong>{data.data}</strong> - {data.horario}</CardContentCol>
                             </CardCol>
                             <CardCol width="33.3%">
-                                <CardContentCol><strong>{data.nutricionista_uuid}</strong></CardContentCol>
+                                <CardContentCol><strong>{usersName[data.nutricionista_uuid]}</strong></CardContentCol>
                             </CardCol>
                             <CardCol width="33.3%" display="flex">
-                                <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/editar-usuario/`+data.id}><Pencil2Icon/></StyledLink></CardContentCol>
-                                <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.idn)}><StyledLink edit="true" header="true" to={"#"}><TrashIcon/></StyledLink></CardContentCol>
+                                <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.id} edit="true" header="true" to={`/editar-consulta/`+data.id}><Pencil2Icon/></StyledLink></CardContentCol>
+                                <CardContentCol maxWidth={"25px"} onClick={(e) => handleDelete(e, data.id)}><StyledLink edit="true" header="true" to={"#"}><TrashIcon/></StyledLink></CardContentCol>
                             </CardCol>
                         </CardContentRow>
                     )

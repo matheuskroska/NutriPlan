@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import { AuthContext } from '../../firebase/Auth'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { Card, InfoMenu } from '../../components'
+import { Card, InfoMenu, Loader } from '../../components'
 import DatePicker from "react-datepicker"
 import { addMonths, addDays, setHours, setMinutes, getDay } from 'date-fns'
 import "react-datepicker/dist/react-datepicker.css"
@@ -12,14 +12,13 @@ import { registerLocale } from 'react-datepicker'
 import pt from "date-fns/locale/pt-BR"
 import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
-import UserModel from '../../db/UserModel'
-import ScheduleModel from '../../db/ScheduleModel'
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 
 registerLocale("pt-BR", pt)
 
-export const Schedule = (props) => {
-
+export const EditAppointment = () => {
     const { currentUser } = useContext(AuthContext)
+    const { docId } = useParams();
     const [startDate, setStartDate] = useState(null)
     const [minDate, setMinDate] = useState(null)
     const [excludedTimes, setExcludedTimes] = useState(null)
@@ -27,16 +26,30 @@ export const Schedule = (props) => {
     const [nutritionist, setNutritionist] = useState(null)
     const [minDay, setMinDay] = useState(null)
     const [minMonth, setMonth] = useState(null)
-    const userModel = new UserModel()
+    const [appoint, setAppoint] = useState(null)
+    const [modalMessage, setModalMessage] = useState(false);
+    const [loader, setLoader] = useState(false)
+    const [message, setMessage] = useState()
+
     const nutritionistModel = new NutritionistModel()
-    const scheduleModel = new ScheduleModel()
+    const appointmentModel = new AppointmentModel()
+    
+    const selectDateAndNutri = async () => {
+        let appointment = await appointmentModel.getByDocId(docId)
+        let dateArr = appointment.data.split("/")
+        let timeArr = appointment.horario.split(":")
+        let date = new Date(dateArr[2], dateArr[1]-1, dateArr[0], timeArr[0]*1, timeArr[1]*1)
+        setNutritionist(appointment.nutricionista_uuid)
+        setAppoint(appointment)
+        setStartDate(date)
+    }
 
     const scrollToItem = () => {
         setTimeout(() => {
             // let items = document.getElementsByClassName('react-datepicker__time-list-item--disabled')
             let items = document.getElementsByClassName('react-datepicker__time-list-item')
             for (let i = 0; i < items.length; i++) {
-                if (items[i].innerHTML == '07:30') {
+                if (items[i].innerHTML === '07:30') {
                     items[i].scrollIntoView()
                 }
             }
@@ -83,7 +96,6 @@ export const Schedule = (props) => {
         let date = new Date()
         let hours = date.getHours()
         let minutes = date.getMinutes()
-        console.log('handleOpen')
         if (date.getDay() === 6 || date.getDay() === 0 || hours + 3 > 17) {
             scrollToItem()
         } else {
@@ -96,13 +108,6 @@ export const Schedule = (props) => {
     const getNutritionists = async () => {
         let nutritionistsList = await nutritionistModel.getAllNutritionists()
         setNutritionists(nutritionistsList)
-    }
-    
-    if (!!!currentUser) {
-        return <Navigate to="/login" replace />
-    } else if (!!!minDate) {
-        selectMinDate()
-        getNutritionists()
     }
 
     const isWeekday = (date) => {
@@ -118,11 +123,12 @@ export const Schedule = (props) => {
             let stDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, date.getMinutes())
             setStartDate(stDate)
         } else {
-            setStartDate(date)            
+            setStartDate(date)
         }
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
+        setLoader(true)
         e.preventDefault()
         let day = (startDate.getDate() < 10) ? "0"+startDate.getDate() : startDate.getDate()
         let month = ((startDate.getMonth()+1) < 10) ? "0"+(startDate.getMonth()+1) : (startDate.getMonth()+1) 
@@ -132,27 +138,12 @@ export const Schedule = (props) => {
         let minutes = (startDate.getMinutes() < 10) ? "0"+startDate.getMinutes() : startDate.getMinutes()
         let time = hours + ':' + minutes
         
-        let nutriId = document.getElementById('selectNutri').value
-        let appointmentModel = new AppointmentModel()
-        appointmentModel.add(currentUser.uuid, nutriId, date, time)
-    }
-
-    const hangleChangeSelect = async (e) => {
-        setNutritionist(e.target.value)
-        let scheduleNutri = await scheduleModel.getAll(e.target.value)
-        if (scheduleNutri.length > 0) {
-            let dates = []
-            scheduleNutri.map(sched => {
-                let dateArr = sched.data.split("/")
-                let timeArr = sched.horario.split(":")
-                let date = new Date(dateArr[2], dateArr[1], dateArr[0], timeArr[0], timeArr[1])
-                dates.push(date)
-            })
-            setExcludedTimes(dates)
-        } else {
-            setExcludedTimes([])
-        }
-        
+        appoint.data = date
+        appoint.horario = time
+        await appointmentModel.update(docId, appoint)
+        setMessage("Os dados foram alterados com sucesso");
+        setModalMessage(true)
+        setLoader(false)
     }
 
     const displayNutritionists = () => {
@@ -170,26 +161,54 @@ export const Schedule = (props) => {
                 let opt = document.createElement('option')
                 opt.value = nutri.uuid
                 opt.textContent += nutri.nome_completo // or opt.innerHTML += user.name
+                console.log(nutri.uuid, nutritionist)
+                if (nutri.uuid === nutritionist) {
+                    opt.setAttribute("selected", "selected")
+                }
                 sel.appendChild(opt)
             })
-            sel.addEventListener("change", hangleChangeSelect)
+            sel.setAttribute("disabled", "disabled")
         }
     }
 
-    (!nutritionist) && displayNutritionists()
+    const pull_data = (data, propsSuccess) => {
+        setModalMessage(data)
+        if (!!propsSuccess) {
+            window.location.reload()
+        }
+    }
+    
+    if (!!!currentUser) {
+        return <Navigate to="/login" replace />
+    } else if (!!!minDate) {
+        selectDateAndNutri()
+        selectMinDate()
+        getNutritionists()
+    }
+
+    displayNutritionists()
 
     return (
         <>
-            <Card maxWidth={"100%"} cardTitle={"Agendar consulta"}>
+        {!!loader && (
+            <>
+                <Loader/>
+            </>
+        )}
+        {modalMessage && (
+            <>
+                <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
+            </>
+        )}
+            <Card maxWidth={"100%"} cardTitle={"Editar consulta"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={"Agendar consulta"}/>
+                    <InfoMenu menuState={"Editar consulta"}/>
                     <CardContent>
                         <form>
                             <CardContentRow>
                                 
                                 <select className="select-nutri" id="selectNutri"></select>
                                 {/* {!!nutritionists && nutritionists.forEach(nutri => {
-                                    console.log('nutri.nome_completo', nutri.nome_completo)
                                     return (
                                         <option value="Teste">Teste - {nutri.nome_completo}</option>
                                     )

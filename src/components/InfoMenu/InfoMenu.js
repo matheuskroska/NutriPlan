@@ -1,15 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StyledRadixToggleGroup } from "../Button/Button.elements"
 import { CardAvatar, CardMenuContainer, CardMenuHeader, CardMenuItem, CardParagraph } from "../Card/Card.elements"
 import { StyledLink, StyledRadixLink } from "../Link/Link.elements"
 import avatar from '../../assets/images/user-test.png';
-import { AuthContext } from '../../firebase/Auth';
-
-
-
+import { AuthContext } from '../../firebase/Auth'
 
 export const InfoMenu = (props) => {
-    const [menuState, setMenuState] = useState(props.menuState);
+    const menuState = props.menuState
     const { currentUser } = useContext(AuthContext)	
 
     return (
@@ -23,7 +20,8 @@ export const InfoMenu = (props) => {
             <CardMenuItem fontSize="inherit" width="100%">
                 {currentUser.isAdmin && <StyledRadixLink edituserbuttons="true" value="Lista de usuários" aria-label="Lista de usuários"><StyledLink menu="true" link="true" to="/lista-usuarios">Lista de usuários</StyledLink></StyledRadixLink>}
                 {/* <StyledRadixLink edituserbuttons="true" value="Notificações" aria-label="Notificações"><StyledLink menu="true" link="true" to="/notificacoes">Notificações</StyledLink></StyledRadixLink> */}
-                <StyledRadixLink edituserbuttons="true" value="Agendar consulta" aria-label="Agendar consulta"><StyledLink menu="true" link="true" to="/agendar-consulta">Agendar consulta</StyledLink></StyledRadixLink>
+                {currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value="Criar plano nutricional" aria-label="Criar plano nutricional"><StyledLink menu="true" link="true" to="/criar-plano">Criar plano nutricional</StyledLink></StyledRadixLink>}
+                {!currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value="Agendar consulta" aria-label="Agendar consulta"><StyledLink menu="true" link="true" to="/agendar-consulta">Agendar consulta</StyledLink></StyledRadixLink>}
                 <StyledRadixLink edituserbuttons="true" value="Minhas consultas" aria-label="Minhas consultas"><StyledLink menu="true" link="true" to="/minhas-consultas">Minhas consultas</StyledLink></StyledRadixLink>
             </CardMenuItem>
         </StyledRadixToggleGroup>

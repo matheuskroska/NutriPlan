@@ -1,0 +1,45 @@
+.column>h3 {
+    padding: 5px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin: 5px 0;
+}
+
+.column {
+	width: 100%;
+	background-color: #fff;
+	padding: 0 10px;
+	border-radius: 10px;
+}
+
+.droppable-col {
+	display: flex;
+	flex-direction: column;
+}
+
+.droppable-col {
+    height: 100%;
+    width: 100%;
+}
+
+.item {
+	margin-bottom: 5px;
+	color: white;
+	border: 1px solid white;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.item:nth-child(even) {
+	background-color: #6f8c43; /* var(--secondary) */
+}
+
+.item:nth-child(odd) {
+	background-color: #4A4D26; /* var(--tertiary) */
+}
+
+.item.dragging {
+	background-color: #AAD76C; /* var(--primary) */
+	color: #4A4D26; /* var(--font-dark) */
+}

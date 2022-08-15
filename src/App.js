@@ -8,10 +8,12 @@ import { InfoPanel } from './pages/InfoPanel/InfoPanel';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 import { EditUser } from './pages/InfoPanel/EditUser';
-import { Schedule } from './pages/Schedule/Schedule';
+import { MakeAppointment } from './pages/Appointment/MakeAppointment';
 import { EditProfile } from './pages/InfoPanel/EditProfile';
 import { ListUser } from './pages/InfoPanel/ListUser';
-import { ListSchedule } from './pages/InfoPanel/ListSchedule';
+import { ListAppointment } from './pages/InfoPanel/ListAppointment';
+import { EditAppointment } from './pages/Appointment/EditAppointment';
+import { Create } from './pages/Plan/Create';
 
 function App() {
 
@@ -33,8 +35,10 @@ function App() {
                 <Route exact path="/editar-perfil" element={<EditProfile/>} />
                 <Route exact path="/lista-usuarios" element={<ListUser/>} />
                 <Route exact path="/info-panel" element={<InfoPanel/>} />
-                <Route exact path="/agendar-consulta" element={<Schedule/>} />
-                <Route exact path="/minhas-consultas" element={<ListSchedule/>} />
+                <Route exact path="/agendar-consulta" element={<MakeAppointment/>} />
+                <Route exact path="/minhas-consultas" element={<ListAppointment/>} />
+                <Route exact path="/editar-consulta/:docId" element={<EditAppointment/>} />
+                <Route exact path="/criar-plano" element={<Create/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>

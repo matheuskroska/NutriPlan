@@ -13,7 +13,6 @@ export const ModalMessage = (props) => {
       <>
         <ModalContainer onClick={handleClick}>
             <ModalWrapper>
-                {/* <ModalTitle><ExclamationTriangleIcon/>ATENÇÃO</ModalTitle> */}
                 <ModalTitle>
                     {!!props.success ? (
                         <>

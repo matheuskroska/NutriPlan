@@ -1,6 +1,6 @@
 import { auth, deleteUser } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, orderBy, onSnapshot, setDoc, update} from 'firebase/firestore'
+import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, Timestamp, orderBy, onSnapshot, setDoc} from 'firebase/firestore'
 import { db } from '../firebase'
 
 class UserModel {
@@ -122,12 +122,11 @@ class UserModel {
         }
     }
 
-    async getAllDataUser(q, dbName) {
+    async getAllDataUser(q) {
         const data = await getDocs(q)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
-            docId: doc.id,
-            dbName: dbName
+            id: doc.id
         }))
         return dataResult
     }
@@ -154,7 +153,7 @@ class UserModel {
 
     async resetPassword(email, newPassword) {
         const user = await this.getUserByEmail(email)
-        const docRef = doc(db, "usuario", user.docId)
+        const docRef = doc(db, "usuario", user.id)
         await updateDoc(docRef, {
             password: newPassword
         })
@@ -212,6 +211,19 @@ class UserModel {
     }
 
     // Listener para recuperar todos os pacientes da base
+    getUserSnapshotByUuid(uuid) {
+        const q = query(collection(db, "usuario"), where("usuario_uuid", "==", uuid))
+        const user = onSnapshot(q, (data) => {
+            const dataResult = data.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            return dataResult
+        })
+        return user
+    }
+
+    // Listener para recuperar todos os pacientes da base
     getUsersSnapshot() {
         const q = query(collection(db, "usuario"), orderBy("criado_em"))
         const usersList = onSnapshot(q, (data) => {
@@ -234,6 +246,21 @@ class UserModel {
         }
     }
 
+    async getUsersName() {
+        const q = query(collection(db, "usuario"))
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+
+        let result = []
+        dataResult.forEach((value) => {
+            result[value.uuid] = value.nome_completo
+        })
+
+        return result
+    }
 
 }
 

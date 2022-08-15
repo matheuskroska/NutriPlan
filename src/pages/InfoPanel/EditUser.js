@@ -16,15 +16,11 @@ export const EditUser = () => {
     const { uuid } = useParams();
     const [user, setUser] = useState(null)
     const [crn, setCrn] = useState(null)
-    const [modalMessage, setModalMessage] = useState(false);
+    const [modalMessage, setModalMessage] = useState(false)
     const [loader, setLoader] = useState(true)
-    const [message, setMessage] = useState();
-    const [success, setSuccess] = useState(false)
-    const navigate = useNavigate()
+    const [message, setMessage] = useState()
     const userModel = new UserModel()
     const nutritionistModel = new NutritionistModel()
-
-    console.log(user)
 
     const getUserData = async () => {
         let userData = await userModel.getUserByUid(uuid)
@@ -45,7 +41,7 @@ export const EditUser = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        setMessage("Os dados foram alterados");
+        setMessage("Os dados foram alterados com sucesso")
         setModalMessage(true)
         await changeUserData()
     }
@@ -65,12 +61,7 @@ export const EditUser = () => {
 
     const pull_data = (data, propsSuccess) => {
         setModalMessage(data)
-        if (!!propsSuccess) {
-            navigate("/login", { replace: true });
-        }
     }
-
-    
 
     if (!!!currentUser) {
         return <Navigate to="/login" replace />
@@ -80,7 +71,7 @@ export const EditUser = () => {
         getUserData()
     }
   
-        return (
+    return (
         <>  
             {!!loader && (
                 <>
@@ -89,7 +80,7 @@ export const EditUser = () => {
             )}
             {modalMessage && (
                 <>
-                    <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
+                    <ModalMessage func={pull_data}>{message}</ModalMessage>
                 </>
             )}
             <Card cardTitle={"Editar usuário"} maxWidth={"100%"}>
@@ -172,6 +163,5 @@ export const EditUser = () => {
                 </CardContainer>
             </Card>   
         </>
-        )
-    
+    )
 }

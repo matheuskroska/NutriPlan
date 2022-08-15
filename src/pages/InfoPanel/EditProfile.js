@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu, Loader } from '../../components';
 import { CardContainer, CardInput, CardInputMask, CardItem, CardItemContainer } from '../../components/Card/Card.elements';
@@ -10,9 +10,7 @@ import Animated from 'react-mount-animation';
 import UserModel from '../../db/UserModel';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
 
-
-
-export const EditProfile = (props) => {
+export const EditProfile = () => {
     const { currentUser } = useContext(AuthContext)
     const [user, setUser] = useState({
         uuid: currentUser.uuid,
@@ -26,11 +24,7 @@ export const EditProfile = (props) => {
     })
     const [modalMessage, setModalMessage] = useState(false);
     const [loader, setLoader] = useState(false)
-    const navigate = useNavigate()
-    const [message, setMessage] = useState();
-    const [success, setSuccess] = useState(false)
-
-    console.log(user)
+    const [message, setMessage] = useState()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -42,10 +36,12 @@ export const EditProfile = (props) => {
     }
 
     const handleSubmit = async(e) => {
+        setLoader(true)
         e.preventDefault()
-        await changeUserData()  
-        setMessage("Os dados foram alterados");
+        await changeUserData()
+        setMessage("Os dados foram alterados com sucesso");
         setModalMessage(true)
+        setLoader(false)
     }
 
     const changeUserData = async() => {
@@ -55,9 +51,9 @@ export const EditProfile = (props) => {
 
     const pull_data = (data, propsSuccess) => {
         setModalMessage(data)
-        // if (!!propsSuccess) {
-        //     navigate("/login", { replace: true });
-        // }
+        if (!!propsSuccess) {
+            window.location.reload()
+        }
     }
 
     if (!!!currentUser) {
@@ -66,16 +62,16 @@ export const EditProfile = (props) => {
 
     return (
         <>
-            {!!loader && (
-                <>
-                    <Loader/>
-                </>
-            )}
-            {modalMessage && (
-                <>
-                    <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
-                </>
-            )}
+        {!!loader && (
+            <>
+                <Loader/>
+            </>
+        )}
+        {modalMessage && (
+            <>
+                <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
+            </>
+        )}
             <Card cardTitle={"Editar perfil"} maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu/>
@@ -100,12 +96,14 @@ export const EditProfile = (props) => {
                             <CardInputMask onChange={handleChange} defaultValue={currentUser.cpf} disabled id="cpf" mask='999.999.999-99' required pattern={"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"} placeholder="CPF" name="cpf" autoComplete="off"></CardInputMask>
                             <ErrorMessage><ExclamationTriangleIcon/></ErrorMessage>
                         </CardItem>
+                            {currentUser.isNutri && 
                             <Animated.div show={true} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
                                 <CardItem>
                                     <CardInput onChange={handleChange} defaultValue={currentUser.crn} disabled required={false} placeholder="CRN" inputWidth="100%" name="crn" autoComplete="off"></CardInput>
                                     <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
                                 </CardItem>
                             </Animated.div>
+                            }
                         <StyledButton primary hasIcon marginTop={"20px"}>Salvar<ArrowRightIcon/></StyledButton>
                         </form>
                     </CardItemContainer>
