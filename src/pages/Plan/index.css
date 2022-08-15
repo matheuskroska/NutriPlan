@@ -1,0 +1,58 @@
+.App {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+}
+
+.App .column {
+	width: 100px;
+	min-height: 200px;
+    max-height: 300px;
+	margin: 20px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #fff;
+    color: #4A4D26; /* var(--font-dark) */
+}
+
+.column>h3 {
+    padding: 5px;
+}
+
+.droppable-col {
+	display: flex;
+	flex-direction: column;
+}
+
+/* .droppable-col:nth-child(4n - 3), .droppable-col:nth-child(4n) {
+     background-color: red;
+}
+ .droppable-col:nth-child(odd) {
+     background-color: blue;
+}
+ */
+.droppable-col {
+    height: 100%;
+    width: 100%;
+}
+
+.item {
+	margin-bottom: 10px;
+	color: white;
+	border: 1px solid white;
+	padding: 5px;
+	border-radius: 7px;
+}
+
+.item:nth-child(even) {
+	background-color: #6f8c43; /* var(--secondary) */
+}
+
+.item:nth-child(odd) {
+	background-color: #4A4D26; /* var(--tertiary) */
+}
+
+.item.dragging {
+	background-color: #AAD76C; /* var(--primary) */
+	color: #4A4D26; /* var(--font-dark) */
+}

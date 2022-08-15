@@ -13,6 +13,7 @@ import { EditProfile } from './pages/InfoPanel/EditProfile';
 import { ListUser } from './pages/InfoPanel/ListUser';
 import { ListAppointment } from './pages/InfoPanel/ListAppointment';
 import { EditAppointment } from './pages/Appointment/EditAppointment';
+import { Create } from './pages/Plan/Create';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
                 <Route exact path="/agendar-consulta" element={<MakeAppointment/>} />
                 <Route exact path="/minhas-consultas" element={<ListAppointment/>} />
                 <Route exact path="/editar-consulta/:docId" element={<EditAppointment/>} />
+                <Route exact path="/criar-plano" element={<Create/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>
