@@ -14,6 +14,8 @@ import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import ScheduleModel from '../../db/ScheduleModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
+import { Select } from '../../components/Select/Select'
+import { StyledSelect, StyledDatePicker } from '../../components/Select/Select.elements'
 
 registerLocale("pt-BR", pt)
 
@@ -255,15 +257,13 @@ export const MakeAppointment = () => {
                     <CardContent>
                         <form>
                             <CardContentRow>
-                                
-                                <select className="select-nutri" id="selectNutri"></select>
+                                <StyledSelect className="select-nutri" id="selectNutri"></StyledSelect>
                                 {/* {!!nutritionists && nutritionists.forEach(nutri => {
                                     return (
                                         <option value="Teste">Teste - {nutri.nome_completo}</option>
                                     )
                                 })} */}
-                            </CardContentRow>
-                            <CardContentRow>
+                                <StyledDatePicker>
                                 <DatePicker 
                                     // disabled
                                     selected={startDate}
@@ -283,6 +283,11 @@ export const MakeAppointment = () => {
                                     onCalendarOpen={handleCalendarOpen}
                                     withPortal
                                 />
+                                </StyledDatePicker>
+                            </CardContentRow>
+                            <CardContentRow>
+                                
+                                
                             </CardContentRow>
                             <CardContentRow>
                                 <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}>marcar consulta<ArrowRightIcon/></StyledButton>
