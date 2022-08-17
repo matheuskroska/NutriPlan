@@ -157,16 +157,9 @@ export const Create = () => {
             <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                 <InfoMenu menuState={"Criar plano nutricional"}/>
                 <CardContent>
-                    <CardContentRow className={text}>
-                        <CardContentCol wSearchIcon fontSize overflowVisible={"visible"}>
-                            <input placeholder="Pesquise..." type="text" value={text} onChange={(e) => updateText(e.target.value)}></input>
-                            <MagnifyingGlassIcon/>
-                        </CardContentCol>
-                        <StyledButton width="initial" mLeft="10px" onClick={addItem} primary>Adicionar<PlusIcon/></StyledButton>
-                    </CardContentRow>
                     <CardContentRow>
                         <CardContentCol>
-                            <Dialog></Dialog>
+                            <Dialog title="Adicionar informarções"></Dialog>
                         </CardContentCol>
                     </CardContentRow>
                     <CardContentRow gap={"0 10px"}>
