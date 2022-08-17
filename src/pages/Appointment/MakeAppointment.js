@@ -254,9 +254,9 @@ export const MakeAppointment = () => {
             <Card maxWidth={"100%"} cardTitle={"Agendar consulta"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={"Agendar consulta"}/>
-                    <CardContent>
+                    <Card margin={"0 auto"} showTitle={"none"}>
                         <form>
-                            <CardContentRow>
+                            <CardContentRow fDirection={"column"}>
                                 <StyledSelect className="select-nutri" id="selectNutri"></StyledSelect>
                                 {/* {!!nutritionists && nutritionists.forEach(nutri => {
                                     return (
@@ -264,7 +264,7 @@ export const MakeAppointment = () => {
                                     )
                                 })} */}
                                 <StyledDatePicker>
-                                <DatePicker 
+                                    <DatePicker 
                                     // disabled
                                     selected={startDate}
                                     onChange={handleChange}
@@ -282,18 +282,13 @@ export const MakeAppointment = () => {
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     onCalendarOpen={handleCalendarOpen}
                                     withPortal
-                                />
+                                    />
                                 </StyledDatePicker>
-                            </CardContentRow>
-                            <CardContentRow>
-                                
-                                
-                            </CardContentRow>
-                            <CardContentRow>
                                 <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}>marcar consulta<ArrowRightIcon/></StyledButton>
+
                             </CardContentRow>
                         </form>
-                    </CardContent>
+                    </Card>
                 </CardContainer>
             </Card>
         </>

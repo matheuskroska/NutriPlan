@@ -11,6 +11,7 @@ export const StyledSelect = styled.select`
     outline: 0;
     box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
     padding: 0 20px;
+    margin-bottom: 10px;
 `
 
 export const StyledDatePicker = styled.div`
@@ -24,6 +25,12 @@ export const StyledDatePicker = styled.div`
     outline: 0;
     box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
     padding: 0 20px;
-    width: fit-content;
+    width: 100%;
+    color: var(--font-dark);
     }
+
+    .react-datepicker__input-container {
+        display: flex;
+    }
+
 `

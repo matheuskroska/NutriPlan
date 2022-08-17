@@ -208,6 +208,7 @@ export const CardContentRow = styled.div`
     padding: 1.5em;
     background-color: rgb(255 255 255 / 80%);
     display: flex;
+    flex-direction: ${props => props.fDirection || "initial"};
     gap: ${props => props.gap};
     justify-content: space-between;
     :first-child {
