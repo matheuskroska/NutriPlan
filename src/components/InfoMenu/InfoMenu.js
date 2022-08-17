@@ -4,6 +4,7 @@ import { CardAvatar, CardCloseButton, CardMenuContainer, CardMenuHeader, CardMen
 import { StyledLink, StyledRadixLink } from "../Link/Link.elements"
 import avatar from '../../assets/images/user-test.png';
 import { AuthContext } from '../../firebase/Auth'
+import {DoubleArrowRightIcon, DoubleArrowLeftIcon} from '@radix-ui/react-icons'
 
 export const InfoMenu = (props) => {
     const menuState = props.menuState
@@ -16,7 +17,9 @@ export const InfoMenu = (props) => {
 
     return (
         <CardMenuContainer mState={!menu}>
-            <CardCloseButton onClick={handleMenuState}>X</CardCloseButton>
+            <CardCloseButton onClick={handleMenuState}>
+                {menu ? <DoubleArrowLeftIcon/> : <DoubleArrowRightIcon/>}
+            </CardCloseButton>
             <CardMenuHeader mState={menu}>
                 <CardParagraph>{currentUser.nome_completo}</CardParagraph>
                 <CardAvatar src={avatar} alt="avatar"></CardAvatar>

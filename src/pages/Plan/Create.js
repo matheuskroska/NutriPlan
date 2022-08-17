@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import { v4 } from 'uuid'
 import { Card, InfoMenu } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { CardContainer, CardContent, CardContentCol, CardContentRow } from '../../components/Card/Card.elements'
+import { CardContainer, CardContent, CardContentCol, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper } from '../../components/Card/Card.elements'
 import { Dialog } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
 import {MagnifyingGlassIcon, PlusIcon} from '@radix-ui/react-icons'
@@ -173,33 +173,41 @@ export const Create = () => {
                         <DragDropContext onDragEnd={handleDragEnd}>
                             {_.map(itemsList, (data, key) => {
                                 return (
-                                    <div key={key} className={"column"}>
-                                        <h3>{data.title}</h3>
+                                    <CardPlanColumn key={key}>
+                                        <CardPlanTitle>{data.title}</CardPlanTitle>
                                         <Droppable droppableId={key}>
                                             {(provided) => {
                                                 return (
-                                                    <div ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
+                                                    <CardPlanDroppableColumn ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
                                                         {data.items.map((el, index) => {
                                                             return (
                                                                 <Draggable key={el.id} index={index} draggableId={el.id}>
                                                                     {(provided, snapshot) => {
                                                                         return (
-                                                                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`}>
+                                                                            <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`}>
                                                                                 {el.name}
-                                                                            </div>
+                                                                            </CardPlanItem>
                                                                         )
                                                                     }}
                                                                 </Draggable>
                                                             )
                                                         })}
                                                         {provided.placeholder}
-                                                        <input type="text" value={textList[`${key}`]['value']} name={key} title={data.title} onChange={handleChange} autoComplete="off"></input>
-                                                        <StyledButton onClick={(e) => addItem(e)} name={key} primary>Adicionar</StyledButton>
-                                                    </div>
+                                                        <CardPlanFlexWrapper>
+                                                            <CardPlanFlexItem>
+                                                                <input placeholder="Pesquise..." type="text" value={textList[`${key}`]['value']} name={key} title={data.title} onChange={handleChange} autoComplete="off"></input>
+                                                                <MagnifyingGlassIcon/>
+                                                            </CardPlanFlexItem>    
+                                                            <StyledButton onClick={(e) => addItem(e)} name={key} primary>Adicionar<PlusIcon/></StyledButton>
+                                                        </CardPlanFlexWrapper>
+                                                    </CardPlanDroppableColumn>
                                                 )
                                             }}
                                         </Droppable>
-                                    </div>
+                                    </CardPlanColumn>
+                                    
+                                        
+                                    
                                 )
                             })}
                         </DragDropContext>

@@ -7,37 +7,6 @@
 	font-weight: 500;
 }
 
-.column {
-	width: 100%;
-	background-color: #d7d7d7;
-	padding: 0 10px;
-	border-radius: 10px;
-}
-
-.droppable-col {
-	display: flex;
-	flex-direction: column;
-}
-
-.droppable-col {
-    height: 100%;
-    width: 100%;
-}
-
-.item {
-	margin-bottom: 5px;
-	color: white;
-	border: 1px solid white;
-	padding: 5px;
-	border-radius: 10px;
-	font-size: 1.3em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 100px;
-    overflow: hidden;
-	text-transform: uppercase;
-}
-
 .item:nth-child(even) {
 	background-color: #6f8c43; /* var(--secondary) */
 }

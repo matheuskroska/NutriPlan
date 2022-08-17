@@ -18,9 +18,10 @@ const contentShow = keyframes`
 `;
 
 export const StyledOverlay = styled(DialogPrimitive.Overlay)`
-    background-color: var(--font-soft);
+    background-color: #000000b3;
     position: fixed;
     inset: 0;
+    height: 100vh;
     @media (prefers-reduced-motion: no-preference) {
         animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)
     }
@@ -44,6 +45,10 @@ export const StyledContent = styled(DialogPrimitive.Overlay)`
     :focus {
         outline: none
     }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 `;
 
 export const StyledTitle = styled(DialogPrimitive.Title)`
@@ -59,6 +64,8 @@ export const StyledDescription = styled(DialogPrimitive.Description)`
     font-size: 15px;
     line-height: 1.5px;
 `;
+
+
 
 export const Flex = styled.div`
     display: flex;

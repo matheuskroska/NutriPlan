@@ -144,7 +144,7 @@ export const CardMenuContainer = styled.div`
     text-align: center;
     background-color: rgb(170 215 108 / 90%);
     border-radius: 5px;
-    min-width: 255px;
+    max-width: 255px;
     margin-right: 32px;
     max-height: max-content;
     transition: 0.5s;
@@ -152,8 +152,13 @@ export const CardMenuContainer = styled.div`
 
 export const CardCloseButton = styled.button`
     position: absolute;
-    top: -20px;
     left: 0;
+    border: 0;
+    outline: 0;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    cursor: pointer;
 `
 
 export const CardMenuHeader = styled.div`
@@ -345,4 +350,69 @@ export const CardSlider = styled.div`
         display: block;
         color: #fff;
    }
+`
+
+
+export const CardPlanColumn = styled.div`
+    width: 14.2%;
+	background-color: #d7d7d7;
+	padding: 10px;
+	border-radius: 10px;
+`
+
+export const CardPlanTitle = styled.h3`
+    font-weight: 500;
+    text-align: center;
+    font-size: 1.4em;
+    /* margin-bottom: 10px; */
+`
+
+export const CardPlanDroppableColumn = styled.div`
+    height: 100%;
+    width: 100%;
+	display: flex;
+	flex-direction: column;
+    justify-content: space-between;
+`
+export const CardPlanItem = styled.div`
+    margin-bottom: 5px;
+	color: white;
+	border: 1px solid white;
+	padding: 5px;
+	border-radius: 5px;
+	font-size: 1.3em;   
+    /* width: 100%; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+	text-transform: uppercase;
+    text-transform: uppercase;
+    padding: 11px 5px;
+    text-align: center;
+`
+
+export const CardPlanFlexItem = styled.div`
+    display: flex;
+    position: relative;
+    height: 35px;
+    margin-bottom: 10px;
+
+    input {
+        border: 1px solid var(--secondary);
+        height: 35px;
+        border-radius: 5px;
+        padding: 0 15px;
+        width: 100%;
+    }
+    
+    svg {
+        position: absolute;
+        right: 5px;
+        height: 35px;
+    }
+    
+`
+
+export const CardPlanFlexWrapper = styled.div`
+
 `
