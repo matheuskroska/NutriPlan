@@ -356,7 +356,7 @@ export const CardSlider = styled.div`
 export const CardPlanColumn = styled.div`
     width: 14.2%;
 	background-color: #d7d7d7;
-	padding: 10px;
+	padding: 10px 10px 35px 10px;
 	border-radius: 10px;
 `
 
@@ -364,7 +364,7 @@ export const CardPlanTitle = styled.h3`
     font-weight: 500;
     text-align: center;
     font-size: 1.4em;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
 `
 
 export const CardPlanDroppableColumn = styled.div`

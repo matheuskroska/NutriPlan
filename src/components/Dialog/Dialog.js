@@ -39,7 +39,7 @@ export const Dialog = () => (
             </Fieldset>
             <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
                 <DialogClose asChild>
-                    <StyledButton variant="green">Save changes</StyledButton>
+                    <StyledButton primary variant="green">Save changes</StyledButton>
                 </DialogClose>
             </Flex>
             <DialogClose asChild>

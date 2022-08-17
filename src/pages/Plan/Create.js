@@ -179,6 +179,7 @@ export const Create = () => {
                                             {(provided) => {
                                                 return (
                                                     <CardPlanDroppableColumn ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
+                                                        <CardPlanFlexWrapper>
                                                         {data.items.map((el, index) => {
                                                             return (
                                                                 <Draggable key={el.id} index={index} draggableId={el.id}>
@@ -192,6 +193,7 @@ export const Create = () => {
                                                                 </Draggable>
                                                             )
                                                         })}
+                                                        </CardPlanFlexWrapper>
                                                         {provided.placeholder}
                                                         <CardPlanFlexWrapper>
                                                             <CardPlanFlexItem>

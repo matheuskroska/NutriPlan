@@ -54,13 +54,13 @@ export const StyledContent = styled(DialogPrimitive.Overlay)`
 export const StyledTitle = styled(DialogPrimitive.Title)`
     margin: 0;
     font-weight: 500;
-    color: var(--font-soft);
+    color: var(--font-dark);
     font-size: 17px;
 `;
 
 export const StyledDescription = styled(DialogPrimitive.Description)`
     margin: 10px 0 20px;
-    color: var(--font-soft);
+    color: var(--font-dark);
     font-size: 15px;
     line-height: 1.5px;
 `;
@@ -79,15 +79,15 @@ export const IconButton = styled.button`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #ff5522;
+    color: var(--secondary);
     position: absolute;
     top: 10px;
     right: 10px;
     :hover { 
-        background-color: #ff5522
+        background-color: var(--secondary)
     };
     :focus {
-        box-shadow: 0 0 0 2px #ff5522
+        box-shadow: 0 0 0 2px var(--secondary)
     }
 `;
 
@@ -101,7 +101,7 @@ export const Fieldset = styled.fieldset`
 
 export const Label = styled.label`
     font-size: 15px;
-    color: '#ff5522';
+    color: 'var(--secondary)';
     width: 90px;
     text-align: 'right';
 `;
@@ -116,10 +116,10 @@ export const Input = styled.input`
     padding: 0 10px;
     font-size: 15px;
     line-height: 1px;
-    color: #ff5522;
-    box-shadow: 0 0 0 1px #ff5522;
+    color: var(--secondary);
+    box-shadow: 0 0 0 1px var(--secondary);
     height: 35px;
     :focus {
-        box-shadow: 0 0 0 2px #ff5522
+        box-shadow: 0 0 0 2px var(--secondary)
     }
 `;
