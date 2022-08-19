@@ -9,6 +9,7 @@ import LoginModel from '../../db/LoginModel';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
 import { Errors } from '../../firebase/Errors';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
+import { Translator } from '../../components/I18n';
 
 export const ForgotPassword = () => {
 
@@ -56,11 +57,11 @@ export const ForgotPassword = () => {
     } else if (!!success) {
         return (
             <>
-                <Card cardTitle="Alterar a senha" >
+                <Card cardTitle={<Translator path="changePwd"/>} >
                     <CardItemContainer visibility={true}>
                         <CardItem>
                             <CardMessage>
-                                E-mail enviado com sucesso <CheckCircledIcon />
+                                <Translator path="emailSuccessSent"/> <CheckCircledIcon />
                             </CardMessage>
                         </CardItem>
                     </CardItemContainer>  
@@ -70,20 +71,20 @@ export const ForgotPassword = () => {
     } else {
         return (
             <>
-                <Card margin={"80px 0"} cardTitle="Alterar a senha" >
+                <Card margin={"80px 0"} cardTitle={<Translator path="changePwd"/>} >
                     <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                             <CardItem>
                                 <CardMessage>
-                                    Para alterar sua senha, informe o e-mail cadastrado<br/>enviaremos um link com as instruções.
+                                    <Translator path="instructionsChangePwd"/>
                                 </CardMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="mail" placeholder="Email" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
-                                <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="mail" placeholder="E-mail" inputWidth="100%" onChange={(e) => setEmail(e.target.value)}></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <StyledButton primary marginTop={"20px"}>enviar e-mail<EnvelopeClosedIcon/></StyledButton>
+                                <StyledButton primary marginTop={"20px"}><Translator path="sendEmail"/><EnvelopeClosedIcon/></StyledButton>
                             </CardItem>
                         </form>
                     </CardItemContainer>  

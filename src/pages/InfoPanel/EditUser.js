@@ -10,6 +10,7 @@ import UserModel from '../../db/UserModel';
 import Animated from 'react-mount-animation';
 import NutritionistModel from '../../db/NutritionistModel';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
+import { Translator } from '../../components/I18n';
 
 export const EditUser = () => {
     const { currentUser } = useContext(AuthContext)
@@ -99,7 +100,7 @@ export const EditUser = () => {
                                  <>
                                     <CardInput onChange={handleChange} defaultValue={user.firstname} autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname"></CardInput>
                                     <CardInput onChange={handleChange} defaultValue={user.lastname} autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname"></CardInput>
-                                    <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>    
+                                    <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorName"/></ErrorMessage>    
                                  </>
                                 }
                             </CardItem>
@@ -111,8 +112,8 @@ export const EditUser = () => {
                                 </>
                                 ) :
                                  <>
-                                    <CardInput onChange={handleChange} defaultValue={user.email} pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" autoComplete="off"></CardInput>
-                                    <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>   
+                                    <CardInput onChange={handleChange} defaultValue={user.email} pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="E-mail" inputWidth="100%" name="email" autoComplete="off"></CardInput>
+                                    <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>   
                                  </>
                                 }
                             </CardItem>
@@ -126,7 +127,7 @@ export const EditUser = () => {
                                  <>
                                     <CardInputMask onChange={handleChange} defaultValue={user.ddd} mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" ></CardInputMask>
                                     <CardInputMask onChange={handleChange} defaultValue={user.phone} mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" ></CardInputMask>
-                                    <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                                    <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                                  </>
                                 }
                             </CardItem>
@@ -152,7 +153,7 @@ export const EditUser = () => {
                                  <>
                                     <CardItem>
                                         <CardInput onChange={handleChange} defaultValue={crn} disabled required={false} placeholder="CRN" inputWidth="100%" name="crn" autoComplete="off"></CardInput>
-                                        <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                                        <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                                     </CardItem>
                                  </>
                                 }    

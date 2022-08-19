@@ -5,6 +5,7 @@ import { Card } from '../../components/index'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ResetPasswordModel from '../../db/ResetPasswordModel'
+import { Translator } from '../../components/I18n'
 
 export const ResetPassword = () => {
     const [email, setEmail] = useState(null)
@@ -89,7 +90,7 @@ export const ResetPassword = () => {
     if (!!!showNewPwd) {
         return (
             <>
-                <Card cardTitle="Tente solicitar um novo link para alterar sua senha" >
+                <Card cardTitle={<Translator path="tryNewLink"/>} >
                     <CardItemContainer visibility={true}>
                         <CardItem>
                             <CardMessage>
@@ -97,7 +98,7 @@ export const ResetPassword = () => {
                             </CardMessage>
                         </CardItem>
                         <CardItem>
-                            <StyledButton onClick={handleForgotPassword} primary maxWidth="fit-content">esqueci minha senha</StyledButton>
+                            <StyledButton onClick={handleForgotPassword} primary maxWidth="fit-content"><Translator path="forgotPwd"/></StyledButton>
                         </CardItem>
                     </CardItemContainer>  
                 </Card>
@@ -106,7 +107,7 @@ export const ResetPassword = () => {
     } else {
         return (
             <>
-                <Card cardTitle="Definir nova senha" >
+                <Card cardTitle={<Translator path="setNewPwd"/>} >
                     <CardItemContainer visibility={true}>
                         { !!showBtnLogin ? (
                             <>
@@ -114,7 +115,7 @@ export const ResetPassword = () => {
                                     <CardMessage>{message}</CardMessage>
                                 </CardItem>
                                 <CardItem>
-                                    <StyledButton onClick={handleRedirectLogin} primary maxWidth="fit-content">Fazer login com nova senha</StyledButton>
+                                    <StyledButton onClick={handleRedirectLogin} primary maxWidth="fit-content"><Translator path="loginNewPwd"/></StyledButton>
                                 </CardItem>
                             </>
                         ) : (
@@ -126,7 +127,7 @@ export const ResetPassword = () => {
                                     <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Confirmar nova senha" inputWidth="100%" onChange={(e) => setConfNewPassword(e.target.value)}></CardInput>
                                 </CardItem>
                                 <CardItem>
-                                    <StyledButton onClick={handleSubmit} primary>alterar senha</StyledButton>
+                                    <StyledButton onClick={handleSubmit} primary><Translator path="changePwd"/></StyledButton>
                                 </CardItem>
                             </>
                         )}

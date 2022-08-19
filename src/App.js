@@ -14,6 +14,7 @@ import { ListUser } from './pages/InfoPanel/ListUser';
 import { ListAppointment } from './pages/InfoPanel/ListAppointment';
 import { EditAppointment } from './pages/Appointment/EditAppointment';
 import { Create } from './pages/Plan/Create';
+import './i18n'
 
 function App() {
 

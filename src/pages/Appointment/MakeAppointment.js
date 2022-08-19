@@ -16,6 +16,7 @@ import ScheduleModel from '../../db/ScheduleModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 import { Select } from '../../components/Select/Select'
 import { StyledSelect, StyledDatePicker } from '../../components/Select/Select.elements'
+import { Translator } from '../../components/I18n'
 
 registerLocale("pt-BR", pt)
 
@@ -251,9 +252,9 @@ export const MakeAppointment = () => {
                 <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
             </>
         )}
-            <Card maxWidth={"100%"} cardTitle={"Agendar consulta"}>
+            <Card maxWidth={"100%"} cardTitle={<Translator path="makeAppoint"/>}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={"Agendar consulta"}/>
+                    <InfoMenu menuState={<Translator path="makeAppoint"/>}/>
                     <Card margin={"0 auto"} showTitle={"none"}>
                         <form>
                             <CardContentRow fDirection={"column"}>
@@ -284,7 +285,7 @@ export const MakeAppointment = () => {
                                     withPortal
                                     />
                                 </StyledDatePicker>
-                                <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}>marcar consulta<ArrowRightIcon/></StyledButton>
+                                <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}><Translator path="bMakeAppoint"/><ArrowRightIcon/></StyledButton>
 
                             </CardContentRow>
                         </form>

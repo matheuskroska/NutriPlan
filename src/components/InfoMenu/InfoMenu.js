@@ -5,6 +5,7 @@ import { StyledLink, StyledRadixLink } from "../Link/Link.elements"
 import avatar from '../../assets/images/user-test.png';
 import { AuthContext } from '../../firebase/Auth'
 import {DoubleArrowRightIcon, DoubleArrowLeftIcon} from '@radix-ui/react-icons'
+import { Translator } from '../I18n';
 
 export const InfoMenu = (props) => {
     const menuState = props.menuState
@@ -23,15 +24,15 @@ export const InfoMenu = (props) => {
             <CardMenuHeader mState={menu}>
                 <CardParagraph>{currentUser.nome_completo}</CardParagraph>
                 <CardAvatar src={avatar} alt="avatar"></CardAvatar>
-                <StyledLink menu="true" to="/editar-perfil">Editar perfil</StyledLink>
+                <StyledLink menu="true" to="/editar-perfil"><Translator path="editProfile"/></StyledLink>
             </CardMenuHeader>
             <StyledRadixToggleGroup mState={menu} value={menuState} height="100%" flexdirection="column" type="single" aria-label="usuario" >
                 <CardMenuItem fontSize="inherit" width="100%">
-                    {currentUser.isAdmin && <StyledRadixLink edituserbuttons="true" value="Lista de usuários" aria-label="Lista de usuários"><StyledLink menu="true" link="true" to="/lista-usuarios">Lista de usuários</StyledLink></StyledRadixLink>}
+                    {currentUser.isAdmin && <StyledRadixLink edituserbuttons="true" value={<Translator path="userList"/>} aria-label={<Translator path="userList"/>}><StyledLink menu="true" link="true" to="/lista-usuarios"><Translator path="userList"/></StyledLink></StyledRadixLink>}
                     {/* <StyledRadixLink edituserbuttons="true" value="Notificações" aria-label="Notificações"><StyledLink menu="true" link="true" to="/notificacoes">Notificações</StyledLink></StyledRadixLink> */}
-                    {currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value="Criar plano nutricional" aria-label="Criar plano nutricional"><StyledLink menu="true" link="true" to="/criar-plano">Criar plano nutricional</StyledLink></StyledRadixLink>}
-                    {!currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value="Agendar consulta" aria-label="Agendar consulta"><StyledLink menu="true" link="true" to="/agendar-consulta">Agendar consulta</StyledLink></StyledRadixLink>}
-                    <StyledRadixLink edituserbuttons="true" value="Minhas consultas" aria-label="Minhas consultas"><StyledLink menu="true" link="true" to="/minhas-consultas">Minhas consultas</StyledLink></StyledRadixLink>
+                    {currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value={<Translator path="createPlan"/>} aria-label={<Translator path="createPlan"/>}><StyledLink menu="true" link="true" to="/criar-plano"><Translator path="createPlan"/></StyledLink></StyledRadixLink>}
+                    {!currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value={<Translator path="makeAppoint"/>} aria-label={<Translator path="makeAppoint"/>}><StyledLink menu="true" link="true" to="/agendar-consulta"><Translator path="makeAppoint"/></StyledLink></StyledRadixLink>}
+                    <StyledRadixLink edituserbuttons="true" value={<Translator path="myAppoint"/>} aria-label={<Translator path="myAppoint"/>}><StyledLink menu="true" link="true" to="/minhas-consultas"><Translator path="myAppoint"/></StyledLink></StyledRadixLink>
                 </CardMenuItem>
             </StyledRadixToggleGroup>
         </CardMenuContainer>

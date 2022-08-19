@@ -10,6 +10,7 @@ import { Card } from "../../components";
 import { CardImg, CardSlider } from "../../components/Card/Card.elements";
 import { StyledLink } from "../../components/Link/Link.elements";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import Translator from "../../components/I18n/Translator";
 
 export const Home = () => {
 
@@ -38,37 +39,37 @@ export const Home = () => {
                 <Slider {...settings}>
                     <Card padding={"26px 14px"} borderRadius={"5px"} margin2={"10px"} showTitle={"none"}>
                         <CardSlider>
-                            <StyledLink header to="#">Pratos Quentes<ChevronDownIcon/></StyledLink>
+                            <StyledLink header to="#"><Translator path="hotMeals"/><ChevronDownIcon/></StyledLink>
                             <CardImg src={slider3} ></CardImg>
                         </CardSlider> 
                     </Card >
                     <Card padding={"26px 14px"} borderRadius={"5px"} margin2={"10px"} showTitle={"none"}>
                         <CardSlider>
-                            <StyledLink header to="#">Pratos Quentes<ChevronDownIcon/></StyledLink>
+                            <StyledLink header to="#"><Translator path="hotMeals"/><ChevronDownIcon/></StyledLink>
                             <CardImg src={slider2} ></CardImg>
                         </CardSlider>    
                     </Card>
                     <Card padding={"26px 14px"} borderRadius={"5px"} margin2={"10px"} showTitle={"none"}>
                         <CardSlider>
-                            <StyledLink header to="#">Pratos Quentes<ChevronDownIcon/></StyledLink>
+                            <StyledLink header to="#"><Translator path="hotMeals"/><ChevronDownIcon/></StyledLink>
                             <CardImg src={slider3} ></CardImg>
                         </CardSlider>    
                     </Card>
                     <Card padding={"26px 14px"} borderRadius={"5px"} margin2={"10px"} showTitle={"none"}>
                         <CardSlider>
-                            <StyledLink header to="#">Pratos Quentes<ChevronDownIcon/></StyledLink>
+                            <StyledLink header to="#"><Translator path="hotMeals"/><ChevronDownIcon/></StyledLink>
                             <CardImg src={slider2} ></CardImg>
                         </CardSlider>
                     </Card>
                     <Card padding={"26px 14px"} borderRadius={"5px"} margin2={"10px"} showTitle={"none"}>
                         <CardSlider>
-                            <StyledLink header to="#">Pratos Quentes<ChevronDownIcon/></StyledLink>   
+                            <StyledLink header to="#"><Translator path="hotMeals"/><ChevronDownIcon/></StyledLink>   
                             <CardImg src={slider3} ></CardImg>
                         </CardSlider>
                     </Card>
                     <Card padding={"26px 14px"} borderRadius={"5px"} margin2={"10px"} showTitle={"none"}>
                         <CardSlider>
-                            <StyledLink header to="#">Pratos Quentes<ChevronDownIcon/></StyledLink>
+                            <StyledLink header to="#"><Translator path="hotMeals"/><ChevronDownIcon/></StyledLink>
                             <CardImg src={slider2} ></CardImg>
                         </CardSlider>
                     </Card>

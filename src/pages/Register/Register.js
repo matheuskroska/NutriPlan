@@ -12,6 +12,7 @@ import NutritionistModel from '../../db/NutritionistModel'
 import PatientModel from '../../db/PatientModel'
 import { Errors } from '../../firebase/Errors'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
+import { Translator } from '../../components/I18n'
 
 export const Register = () => {
     const [visibility, setVisibility] = useState(false)
@@ -192,32 +193,32 @@ export const Register = () => {
                         <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
                     </>
                 )}
-                <Card margin={"80px 0"} cardTitle="Cadastro">
+                <Card margin={"80px 0"} cardTitle={<Translator path="register"/>}>
                     <CardItem wrap={"initial"}>
                         <CardDescription>Eu sou um:</CardDescription>
                         <StyledRadixToggleGroup type="single" aria-label="usuario">
-                            <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente">paciente</StyledRadixButton>
-                            <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista">nutricionista</StyledRadixButton>
+                            <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente"><Translator path="patient"/></StyledRadixButton>
+                            <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista"><Translator path="nutritionist"/></StyledRadixButton>
                         </StyledRadixToggleGroup>
                     </CardItem>
                         <CardItemContainer visibility={visibility}>
                             <CardItem>
-                                <CardDescription>Para concluir o cadastro, preencha o formulário abaixo</CardDescription>
+                                <CardDescription><Translator path="finishRegister"/></CardDescription>
                             </CardItem>
                             <form onSubmit={handleSubmit}>
                             <CardItem>
                                 <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange} defaultValue={user.firstname}></CardInput>
                                 <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange} defaultValue={user.lastname}></CardInput>
-                                <ErrorMessage><ExclamationTriangleIcon/>Nome e Sobrenome deve conter de 2 a 20 caracteres</ErrorMessage>
+                                <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorName"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="Email" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off" defaultValue={user.email}></CardInput>
-                                <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                                <CardInput pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?" required type="email" placeholder="E-mail" inputWidth="100%" name="email" onChange={handleChange} autoComplete="off" defaultValue={user.email}></CardInput>
+                                <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
                                 <CardInputMask mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange} defaultValue={user.ddd}></CardInputMask>
                                 <CardInputMask mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange} defaultValue={user.phone}></CardInputMask>
-                                <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                                <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
                                 <CardInputMask id="cpf" mask='999.999.999-99' required pattern={"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"} placeholder="CPF" name="cpf" onChange={handleChange} autoComplete="off" defaultValue={user.cpf}></CardInputMask>
@@ -226,18 +227,18 @@ export const Register = () => {
                                 <Animated.div show={userCategory} mountAnim={`0% {opacity: 0}100% {opacity: 1}`}>
                                     <CardItem>
                                         <CardInput required={false} placeholder="CRN" inputWidth="100%" name="crn" onChange={handleChange} autoComplete="off" defaultValue={user.crn}></CardInput>
-                                        <ErrorMessage><ExclamationTriangleIcon/>Formato inválido</ErrorMessage>
+                                        <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                                     </CardItem>
                                 </Animated.div>
                             <CardItem>
                                 <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd} defaultValue={user.password}></CardInput>
-                                <ErrorMessage><ExclamationTriangleIcon/>Senha deve ter de 8 a 20 caraceteres, 1 letra, 1 número e 1 caracter especial</ErrorMessage>
+                                <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorPwd"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
                                 <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword} defaultValue={user.conf_password}></CardInput>
-                                <ErrorMessage><ExclamationTriangleIcon/>Senhas Diferentes</ErrorMessage>
+                                <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorConfPwd"/></ErrorMessage>
                             </CardItem>
-                            <StyledButton primary hasIcon marginTop={"20px"}>cadastrar<ArrowRightIcon/></StyledButton>
+                            <StyledButton primary hasIcon marginTop={"20px"}><Translator path="bRegister"/><ArrowRightIcon/></StyledButton>
                             </form>
                         </CardItemContainer>
                 </Card>

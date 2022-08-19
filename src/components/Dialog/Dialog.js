@@ -49,7 +49,7 @@ export const Dialog = (props) => (
             </Fieldset>
             <Fieldset>
                 <Label htmlFor="food">Alimento</Label>
-                <Input id="food" placeholder="" />
+                <Input id="food" placeholder="Selecione um alimento" />
             </Fieldset>
             <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
                 <DialogClose asChild>

@@ -8,6 +8,7 @@ import NutritionistModel from '../../db/NutritionistModel';
 import PatientModel from '../../db/PatientModel';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu } from '../../components';
+import { Translator } from '../../components/I18n';
 
 export const ListUser = () => {
     const [usersList, setUsersList] = useState(null)
@@ -103,17 +104,17 @@ export const ListUser = () => {
     }
 
     return (
-        <Card cardTitle={"Lista de usuários"} maxWidth={"100%"}>
+        <Card cardTitle={<Translator path="userList"/>} maxWidth={"100%"}>
             <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                <InfoMenu menuState={"Lista de usuários"}/>
+                <InfoMenu menuState={<Translator path="userList"/>}/>
                 <CardContent>
                     <CardContentRow>
                         <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
                     </CardContentRow>
                     <CardContentRow>
-                        <CardColHeader txAlign="left" width="33.3%">CPF - Nome completo</CardColHeader>
+                        <CardColHeader txAlign="left" width="33.3%"><Translator path="cpfFullName"/></CardColHeader>
                         <CardColHeader width="33.3%">CRN</CardColHeader>
-                        <CardColHeader width="33.3%">Ações</CardColHeader>
+                        <CardColHeader width="33.3%"><Translator path="actions"/></CardColHeader>
                     </CardContentRow>
                     {!!usersList && search(usersList).map(data => {
                         return (
@@ -131,15 +132,15 @@ export const ListUser = () => {
                                 <CardCol width="33.3%" display="flex">
                                     {data.acesso === 0 ? (
                                         <>
-                                            <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/>Aprovar</CardContentCol>
-                                            <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/>Reprovar</CardContentCol>
+                                            <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleApprove(e, data.uuid)}><CheckIcon/><Translator path="approve"/></CardContentCol>
+                                            <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleReprove(e, data.uuid)}><Cross2Icon/><Translator path="reprove"/></CardContentCol>
                                         </>
                                     ) : (
                                         <>
                                             {data.ativo ? (
-                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'desactive')}><Cross2Icon/>Desativar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} denyTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'desactive')}><Cross2Icon/><Translator path="disable"/></CardContentCol>
                                             ) : (
-                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'active')}><CheckIcon/>Ativar</CardContentCol>
+                                                <CardContentCol maxWidth={"100px"} confirmTheme onClick={(e) => handleActiveDesactive(e, data.uuid, 'active')}><CheckIcon/><Translator path="activate"/></CardContentCol>
                                             )}
                                         </>
                                     )}

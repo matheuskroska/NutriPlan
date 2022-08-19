@@ -10,6 +10,7 @@ import { Dialog } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
 import {MagnifyingGlassIcon, PlusIcon} from '@radix-ui/react-icons'
 import './index.css'
+import { Translator } from '../../components/I18n'
 
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
@@ -153,9 +154,9 @@ export const Create = () => {
     }
 
     return (
-        <Card cardTitle={"Criar plano nutricional"} maxWidth={"100%"}>
+        <Card cardTitle={<Translator path="createPlan"/>} maxWidth={"100%"}>
             <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                <InfoMenu menuState={"Criar plano nutricional"}/>
+                <InfoMenu menuState={<Translator path="createPlan"/>}/>
                 <CardContent>
                     <CardContentRow>
                         <CardContentCol>

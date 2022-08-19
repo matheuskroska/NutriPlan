@@ -7,6 +7,7 @@ import { StyledLink } from '../Link/Link.elements';
 import { useContext } from 'react';
 import { AuthContext } from '../../firebase/Auth';
 import UserModel from '../../db/UserModel';
+import I18n from '../I18n/I18n';
 
 export const Header = () => {
 
@@ -26,8 +27,7 @@ export const Header = () => {
         const location = useLocation();
 
         useEffect(() => {
-            location.pathname === "/login" || location.pathname === "/cadastro" || location.pathname === "/alterar-senha" || location.pathname === "/redefinir-senha" 
-            ? setHeaderVisibility(false) : setHeaderVisibility(true);
+            setHeaderVisibility(true);
         }, [location])
     }
 
@@ -46,14 +46,22 @@ export const Header = () => {
                                 <NavRight>
                                     {(!!!currentUser) ? (
                                         <>
+                                            <NavItem>
+                                                <I18n />
+                                            </NavItem>
                                             <StyledLink header="true" to="/login">login</StyledLink>
                                             <StyledLink header="true" to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
                                         </>
                                     ) : (
-                                        <NavItem>
-                                            <StyledLink header="true" to="/editar-perfil">{currentUser.nome_completo}</StyledLink>
-                                            <StyledLink onClick={handleLogout} header="true" to="/">sair<ExitIcon/></StyledLink>
-                                        </NavItem>
+                                        <>
+                                            <NavItem>
+                                                <I18n />
+                                            </NavItem>
+                                            <NavItem>
+                                                <StyledLink header="true" to="/editar-perfil">{currentUser.nome_completo}</StyledLink>
+                                                <StyledLink onClick={handleLogout} header="true" to="/">sair<ExitIcon/></StyledLink>
+                                            </NavItem>
+                                        </>
                                     )}
                                 </NavRight> 
                             </>
