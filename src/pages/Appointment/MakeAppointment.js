@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate, useNavigate } from 'react-router-dom'
-import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
+import { CardContainer, CardContentRow } from '../../components/Card/Card.elements'
 import { StyledButton } from '../../components/Button/Button.elements'
 import { Card, InfoMenu, Loader } from '../../components'
 import DatePicker from "react-datepicker"
@@ -14,7 +13,6 @@ import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import ScheduleModel from '../../db/ScheduleModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
-import { Select } from '../../components/Select/Select'
 import { StyledSelect, StyledDatePicker } from '../../components/Select/Select.elements'
 import { Translator } from '../../components/I18n'
 
@@ -29,7 +27,6 @@ export const MakeAppointment = () => {
     const [nutritionist, setNutritionist] = useState(null)
     const [minDay, setMinDay] = useState(null)
     const [minMonth, setMonth] = useState(null)
-    const [nutriDates, setNutriDates] = useState(null)
     const [modalMessage, setModalMessage] = useState(false);
     const [loader, setLoader] = useState(false)
     const [message, setMessage] = useState()
@@ -160,7 +157,6 @@ export const MakeAppointment = () => {
                 let date = new Date(dateArr[2], dateArr[1]-1, dateArr[0], timeArr[0]*1, timeArr[1]*1)
                 dates.push(date)
             })
-            setNutriDates(dates)
             setExcludedTimes(dates)
         } else {
             setExcludedTimes(excludedTimes)
@@ -179,7 +175,6 @@ export const MakeAppointment = () => {
                     dates.push(date)
                 }
             })
-            setNutriDates(dates)
             setExcludedTimes(dates)
         } else {
             setExcludedTimes(excludedTimes)
@@ -285,7 +280,7 @@ export const MakeAppointment = () => {
                                     withPortal
                                     />
                                 </StyledDatePicker>
-                                <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}><Translator path="bMakeAppoint"/><ArrowRightIcon/></StyledButton>
+                                <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}><Translator path="bMakeAppoint"/></StyledButton>
 
                             </CardContentRow>
                         </form>

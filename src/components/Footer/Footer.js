@@ -4,6 +4,7 @@ import {} from './Footer.elements'
 import logo from '../../assets/images/logo.png';
 import {FigmaLogoIcon, GitHubLogoIcon, InstagramLogoIcon, DiscordLogoIcon} from '@radix-ui/react-icons'
 import { FooterColSocial, FooterLogo, FooterWrapper,FooterContainer,FooterItem, FooterCol, FooterColItem, FooterColList, FooterColTitle } from './Footer.elements'
+import { Translator } from '../I18n';
 
 export const Footer = () => {
 
@@ -40,32 +41,29 @@ export const Footer = () => {
                         {(footerVisibility) ? (
                             <>
                                 <FooterCol>
-                                <FooterColTitle>Teste</FooterColTitle>
-                                <FooterColList>
-                                    <FooterColItem>Sobre</FooterColItem>
-                                    <FooterColItem>Fale Conosco</FooterColItem>
-                                    <FooterColItem>História</FooterColItem>
-                                    <FooterColItem>Seja um parceiro</FooterColItem>
-                                </FooterColList>
-                            </FooterCol>
-                            <FooterCol>
-                                <FooterColTitle>Teste</FooterColTitle>
-                                <FooterColList>
-                                    <FooterColItem>Sobre</FooterColItem>
-                                    <FooterColItem>Fale Conosco</FooterColItem>
-                                    <FooterColItem>História</FooterColItem>
-                                    <FooterColItem>Seja um parceiro</FooterColItem>
-                                </FooterColList>
-                            </FooterCol>
-                            <FooterCol>
-                                <FooterColTitle>Teste</FooterColTitle>
-                                <FooterColList>
-                                    <FooterColItem>Sobre</FooterColItem>
-                                    <FooterColItem>Fale Conosco</FooterColItem>
-                                    <FooterColItem>História</FooterColItem>
-                                    <FooterColItem>Seja um parceiro</FooterColItem>
-                                </FooterColList>
-                            </FooterCol>
+                                    <FooterColTitle><Translator path="about"/></FooterColTitle>
+                                    <FooterColList>
+                                        <FooterColItem><Translator path="bePartner"/></FooterColItem>
+                                        <FooterColItem><Translator path="faq"/></FooterColItem>
+                                        <FooterColItem><Translator path="contactUs"/></FooterColItem>
+                                    </FooterColList>
+                                </FooterCol>
+                                <FooterCol>
+                                    <FooterColTitle><Translator path="about"/></FooterColTitle>
+                                    <FooterColList>
+                                        <FooterColItem><Translator path="bePartner"/></FooterColItem>
+                                        <FooterColItem><Translator path="faq"/></FooterColItem>
+                                        <FooterColItem><Translator path="contactUs"/></FooterColItem>
+                                    </FooterColList>
+                                </FooterCol>
+                                <FooterCol>
+                                    <FooterColTitle><Translator path="about"/></FooterColTitle>
+                                    <FooterColList>
+                                        <FooterColItem><Translator path="bePartner"/></FooterColItem>
+                                        <FooterColItem><Translator path="faq"/></FooterColItem>
+                                        <FooterColItem><Translator path="contactUs"/></FooterColItem>
+                                    </FooterColList>
+                                </FooterCol>
                             </>
                         ) : (
                             <>
@@ -78,7 +76,7 @@ export const Footer = () => {
                 {(!footerVisibility) ? (
                     <>
                         <FooterWrapper bgColor="var(--primary)">
-                            <FooterItem padding={"0 0 20px 0"}>Criação e Desenvolvimento José & Matheus</FooterItem>
+                            <FooterItem padding={"0 0 20px 0"}><Translator path="dev"/></FooterItem>
                         </FooterWrapper>
                     </>) : (
                         <>

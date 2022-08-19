@@ -9,8 +9,8 @@ import { AuthContext } from '../../firebase/Auth';
 import { Navigate } from 'react-router-dom';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
-import { Errors } from '../../firebase/Errors';
 import { Translator } from '../../components/I18n';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
     const [email, setEmail] = useState(null)
@@ -19,6 +19,7 @@ export const Login = () => {
     const [loader, setLoader] = useState(false)
     const [modalError, setModalError] = useState(false)
     const { currentUser } = useContext(AuthContext)
+    const { t } = useTranslation()
     
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -60,7 +61,7 @@ export const Login = () => {
                             <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            <CardInput required type="password" placeholder="Senha" inputWidth="100%" onChange={(e) => setPassword(e.target.value)} defaultValue={password}></CardInput>
+                            <CardInput required type="password" placeholder={`${t('pwd')}`} inputWidth="100%" onChange={(e) => setPassword(e.target.value)} defaultValue={password}></CardInput>
                         </CardItem>
                         <CardItem>
                             <Link to="/alterar-senha" forgotpwd><Translator path="forgotPwd"/></Link>

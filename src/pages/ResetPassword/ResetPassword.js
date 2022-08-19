@@ -6,6 +6,7 @@ import { AuthContext } from '../../firebase/Auth'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ResetPasswordModel from '../../db/ResetPasswordModel'
 import { Translator } from '../../components/I18n'
+import { useTranslation } from 'react-i18next'
 
 export const ResetPassword = () => {
     const [email, setEmail] = useState(null)
@@ -14,7 +15,8 @@ export const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState(null)
     const [confNewPassword, setConfNewPassword] = useState(null)
     const [message, setMessage] = useState(null)
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const handleSubmit = async() => {
         let ret = await ResetPasswordModel.handleConfirmNewPassword(email, newPassword, actionCode)
@@ -121,10 +123,10 @@ export const ResetPassword = () => {
                         ) : (
                             <>
                                 <CardItem>
-                                    <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Nova senha" inputWidth="100%" onChange={(e) => setNewPassword(e.target.value)}></CardInput>
+                                    <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder={`${t('newPwd')}`} inputWidth="100%" onChange={(e) => setNewPassword(e.target.value)}></CardInput>
                                 </CardItem>
                                 <CardItem>
-                                    <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Confirmar nova senha" inputWidth="100%" onChange={(e) => setConfNewPassword(e.target.value)}></CardInput>
+                                    <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder={`${t('confNewPwd')}`} inputWidth="100%" onChange={(e) => setConfNewPassword(e.target.value)}></CardInput>
                                 </CardItem>
                                 <CardItem>
                                     <StyledButton onClick={handleSubmit} primary><Translator path="changePwd"/></StyledButton>

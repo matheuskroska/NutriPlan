@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
 import { AuthContext } from '../../firebase/Auth'
 import { Navigate, useParams } from 'react-router-dom'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
@@ -13,6 +12,7 @@ import pt from "date-fns/locale/pt-BR"
 import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
+import { Translator } from '../../components/I18n'
 
 registerLocale("pt-BR", pt)
 
@@ -200,9 +200,9 @@ export const EditAppointment = () => {
                 <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
             </>
         )}
-            <Card maxWidth={"100%"} cardTitle={"Editar consulta"}>
+            <Card maxWidth={"100%"} cardTitle={<Translator path="editAppoint"/>}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={"Editar consulta"}/>
+                    <InfoMenu menuState={<Translator path="editAppoint"/>}/>
                     <CardContent>
                         <form>
                             <CardContentRow>
@@ -235,7 +235,7 @@ export const EditAppointment = () => {
                                 />
                             </CardContentRow>
                             <CardContentRow>
-                                <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}>marcar consulta<ArrowRightIcon/></StyledButton>
+                                <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}><Translator path="editAppoint"/></StyledButton>
                             </CardContentRow>
                         </form>
                     </CardContent>

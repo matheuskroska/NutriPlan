@@ -1,6 +1,7 @@
 import { CheckCircledIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import React from 'react'
 import { StyledButton } from '../Button/Button.elements'
+import { Translator } from '../I18n'
 import { ModalContainer, ModalContent, ModalTitle, ModalWrapper } from './ModalMessage.elements'
 
 export const ModalMessage = (props) => {
@@ -16,16 +17,16 @@ export const ModalMessage = (props) => {
                 <ModalTitle>
                     {!!props.success ? (
                         <>
-                            <CheckCircledIcon/> SUCESSO
+                            <CheckCircledIcon/> <Translator path="msgSuccess"/>
                         </>
                     ) : (
                         <>
-                            <ExclamationTriangleIcon/> ATENÇÃO
+                            <ExclamationTriangleIcon/> <Translator path="msgWarning"/>
                         </>
                     )}
                 </ModalTitle>
                 <ModalContent>{props.children}</ModalContent>
-                <StyledButton onClick={handleClick} primary>continuar</StyledButton>
+                <StyledButton onClick={handleClick} primary><Translator path="ok"/></StyledButton>
             </ModalWrapper>
         </ModalContainer>
       </>

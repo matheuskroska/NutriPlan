@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../firebase/Auth';
 import UserModel from '../../db/UserModel';
 import I18n from '../I18n/I18n';
+import { Translator } from '../I18n';
 
 export const Header = () => {
 
@@ -49,8 +50,8 @@ export const Header = () => {
                                             <NavItem>
                                                 <I18n />
                                             </NavItem>
-                                            <StyledLink header="true" to="/login">login</StyledLink>
-                                            <StyledLink header="true" to="/cadastro">cadastre-se<EnterIcon/></StyledLink>
+                                            <StyledLink header="true" to="/login">Login</StyledLink>
+                                            <StyledLink header="true" to="/cadastro"><Translator path="headerRegister"/><EnterIcon/></StyledLink>
                                         </>
                                     ) : (
                                         <>
@@ -59,7 +60,7 @@ export const Header = () => {
                                             </NavItem>
                                             <NavItem>
                                                 <StyledLink header="true" to="/editar-perfil">{currentUser.nome_completo}</StyledLink>
-                                                <StyledLink onClick={handleLogout} header="true" to="/">sair<ExitIcon/></StyledLink>
+                                                <StyledLink onClick={handleLogout} header="true" to="/"><Translator path="logout"/><ExitIcon/></StyledLink>
                                             </NavItem>
                                         </>
                                     )}

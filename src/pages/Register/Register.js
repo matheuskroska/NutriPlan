@@ -13,6 +13,7 @@ import PatientModel from '../../db/PatientModel'
 import { Errors } from '../../firebase/Errors'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 import { Translator } from '../../components/I18n'
+import { useTranslation } from 'react-i18next'
 
 export const Register = () => {
     const [visibility, setVisibility] = useState(false)
@@ -38,6 +39,7 @@ export const Register = () => {
     })
     const userModel = new UserModel()
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const swapForm = (userCategory, e) => {
         Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""))
@@ -195,7 +197,7 @@ export const Register = () => {
                 )}
                 <Card margin={"80px 0"} cardTitle={<Translator path="register"/>}>
                     <CardItem wrap={"initial"}>
-                        <CardDescription>Eu sou um:</CardDescription>
+                        <CardDescription><Translator path="Iam"/></CardDescription>
                         <StyledRadixToggleGroup type="single" aria-label="usuario">
                             <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente"><Translator path="patient"/></StyledRadixButton>
                             <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista"><Translator path="nutritionist"/></StyledRadixButton>
@@ -207,8 +209,8 @@ export const Register = () => {
                             </CardItem>
                             <form onSubmit={handleSubmit}>
                             <CardItem>
-                                <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Nome" inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange} defaultValue={user.firstname}></CardInput>
-                                <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder="Sobrenome" inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange} defaultValue={user.lastname}></CardInput>
+                                <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder={`${t('firstName')}`} inputWidth="calc(50% - 46px)" name="firstname" onChange={handleChange} defaultValue={user.firstname}></CardInput>
+                                <CardInput autoComplete="off" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}" required placeholder={`${t('lastName')}`} inputWidth="calc(50% - 46px)" name="lastname" onChange={handleChange} defaultValue={user.lastname}></CardInput>
                                 <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorName"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
@@ -217,7 +219,7 @@ export const Register = () => {
                             </CardItem>
                             <CardItem>
                                 <CardInputMask mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange} defaultValue={user.ddd}></CardInputMask>
-                                <CardInputMask mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder="Telefone" inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange} defaultValue={user.phone}></CardInputMask>
+                                <CardInputMask mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder={`${t('phone')}`} inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange} defaultValue={user.phone}></CardInputMask>
                                 <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
@@ -231,11 +233,11 @@ export const Register = () => {
                                     </CardItem>
                                 </Animated.div>
                             <CardItem>
-                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder="Senha" inputWidth="100%" name="password" onChange={handleChangePwd} defaultValue={user.password}></CardInput>
+                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} required type="password" placeholder={`${t('pwd')}`} inputWidth="100%" name="password" onChange={handleChangePwd} defaultValue={user.password}></CardInput>
                                 <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorPwd"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder="Confirme sua senha" inputWidth="100%" name="conf_password" onChange={verifyPassword} defaultValue={user.conf_password}></CardInput>
+                                <CardInput pattern={"^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"} type="password" placeholder={`${t('confPwd')}`} inputWidth="100%" name="conf_password" onChange={verifyPassword} defaultValue={user.conf_password}></CardInput>
                                 <ErrorMessage><ExclamationTriangleIcon/><Translator path="errorConfPwd"/></ErrorMessage>
                             </CardItem>
                             <StyledButton primary hasIcon marginTop={"20px"}><Translator path="bRegister"/><ArrowRightIcon/></StyledButton>

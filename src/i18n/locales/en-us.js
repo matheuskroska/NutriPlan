@@ -6,6 +6,12 @@ export default {
         logIn: 'Log in',
 
         editProfile: "Edit profile",
-        userList: "User list"
+        userList: "User list",
+
+        dev: 'Criação e Desenvolvimento José & Matheus',
+        about: 'About',
+        contactUs: 'Contact us',
+        faq: 'FAQ',
+        bePartner: 'Be a partner',
     }
 }

@@ -9,6 +9,7 @@ import PatientModel from '../../db/PatientModel';
 import { AuthContext } from '../../firebase/Auth';
 import { Card, InfoMenu } from '../../components';
 import { Translator } from '../../components/I18n';
+import { useTranslation } from 'react-i18next';
 
 export const ListUser = () => {
     const [usersList, setUsersList] = useState(null)
@@ -17,6 +18,7 @@ export const ListUser = () => {
     const { currentUser } = useContext(AuthContext)
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
+    const { t } = useTranslation()
     
     const userModel = new UserModel()
     const patientModel = new PatientModel()
@@ -109,7 +111,7 @@ export const ListUser = () => {
                 <InfoMenu menuState={<Translator path="userList"/>}/>
                 <CardContent>
                     <CardContentRow>
-                        <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
+                        <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder={`${t('search')}`} value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
                     </CardContentRow>
                     <CardContentRow>
                         <CardColHeader txAlign="left" width="33.3%"><Translator path="cpfFullName"/></CardColHeader>

@@ -9,6 +9,7 @@ import { Card, InfoMenu } from '../../components';
 import AppointmentModel from '../../db/AppointmentModel';
 import ScheduleModel from '../../db/ScheduleModel';
 import { Translator } from '../../components/I18n';
+import { useTranslation } from 'react-i18next';
 
 export const ListAppointment = () => {
     const [usersList, setUsersList] = useState(null)
@@ -17,6 +18,7 @@ export const ListAppointment = () => {
     const [searchParam] = useState(["data", "horario"]); //colunas da base para realizar busca
     const [usersName, setUsersName] = useState([]);
     const [scheduleList, setScheduleList] = useState(null)
+    const { t } = useTranslation()
     
     const userModel = new UserModel()
     const appointmentModel = new AppointmentModel()
@@ -74,7 +76,7 @@ export const ListAppointment = () => {
             <InfoMenu menuState={<Translator path="myAppoint"/>}/>
             <CardContent>
                 <CardContentRow>
-                    <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder="Pesquise..." value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
+                    <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder={`${t('search')}`} value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
                 </CardContentRow>
                 <CardContentRow>
                     <CardColHeader txAlign="left" width="33.3%"><Translator path="dateTime"/></CardColHeader>

@@ -11,10 +11,11 @@ import { AuthContext } from '../../firebase/Auth'
 import {MagnifyingGlassIcon, PlusIcon} from '@radix-ui/react-icons'
 import './index.css'
 import { Translator } from '../../components/I18n'
+import { useTranslation } from 'react-i18next'
 
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
-    const [text, updateText] = useState([])
+    const { t } = useTranslation()
     const [textList, setTextList] = useState({
         sunday: '',
         monday: '',
@@ -191,10 +192,10 @@ export const Create = () => {
                                                         {provided.placeholder}
                                                         <CardPlanFlexWrapper>
                                                             <CardPlanFlexItem>
-                                                                <input placeholder="Pesquise..." type="text" value={textList[`${key}`]['value']} name={key} title={data.title} onChange={handleChange} autoComplete="off"></input>
+                                                                <input placeholder={`${t('search')}`} type="text" value={textList[`${key}`]['value']} name={key} title={data.title} onChange={handleChange} autoComplete="off"></input>
                                                                 <MagnifyingGlassIcon/>
                                                             </CardPlanFlexItem>    
-                                                            <StyledButton onClick={(e) => addItem(e)} name={key} primary>Adicionar<PlusIcon/></StyledButton>
+                                                            <StyledButton onClick={(e) => addItem(e)} name={key} primary><Translator path="add"/><PlusIcon/></StyledButton>
                                                         </CardPlanFlexWrapper>
                                                     </CardPlanDroppableColumn>
                                                 )
