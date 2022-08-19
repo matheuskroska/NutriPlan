@@ -42,7 +42,7 @@ export const EditProfile = () => {
         setLoader(true)
         e.preventDefault()
         await changeUserData()
-        setMessage("Os dados foram alterados com sucesso");
+        setMessage(t('dataChanged'));
         setModalMessage(true)
         setLoader(false)
     }

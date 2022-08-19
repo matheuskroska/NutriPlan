@@ -70,7 +70,7 @@ export const Register = () => {
                         let hasUser = await userModel.hasUser(user)
                         if (hasUser) {
                             setLoader(false)
-                            setMessage("CPF já existente");
+                            setMessage(t('cpfExists'));
                             setModalMessage(true)
                         } else {
                             let nutritionistModel = null
@@ -88,7 +88,7 @@ export const Register = () => {
                                 setMessage(Errors[ret]);
                             } else {
                                 setSuccess(true)
-                                setMessage("Cadastro realizado com sucesso! Por favor, aguarde até que seu login seja liberado.");
+                                setMessage(t('registerSuccess'));
                             }
                             setModalMessage(true)
                         }

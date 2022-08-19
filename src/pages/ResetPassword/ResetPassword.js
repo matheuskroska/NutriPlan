@@ -23,7 +23,7 @@ export const ResetPassword = () => {
         if (!!ret && ret === true) {
             //Faz redirect para tela de login
             setShowBtnLogin(true)
-            setMessage('Senha alterada com sucesso!')
+            setMessage(t('pwdChanged'))
         } else {
             alert(ret)
         }

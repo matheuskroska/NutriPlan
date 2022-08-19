@@ -15,6 +15,7 @@ import ScheduleModel from '../../db/ScheduleModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 import { StyledSelect, StyledDatePicker } from '../../components/Select/Select.elements'
 import { Translator } from '../../components/I18n'
+import { useTranslation } from 'react-i18next'
 
 registerLocale("pt-BR", pt)
 
@@ -30,6 +31,7 @@ export const MakeAppointment = () => {
     const [modalMessage, setModalMessage] = useState(false);
     const [loader, setLoader] = useState(false)
     const [message, setMessage] = useState()
+    const { t } = useTranslation()
 
     const navigate = useNavigate()
     const nutritionistModel = new NutritionistModel()
@@ -141,7 +143,7 @@ export const MakeAppointment = () => {
         let nutriId = document.getElementById('selectNutri').value
         await appointmentModel.add(currentUser.uuid, nutriId, date, time)
         await scheduleModel.addNew(nutriId, date, time)
-        setMessage("Os dados foram salvos com sucesso")
+        setMessage(t('dataSaved'))
         setModalMessage(true)
         setLoader(false)
     }
@@ -207,7 +209,7 @@ export const MakeAppointment = () => {
         }
         if (!!nutritionists) {
             let opt = document.createElement('option')
-            opt.textContent += 'Selecione um nutricionista' // or opt.innerHTML += user.name
+            opt.textContent += t('selNutri') // or opt.innerHTML += user.name
             sel.appendChild(opt)
             nutritionists.forEach(nutri => {
                 let opt = document.createElement('option')
@@ -273,7 +275,7 @@ export const MakeAppointment = () => {
                                     minTime={setHours(setMinutes(minDate, 0), 8)}
                                     maxTime={setHours(setMinutes(minDate, 30), 17)}
                                     excludeTimes={excludedTimes}
-                                    placeholderText="Selecione uma data e um horário"
+                                    placeholderText={t('selDateTime')}
                                     showTimeSelect
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     onCalendarOpen={handleCalendarOpen}

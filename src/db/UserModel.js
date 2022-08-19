@@ -82,7 +82,6 @@ class UserModel {
     
     async signIn(email, password) {
         let userData = await this.getUserByEmailAndPassword(email, password)
-        console.log(userData)
         if (!!userData) {
             if (userData.acesso === 0) {
                 return 'auth/login-not-approved'

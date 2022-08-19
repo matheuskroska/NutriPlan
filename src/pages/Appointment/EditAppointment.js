@@ -13,6 +13,7 @@ import AppointmentModel from '../../db/AppointmentModel'
 import NutritionistModel from '../../db/NutritionistModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 import { Translator } from '../../components/I18n'
+import { useTranslation } from 'react-i18next'
 
 registerLocale("pt-BR", pt)
 
@@ -30,6 +31,7 @@ export const EditAppointment = () => {
     const [modalMessage, setModalMessage] = useState(false);
     const [loader, setLoader] = useState(false)
     const [message, setMessage] = useState()
+    const { t } = useTranslation()
 
     const nutritionistModel = new NutritionistModel()
     const appointmentModel = new AppointmentModel()
@@ -141,7 +143,7 @@ export const EditAppointment = () => {
         appoint.data = date
         appoint.horario = time
         await appointmentModel.update(docId, appoint)
-        setMessage("Os dados foram alterados com sucesso");
+        setMessage(t('dataChanged'));
         setModalMessage(true)
         setLoader(false)
     }
@@ -155,13 +157,12 @@ export const EditAppointment = () => {
         }
         if (!!nutritionists) {
             let opt = document.createElement('option')
-            opt.textContent += 'Selecione um nutricionista' // or opt.innerHTML += user.name
+            opt.textContent += t('selNutri') // or opt.innerHTML += user.name
             sel.appendChild(opt)
             nutritionists.forEach(nutri => {
                 let opt = document.createElement('option')
                 opt.value = nutri.uuid
                 opt.textContent += nutri.nome_completo // or opt.innerHTML += user.name
-                console.log(nutri.uuid, nutritionist)
                 if (nutri.uuid === nutritionist) {
                     opt.setAttribute("selected", "selected")
                 }
@@ -227,7 +228,7 @@ export const EditAppointment = () => {
                                     minTime={setHours(setMinutes(minDate, 0), 8)}
                                     maxTime={setHours(setMinutes(minDate, 30), 17)}
                                     excludeTimes={excludedTimes}
-                                    placeholderText="Selecione uma data e um horário"
+                                    placeholderText={t('selDateTime')}
                                     showTimeSelect
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     onCalendarOpen={handleCalendarOpen}

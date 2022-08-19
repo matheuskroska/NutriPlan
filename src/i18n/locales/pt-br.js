@@ -1,6 +1,5 @@
 export default {
     translations: {
-        // Verificar como é feito para funcionar nos placeholders
         hotMeals: 'Pratos quentes',
         firstName: 'Nome',
         lastName: 'Sobrenome',
@@ -15,7 +14,7 @@ export default {
         nutritionist: 'Nutricionista',
         finishRegister: 'Para concluir o cadastro, preencha o formulário abaixo',
         errorName: 'Nome e Sobrenome deve conter de 2 a 20 caracteres',
-        errorPwd: 'Senha deve ter de 8 a 20 caraceteres, 1 letra, 1 número e 1 caracter especial',
+        errorPwd: 'Senha deve ter de 8 a 20 caracteres, 1 letra, 1 número e 1 caracter especial',
         errorConfPwd: 'Senhas diferentes',
         bRegister: 'Cadastrar',
         changePwd: 'Alterar senha',
@@ -56,7 +55,20 @@ export default {
         Iam: 'Eu sou um:',
         search: 'Pesquise...',
         newPwd: 'Nova senha',
-        confNewPwd: 'Nova senha',
+        confNewPwd: 'Confirmar nova senha',
+        selDateTime: 'Selecione uma data e um horário',
+        pwdChanged: 'Senha alterada com sucesso!',
+        dataChanged: 'Os dados foram alterados com sucesso',
+        dataSaved: 'Os dados foram salvos com sucesso',
+        cpfExists: 'Esse CPF já existe',
+        registerSuccess: 'Cadastro realizado com sucesso! Por favor, aguarde até que seu login seja liberado.',
+        sunday: 'Domingo',
+        monday: 'Segunda',
+        tuesday: 'Terça',
+        wednesday: 'Quarta',
+        thursday: 'Quinta',
+        friday: 'Sexta',
+        saturday: 'Sábado',
         // Fazer com que os erros (Errors[ret]) sejam traduzidos
         'auth/app-deleted': 'O banco de dados não foi localizado.',
         'auth/expired-action-code': 'O código da ação o ou link expirou.',
