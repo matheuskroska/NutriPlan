@@ -2,7 +2,7 @@ import React from 'react';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { StyledButton } from '../Button/Button.elements';
-import { Fieldset, Flex, IconButton, Input, Label, StyledContent, StyledDescription, StyledOverlay, StyledTitle } from './Dialog.elements';
+import { DialogWrapper, Fieldset, Flex, IconButton, Input, Label, StyledContent, StyledDescription, StyledOverlay, StyledTitle } from './Dialog.elements';
 import DatePicker from "react-datepicker"
 import { addDays, setHours, setMinutes } from 'date-fns';
 
@@ -25,7 +25,10 @@ export const DialogClose = DialogPrimitive.Close;
 
 export const Dialog = (props) => (
     <DialogRoot>
-        <DialogTrigger asChild>
+        <DialogWrapper> 
+            {props.children}
+        </DialogWrapper>
+        {/* <DialogTrigger asChild>
             <StyledButton>Abrir Dialog</StyledButton>
         </DialogTrigger>
         <DialogContent >
@@ -61,6 +64,6 @@ export const Dialog = (props) => (
                     <Cross2Icon />
                 </IconButton>
             </DialogClose>
-        </DialogContent>
+        </DialogContent> */}
     </DialogRoot>
 );

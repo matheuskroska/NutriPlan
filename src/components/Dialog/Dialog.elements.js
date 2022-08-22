@@ -17,6 +17,11 @@ const contentShow = keyframes`
     }
 `;
 
+export const DialogWrapper = styled.div`
+    width: 100%;
+    margin: ${props => props.margin || "0"};
+`
+
 export const StyledOverlay = styled(DialogPrimitive.Overlay)`
     background-color: #000000b3;
     position: fixed;
@@ -84,7 +89,9 @@ export const IconButton = styled.button`
     top: 10px;
     right: 10px;
     :hover { 
-        background-color: var(--secondary)
+        background-color: var(--secondary);
+        color: var(--font-soft);
+        cursor: pointer;
     };
     :focus {
         box-shadow: 0 0 0 2px var(--secondary)

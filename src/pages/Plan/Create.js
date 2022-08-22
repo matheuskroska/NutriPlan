@@ -6,12 +6,16 @@ import { v4 } from 'uuid'
 import { Card, InfoMenu } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
 import { CardContainer, CardContent, CardContentCol, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper } from '../../components/Card/Card.elements'
-import { Dialog } from '../../components/Dialog/Dialog'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogRoot, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
-import {MagnifyingGlassIcon, PlusIcon} from '@radix-ui/react-icons'
+import {Cross2Icon, MagnifyingGlassIcon, PlusIcon} from '@radix-ui/react-icons'
 import './index.css'
 import { Translator } from '../../components/I18n'
 import { useTranslation } from 'react-i18next'
+import { Fieldset, Flex, IconButton, Input, Label } from '../../components/Dialog/Dialog.elements'
+import { StyledDatePicker } from '../../components/Select/Select.elements'
+import { addDays, setHours, setMinutes } from 'date-fns'
+import DatePicker from "react-datepicker"
 
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
@@ -25,50 +29,17 @@ export const Create = () => {
         friday: '',
         saturday: '',
     })
-
-    const item = {
-        id: v4(),
-        name: "ABARÁ"
-    }
-
-    const item2 = {
-        id: v4(),
-        name: "AÇAÍ"
-    }
-
-    const item3 = {
-        id: v4(),
-        name: "Cerveja"
-    }
-
-    const item4 = {
-        id: v4(),
-        name: "Peixe"
-    }
-
-    const item5 = {
-        id: v4(),
-        name: "Batata frita com queijo parmesão e bacon"
-    }
-
-    const item6 = {
-        id: v4(),
-        name: "Sorvete de creme"
-    }
-
-    const item7 = {
-        id: v4(),
-        name: "Milho verde"
-    }
+    const [time, setTime] = useState(null)
+    const [food, setFood] = useState(null)
 
     const [itemsList, updateItemsList] = useState({
         "sunday": {
             title: "Domingo",
-            items: [item, item3]
+            items: []
         },
         "monday": {
             title: "Segunda",
-            items: [item2]
+            items: []
         },
         "tuesday": {
             title: "Terça",
@@ -76,19 +47,19 @@ export const Create = () => {
         },
         "wednesday": {
             title: "Quarta",
-            items: [item6]
+            items: []
         },
         "thursday": {
             title: "Quinta",
-            items: [item7]
+            items: []
         },
         "friday": {
             title: "Sexta",
-            items: [item4]
+            items: []
         },
         "saturday": {
             title: "Sábado",
-            items: [item5]
+            items: []
         }
     })
 
@@ -108,20 +79,19 @@ export const Create = () => {
     }
 
     const addItem = (e) => {
-        const { name } = e.target
+        const { name, title } = e.target
         const key = name
-        if (!textList[key]['value']) {
-            return false
-        }
+        const minutes = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
+        const timeToShow = time.getHours() + ':' + minutes
         updateItemsList(prev => {
             return {
                 ...prev,
                 [key]: {
-                    title: textList[key]['title'],
+                    title: title,
                     items: [
                         {
                             id: v4(),
-                            name: textList[key]['value']
+                            name: timeToShow + ' - ' + food
                         },
                         ...prev[key].items
                     ]
@@ -131,7 +101,7 @@ export const Create = () => {
         setTextList(prev => ({
             ...prev,
             [key]: {
-                title: textList[key]['title'],
+                title: title,
                 value: ''
             }
         }))
@@ -159,11 +129,6 @@ export const Create = () => {
             <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                 <InfoMenu menuState={<Translator path="createPlan"/>}/>
                 <CardContent>
-                    <CardContentRow>
-                        <CardContentCol>
-                            <Dialog title="Adicionar informarções"></Dialog>
-                        </CardContentCol>
-                    </CardContentRow>
                     <CardContentRow gap={"0 10px"}>
                         <DragDropContext onDragEnd={handleDragEnd}>
                             {_.map(itemsList, (data, key) => {
@@ -192,10 +157,50 @@ export const Create = () => {
                                                         {provided.placeholder}
                                                         <CardPlanFlexWrapper>
                                                             <CardPlanFlexItem>
-                                                                <input placeholder={`${t('search')}`} type="text" value={textList[`${key}`]['value']} name={key} title={data.title} onChange={handleChange} autoComplete="off"></input>
-                                                                <MagnifyingGlassIcon/>
+                                                                <Dialog>
+                                                                    <DialogTrigger asChild>
+                                                                        <StyledButton primary><Translator path="add"/><PlusIcon/></StyledButton>
+                                                                    </DialogTrigger>
+                                                                    <DialogContent >
+                                                                        <DialogTitle><Translator path="addInfo"/></DialogTitle>
+                                                                        <DialogDescription><Translator path="selTimeFood"/></DialogDescription>
+                                                                        <Fieldset>
+                                                                            <Label htmlFor="name"><Translator path="time"/></Label>
+                                                                            <StyledDatePicker>
+                                                                            <DatePicker
+                                                                                selected={time}
+                                                                                onChange={setTime}
+                                                                                showTimeSelect={true}
+                                                                                showTimeSelectOnly={true}
+                                                                                timeIntervals={30}
+                                                                                timeCaption={t('time')}
+                                                                                minTime={setHours(setMinutes(addDays(new Date(), 1), 0), 8)}
+                                                                                maxTime={setHours(setMinutes(addDays(new Date(), 1), 30), 17)}
+                                                                                dateFormat="HH:mm"
+                                                                                timeFormat="HH:mm"
+                                                                                placeholderText={t('selTime')}
+                                                                                // withPortal
+                                                                            />
+                                                                            </StyledDatePicker>
+                                                                        </Fieldset>
+                                                                        <Fieldset>
+                                                                            <Label htmlFor="food"><Translator path="food"/></Label>
+                                                                            <Input id="food" placeholder={t('selFood')} onChange={(e) => setFood(e.target.value)}/>
+                                                                        </Fieldset>
+                                                                        <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
+                                                                            <DialogClose asChild>
+                                                                                <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green"><Translator path="save"/></StyledButton>
+                                                                            </DialogClose>
+                                                                        </Flex>
+                                                                        <DialogClose asChild>
+                                                                            <IconButton aria-label="Close">
+                                                                                <Cross2Icon />
+                                                                            </IconButton>
+                                                                        </DialogClose>
+                                                                    </DialogContent>
+                                                                </Dialog>
                                                             </CardPlanFlexItem>    
-                                                            <StyledButton onClick={(e) => addItem(e)} name={key} primary><Translator path="add"/><PlusIcon/></StyledButton>
+                                                            {/* <StyledButton onClick={(e) => addItem(e)} name={key} primary><Translator path="add"/><PlusIcon/></StyledButton> */}
                                                         </CardPlanFlexWrapper>
                                                     </CardPlanDroppableColumn>
                                                 )

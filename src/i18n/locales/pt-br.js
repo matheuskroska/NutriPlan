@@ -69,6 +69,12 @@ export default {
         thursday: 'Quinta',
         friday: 'Sexta',
         saturday: 'Sábado',
+        addInfo: 'Adicionar informarções',
+        selTimeFood: 'Selecione um horário e um alimento.',
+        time: 'Horário',
+        food: 'Alimento',
+        selFood: 'Selecione um alimento',
+        selTime: 'Selecione um horário',
         // Fazer com que os erros (Errors[ret]) sejam traduzidos
         'auth/app-deleted': 'O banco de dados não foi localizado.',
         'auth/expired-action-code': 'O código da ação o ou link expirou.',
