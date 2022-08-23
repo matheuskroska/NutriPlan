@@ -104,6 +104,32 @@ export const Fieldset = styled.fieldset`
     gap: 20px;
     align-items: center;
     margin-bottom: 15px;
+    position: relative;
+
+    .searchResult {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background-color: #fff;
+        z-index: 9999;
+        max-height: 28vh;
+        overflow: auto;
+
+        li {
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        li:hover {
+            background-color: var(--secondary);
+            color: #fff;
+        }
+    }
+
+    .searchInput {
+        position: relative;
+    }
 `;
 
 export const Label = styled.label`

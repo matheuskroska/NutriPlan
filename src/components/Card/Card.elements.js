@@ -364,7 +364,7 @@ export const CardPlanColumn = styled.div`
 export const CardPlanTitle = styled.h3`
     font-weight: 500;
     text-align: center;
-    font-size: 1.4em;
+    font-size: 1.5em;
     margin-bottom: 10px;
 `
 

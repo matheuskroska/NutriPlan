@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { Navigate } from 'react-router-dom'
 import { v4 } from 'uuid'
@@ -8,7 +8,7 @@ import { StyledButton } from '../../components/Button/Button.elements'
 import { CardContainer, CardContent, CardContentCol, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper } from '../../components/Card/Card.elements'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogRoot, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
-import {Cross2Icon, MagnifyingGlassIcon, PlusIcon} from '@radix-ui/react-icons'
+import {Cross2Icon, PlusIcon} from '@radix-ui/react-icons'
 import './index.css'
 import { Translator } from '../../components/I18n'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +16,7 @@ import { Fieldset, Flex, IconButton, Input, Label } from '../../components/Dialo
 import { StyledDatePicker } from '../../components/Select/Select.elements'
 import { addDays, setHours, setMinutes } from 'date-fns'
 import DatePicker from "react-datepicker"
+import axios from "axios";
 
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
@@ -31,7 +32,8 @@ export const Create = () => {
     })
     const [time, setTime] = useState(null)
     const [food, setFood] = useState(null)
-
+    const [foodOption, setFoodOption] = useState(null)
+    const [selectState, setSelectState] = useState(null);
     const [itemsList, updateItemsList] = useState({
         "sunday": {
             title: "Domingo",
@@ -62,6 +64,40 @@ export const Create = () => {
             items: []
         }
     })
+
+
+    const options = {
+        method: 'GET',
+        url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/search',
+        params: {
+            query: ""
+        },
+        headers: {
+            'X-RapidAPI-Key': '893dfc6070msh83cc056cdf0781cp19e41ajsn0e3b1cf5f171',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+
+    const requestToApi = (text) => {
+        options.params.query = text;
+        axios.request(options).then(function (response) {
+            setFoodOption(response.data);
+            setSelectState(true)
+        }).catch(function (error) {
+            console.error(error);
+        });  
+    }
+
+    const clearInput = (e) => {
+        document.getElementById("food").value = e.target.innerText;
+    }
+ 
+    const search = _.debounce((text) => {
+        if(text && text.length > 3) {
+            requestToApi(text)
+        }
+      }, 1500);
+      
 
     const handleDragEnd = ({destination, source}) => {
         if (!destination) return //dropando fora das caixas
@@ -184,12 +220,23 @@ export const Create = () => {
                                                                             </StyledDatePicker>
                                                                         </Fieldset>
                                                                         <Fieldset>
-                                                                            <Label htmlFor="food"><Translator path="food"/></Label>
-                                                                            <Input id="food" placeholder={t('selFood')} onChange={(e) => setFood(e.target.value)}/>
+                                                                            <div className='searchInput'>
+                                                                                <Label htmlFor="food"><Translator path="food"/></Label>
+                                                                                <Input id="food" placeholder={t('selFood')} onChange={(e) => search(e.target.value)}/>
+                                                                            </div>
+                                                                            {selectState && (
+                                                                                <ul className='searchResult'>
+                                                                                    {foodOption.results.map((data) => {
+                                                                                        return (
+                                                                                            <li id={data.id} key={data.id} onClick={(e) => {setFood(data.name);setSelectState(false);clearInput(e)}}>{data.name}</li>
+                                                                                        )
+                                                                                    })}      
+                                                                                </ul>    
+                                                                            )}
                                                                         </Fieldset>
                                                                         <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
                                                                             <DialogClose asChild>
-                                                                                <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green"><Translator path="save"/></StyledButton>
+                                                                                <StyledButton onClick={(e) => addItem(e)} name={key} title={data.name} primary variant="green"><Translator path="save"/></StyledButton>
                                                                             </DialogClose>
                                                                         </Flex>
                                                                         <DialogClose asChild>
@@ -207,9 +254,6 @@ export const Create = () => {
                                             }}
                                         </Droppable>
                                     </CardPlanColumn>
-                                    
-                                        
-                                    
                                 )
                             })}
                         </DragDropContext>
