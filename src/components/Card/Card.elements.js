@@ -10,6 +10,11 @@ export const CardContainer = styled.div`
     margin: ${props=> props.margin || "0 auto"};
     border-radius: ${props=> props.borderRadius || "5px"};
     position: relative;
+
+    .registerToggle {
+        opacity: 1!important;
+    }
+
 `
 export const CardInput = styled.input`
     border-radius: 5px;

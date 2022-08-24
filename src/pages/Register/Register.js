@@ -195,10 +195,10 @@ export const Register = () => {
                         <ModalMessage func={pull_data} success={success}>{message}</ModalMessage>
                     </>
                 )}
-                <Card margin={"80px 0"} cardTitle={<Translator path="register"/>}>
+                <Card className="registerPage" margin={"80px 0"} cardTitle={<Translator path="register"/>}>
                     <CardItem wrap={"initial"}>
                         <CardDescription><Translator path="Iam"/></CardDescription>
-                        <StyledRadixToggleGroup type="single" aria-label="usuario">
+                        <StyledRadixToggleGroup className="registerToggle" type="single" aria-label="usuario">
                             <StyledRadixButton onClick={ () => swapForm(false)} value="paciente" aria-label="Paciente"><Translator path="patient"/></StyledRadixButton>
                             <StyledRadixButton onClick={ () => swapForm(true)} value="nutricionista" aria-label="Nutricionista"><Translator path="nutritionist"/></StyledRadixButton>
                         </StyledRadixToggleGroup>

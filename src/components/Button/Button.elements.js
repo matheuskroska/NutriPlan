@@ -27,7 +27,7 @@ const cssButon = css`
 `
 
 export const StyledRadixToggleGroup = styled(ToggleGroupPrimitive.Root)`
-    /* opacity: ${props => props.mState ? "1" : "0"}; */
+    opacity: ${props => props.mState ? "1" : "0"};
     display: flex;
     justify-content: initial;
     width: 100%;
