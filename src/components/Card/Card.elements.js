@@ -417,3 +417,46 @@ export const CardPlanFlexItem = styled.div`
 export const CardPlanFlexWrapper = styled.div`
 
 `
+
+export const CardNutritionalValueContainer = styled.div`
+        max-height: 85vh;
+    overflow: auto;
+`
+
+export const CardNutritionalValueList = styled.ul`
+
+`
+
+export const CardNutritionalValueTitle = styled.h2`
+    font-size: 1.7em;
+`
+
+export const CardNutritionalValueSubtitle = styled.h3`
+    font-size: 1.5em;
+`
+
+export const CardNutritionalValueListItem = styled.li`
+    display: flex;
+    font-size: 1.3em;
+    padding: 3px;
+    border-radius: 5px;
+    div {
+        width: 33%;
+    }
+
+    &:nth-child(odd) {
+        background-color: var(--secondary);
+        color: #fff;
+    }
+`
+
+export const CardNutritionalValueListItemHeader = styled.li`
+    display: flex;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--font-dark);
+    padding: 6px 0;
+    div {
+        width: 33%;
+    }
+`

@@ -2,6 +2,7 @@ import styled, {css} from "styled-components";
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 const cssButon = css`
+    white-space: nowrap;
     position: relative;
     border-radius: 5px;
     max-width: ${props => props.maxWidth ? props.maxWidth : "100%"};
@@ -26,7 +27,7 @@ const cssButon = css`
 `
 
 export const StyledRadixToggleGroup = styled(ToggleGroupPrimitive.Root)`
-    opacity: ${props => props.mState ? "1" : "0"};
+    /* opacity: ${props => props.mState ? "1" : "0"}; */
     display: flex;
     justify-content: initial;
     width: 100%;

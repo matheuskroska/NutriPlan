@@ -108,12 +108,15 @@ export const Fieldset = styled.fieldset`
 
     .searchResult {
         position: absolute;
-        top: 50px;
+        top: 40px;
         left: 0;
         background-color: #fff;
         z-index: 9999;
         max-height: 28vh;
         overflow: auto;
+        width: 100%;
+        border: 1px solid #66A571;
+        border-radius: 5px;
 
         li {
             padding: 10px;
@@ -135,24 +138,19 @@ export const Fieldset = styled.fieldset`
 export const Label = styled.label`
     font-size: 15px;
     color: 'var(--secondary)';
-    width: 90px;
+    max-width: 70px;
+    width: 100%;
     text-align: 'right';
 `;
 export const Input = styled.input`
-    all: unset;
+    border-radius: 5px;
+    border: 1px solid #66A571;
+    height: 31px;
+    font-size: 1.3em;
+    font-weight: 400;
+    outline: 0;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+    padding: 0 20px;
     width: 100%;
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    padding: 0 10px;
-    font-size: 15px;
-    line-height: 1px;
-    color: var(--secondary);
-    box-shadow: 0 0 0 1px var(--secondary);
-    height: 35px;
-    :focus {
-        box-shadow: 0 0 0 2px var(--secondary)
-    }
+    color: var(--font-dark);
 `;

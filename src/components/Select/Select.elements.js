@@ -15,6 +15,7 @@ export const StyledSelect = styled.select`
 `
 
 export const StyledDatePicker = styled.div`
+    width: 100%;
     input {
         border-radius: 5px;
     border: 1px solid #66A571;

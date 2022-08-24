@@ -5,10 +5,10 @@ import { Navigate } from 'react-router-dom'
 import { v4 } from 'uuid'
 import { Card, InfoMenu } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { CardContainer, CardContent, CardContentCol, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper } from '../../components/Card/Card.elements'
+import { CardContainer, CardContent, CardContentCol, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper, CardNutritionalValue, CardNutritionalValueContainer, CardNutritionalValueTitle, CardNutritionalValueSubtitle, CardNutritionalValueList, CardNutritionalValueListItemHeader, CardNutritionalValueListItem } from '../../components/Card/Card.elements'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogRoot, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
-import {Cross2Icon, PlusIcon} from '@radix-ui/react-icons'
+import {Cross2Icon, IdCardIcon, PlusIcon} from '@radix-ui/react-icons'
 import './index.css'
 import { Translator } from '../../components/I18n'
 import { useTranslation } from 'react-i18next'
@@ -151,12 +151,11 @@ export const Create = () => {
         });  
     }
 
-    console.log(foodDetails)
-
-
     const search = _.debounce((text) => {
         if(text && text.length > 3) {
             requestToApi(text)
+        } else {
+            setDetailsInput(false)
         }
       }, 1500);
       
@@ -296,56 +295,68 @@ export const Create = () => {
                                                                             <Fieldset>
                                                                                 <Label htmlFor="name"><Translator path="time"/></Label>
                                                                                 <StyledDatePicker>
-                                                                                <DatePicker
-                                                                                    selected={time}
-                                                                                    onChange={setTime}
-                                                                                    showTimeSelect={true}
-                                                                                    showTimeSelectOnly={true}
-                                                                                    timeIntervals={30}
-                                                                                    timeCaption={t('time')}
-                                                                                    minTime={setHours(setMinutes(addDays(new Date(), 1), 0), 8)}
-                                                                                    maxTime={setHours(setMinutes(addDays(new Date(), 1), 30), 17)}
-                                                                                    dateFormat="HH:mm"
-                                                                                    timeFormat="HH:mm"
-                                                                                    placeholderText={t('selTime')}
-                                                                                    // withPortal
-                                                                                />
+                                                                                    <DatePicker
+                                                                                        selected={time}
+                                                                                        onChange={setTime}
+                                                                                        showTimeSelect={true}
+                                                                                        showTimeSelectOnly={true}
+                                                                                        timeIntervals={30}
+                                                                                        timeCaption={t('time')}
+                                                                                        minTime={setHours(setMinutes(addDays(new Date(), 1), 0), 8)}
+                                                                                        maxTime={setHours(setMinutes(addDays(new Date(), 1), 30), 17)}
+                                                                                        dateFormat="HH:mm"
+                                                                                        timeFormat="HH:mm"
+                                                                                        placeholderText={t('selTime')}
+                                                                                        // withPortal
+                                                                                    />
                                                                                 </StyledDatePicker>
                                                                             </Fieldset>
                                                                             <Fieldset>
-                                                                                <div className='searchInput'>
                                                                                     <Label htmlFor="food"><Translator path="food"/></Label>
-                                                                                    <Input id="food" placeholder={t('selFood')} onChange={(e) => search(e.target.value)} autoComplete="off"/>
-                                                                                </div>
-                                                                                <div>
-                                                                                    {detailsInput && (
+                                                                                    <Input id="food" placeholder={t('selFood')} onChange={(e) => search(e.target.value)} autoComplete="off"/>                                                                                
+                                                                                    {selectState && (
+                                                                                        <ul className='searchResult'>
+                                                                                            {foodOption.results.map((data) => {
+                                                                                                return (
+                                                                                                    <li id={data.id} key={data.id} onClick={(e) => {setFood(data);setSelectState(false);changeInputToSelected(e)}}>{data.name}</li>
+                                                                                                )
+                                                                                            })}      
+                                                                                        </ul>    
+                                                                                    )}
+                                                                            </Fieldset>
+                                                                            <Fieldset>
+                                                                            {detailsInput && (
                                                                                         <>
-                                                                                            <input onChange={(e) => setVolume(e.target.value)} placeholder="gramas"></input>
-                                                                                            <input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder="quantidade"></input>                                                             
+                                                                                            <Input onChange={(e) => setVolume(e.target.value)} placeholder="gr/ml"/>
+                                                                                            <Input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder="quantidade"/>                                                             
                                                                                             <Dialog>
                                                                                                 <DialogTrigger asChild>
-                                                                                                    <StyledButton primary onClick={() => getFoodDetails(food)}>ver detalhes <PlusIcon/></StyledButton>
+                                                                                                    <StyledButton primary onClick={() => getFoodDetails(food)}>ver detalhes <IdCardIcon/></StyledButton>
                                                                                                 </DialogTrigger>
-                                                                                                <DialogContent>
+                                                                                                <DialogContent className="nutriValues">
                                                                                                     {foodDetails && (
-                                                                                                        <>
-                                                                                                            <div>{foodDetails.name}</div>
-                                                                                                            <div>{foodDetails.amount}</div>
-                                                                                                            <ul>
+                                                                                                        <CardNutritionalValueContainer>
+                                                                                                            <CardNutritionalValueTitle>Nome - {foodDetails.name}</CardNutritionalValueTitle>
+                                                                                                            <CardNutritionalValueSubtitle>Quantidade - {foodDetails.amount}</CardNutritionalValueSubtitle>
+                                                                                                            <CardNutritionalValueList>
+                                                                                                                <CardNutritionalValueListItemHeader>
+                                                                                                                    <div>Nome</div>
+                                                                                                                    <div>Quantidade / Unidade </div>
+                                                                                                                    <div>Necessidades Diárias</div>
+                                                                                                                </CardNutritionalValueListItemHeader>
                                                                                                                 {foodDetails.nutrition.nutrients.map((data) => {
                                                                                                                     return (
                                                                                                                         <>
-                                                                                                                            <li>
+                                                                                                                            <CardNutritionalValueListItem>
                                                                                                                                 <div>{data.name}</div>
-                                                                                                                                <div>{data.amount}</div>
-                                                                                                                                <div>{data.unit}</div>
+                                                                                                                                <div>{data.amount} {data.unit}</div>
                                                                                                                                 <div>{data.percentOfDailyNeeds}</div>
-                                                                                                                            </li>
+                                                                                                                            </CardNutritionalValueListItem>
                                                                                                                         </>
                                                                                                                     )
                                                                                                                 })}
-                                                                                                            </ul>
-                                                                                                        </>
+                                                                                                            </CardNutritionalValueList>
+                                                                                                        </CardNutritionalValueContainer>
                                                                                                     )}
                                                                                                     
                                                                                                     <DialogClose asChild>
@@ -357,21 +368,12 @@ export const Create = () => {
                                                                                                 
                                                                                             </Dialog>
                                                                                         </>  
-                                                                                    )}
-                                                                                </div>
-                                                                                {selectState && (
-                                                                                    <ul className='searchResult'>
-                                                                                        {foodOption.results.map((data) => {
-                                                                                            return (
-                                                                                                <li id={data.id} key={data.id} onClick={(e) => {setFood(data);setSelectState(false);changeInputToSelected(e)}}>{data.name}</li>
-                                                                                            )
-                                                                                        })}      
-                                                                                    </ul>    
-                                                                                )}
+                                                                                    )}                                                                                
+                                                                                    
                                                                             </Fieldset>
                                                                             <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
                                                                                 <DialogClose asChild>
-                                                                                    <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green"><Translator path="save"/></StyledButton>
+                                                                                    <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green"><Translator path="save"/><PlusIcon/></StyledButton>
                                                                                 </DialogClose>
                                                                             </Flex>
                                                                             <DialogClose onClick={() => setDetailsInput( !detailsInput ? detailsInput : !detailsInput)} asChild>
