@@ -78,6 +78,8 @@ export default {
         timeExists: 'Já existe um alimento cadastrado nesse horário',
         timeEmpty: 'O campo horário não pode estar vazio',
         foodEmpty: 'O campo alimento não pode estar vazio',
+        volumeEmpty: 'O campo volume não pode estar vazio',
+        quantityEmpty: 'O campo quantidade não pode estar vazio',
         // Fazer com que os erros (Errors[ret]) sejam traduzidos
         'auth/app-deleted': 'O banco de dados não foi localizado.',
         'auth/expired-action-code': 'O código da ação o ou link expirou.',

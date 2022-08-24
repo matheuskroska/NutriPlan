@@ -78,6 +78,8 @@ export default {
         timeExists: 'There is already a food registered at this time',
         timeEmpty: 'The time field cannot be empty',
         foodEmpty: 'The food field cannot be empty',
+        volumeEmpty: 'The volume field cannot be empty',
+        quantityEmpty: 'The quantity field cannot be empty',
         // Fazer com que os erros (Errors[ret]) sejam traduzidos
         'auth/app-deleted': 'O banco de dados não foi localizado.',
         'auth/expired-action-code': 'O código da ação o ou link expirou.',

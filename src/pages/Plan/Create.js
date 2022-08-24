@@ -137,12 +137,26 @@ export const Create = () => {
     }
     
 
-    const getFoodDetails = (food) => {
+    const getFoodDetails = (e, food) => {
+
+        if(!quantity) {
+            e.preventDefault()
+            setMessage(t('quantityEmpty'))
+            setModalMessage(true)
+            return false
+        }
+
+        if(!volume) {
+            e.preventDefault()
+            setMessage(t('volumeEmpty'))
+            setModalMessage(true)
+            return false
+        }
+
         const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/'+ food.id +'/information';
         optionsDetail.url = url;
         optionsDetail.params.amount = volume.toString();
         optionsDetail.params.unit = quantity.toString();
-        console.log(quantity,volume)
 
         axios.request(optionsDetail).then(function (response) {
             setFoodDetails(response.data)
@@ -200,6 +214,22 @@ export const Create = () => {
             setModalMessage(true)
             return false
         }
+        if(!quantity) {
+            e.preventDefault()
+            setMessage(t('quantityEmpty'))
+            setModalMessage(true)
+            return false
+        }
+
+        if(!volume) {
+            e.preventDefault()
+            setMessage(t('volumeEmpty'))
+            setModalMessage(true)
+            return false
+        }
+
+        setDetailsInput( !detailsInput ? detailsInput : !detailsInput)
+
         const minutes = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
         const timeFood = time.getHours() + ':' + minutes
         const itemsInDay = itemsList[key].items.map(el => el.timeAndFood)
@@ -331,7 +361,7 @@ export const Create = () => {
                                                                                             <Input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder="quantidade"/>                                                             
                                                                                             <Dialog>
                                                                                                 <DialogTrigger asChild>
-                                                                                                    <StyledButton primary onClick={() => getFoodDetails(food)}>ver detalhes <IdCardIcon/></StyledButton>
+                                                                                                    <StyledButton primary onClick={(e) => getFoodDetails(e, food)}>ver detalhes <IdCardIcon/></StyledButton>
                                                                                                 </DialogTrigger>
                                                                                                 <DialogContent className="nutriValues">
                                                                                                     {foodDetails && (
