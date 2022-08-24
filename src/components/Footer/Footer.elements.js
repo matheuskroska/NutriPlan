@@ -8,7 +8,7 @@ export const FooterContainer = styled.div`
 `
 
 export const FooterWrapper = styled.div`
-    background-color: ${props => props.bgColor || "var(--primary)"};
+    background-color: ${props => props.bgColor || "rgb(170 215 108 / 90%);"};
     display: flex;
     justify-content: center;
     position:relative;

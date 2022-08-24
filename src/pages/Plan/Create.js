@@ -283,7 +283,7 @@ export const Create = () => {
                     <ModalMessage func={pull_data} success={false}>{message}</ModalMessage>
                 </>
             )}
-            <Card cardTitle={<Translator path="createPlan"/>} maxWidth={"100%"}>
+            <Card cardTitle={<Translator path="createPlan"/>} maxWidth={"100%"} borderRadius={"0"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={<Translator path="createPlan"/>}/>
                     <CardContent>

@@ -5,7 +5,7 @@ import { Card, InfoMenu, Loader } from '../../components';
 import { CardContainer, CardInput, CardInputMask, CardItem, CardItemContainer } from '../../components/Card/Card.elements';
 import { StyledButton } from '../../components/Button/Button.elements';
 import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { ExclamationTriangleIcon, PlusIcon } from '@radix-ui/react-icons';
 import Animated from 'react-mount-animation';
 import UserModel from '../../db/UserModel';
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
@@ -75,10 +75,10 @@ export const EditProfile = () => {
                 <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
             </>
         )}
-            <Card cardTitle={<Translator path="editProfile"/>} maxWidth={"100%"}>
+            <Card cardTitle={<Translator path="editProfile"/>} maxWidth={"100%"} borderRadius={"0"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu/>
-                    <Card margin={"0 auto"} showTitle={"none"}>
+                    <Card margin={"0 auto"} showTitle={"none"} >
                     <CardItemContainer visibility={true}>
                         <form onSubmit={handleSubmit}>
                         <CardItem>
@@ -107,7 +107,7 @@ export const EditProfile = () => {
                                 </CardItem>
                             </Animated.div>
                             }
-                        <StyledButton primary hasIcon marginTop={"20px"}><Translator path="save"/></StyledButton>
+                        <StyledButton primary hasIcon marginTop={"20px"}><Translator path="save"/><PlusIcon/></StyledButton>
                         </form>
                     </CardItemContainer>
                     </Card>

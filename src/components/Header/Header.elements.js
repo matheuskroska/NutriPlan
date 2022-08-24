@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 
 export const NavContainer = styled.div`
-   background-color: var(--primary);
+    background: rgb(170 215 108 / 90%);
     box-shadow: rgb(50 50 93 / 25%) 0px 6px 12px -2px, rgb(0 0 0 / 30%) 0px 3px 7px;
 `
 

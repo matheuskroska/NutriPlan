@@ -14,6 +14,7 @@ export const FlagContainer = styled.div`
     }
 
     img {
+        cursor: pointer;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         border-radius: 10px;
     }

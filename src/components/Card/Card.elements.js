@@ -424,7 +424,7 @@ export const CardPlanFlexWrapper = styled.div`
 `
 
 export const CardNutritionalValueContainer = styled.div`
-        max-height: 85vh;
+        max-height: 35vh;
     overflow: auto;
 `
 

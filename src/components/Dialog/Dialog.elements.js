@@ -42,7 +42,7 @@ export const StyledContent = styled(DialogPrimitive.Overlay)`
     transform: 'translate(-50%, -50%)';
     width: 90vw;
     max-width: 450px;
-    max-height: 85vh;
+    max-height: 35vh;
     padding: 25px;
     @media (prefers-reduced-motion: no-preference) {
         animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1),

@@ -27,7 +27,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     html {
-        background-color: var(--primary);
+        background: var(--primary);
+        height: 100vh;
     }
 
     

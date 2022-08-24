@@ -106,7 +106,7 @@ export const ListUser = () => {
     }
 
     return (
-        <Card cardTitle={<Translator path="userList"/>} maxWidth={"100%"}>
+        <Card cardTitle={<Translator path="userList"/>} maxWidth={"100%"} borderRadius={"0"}>
             <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                 <InfoMenu menuState={<Translator path="userList"/>}/>
                 <CardContent>
