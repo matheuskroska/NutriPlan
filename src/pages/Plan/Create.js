@@ -34,11 +34,15 @@ export const Create = () => {
     const [time, setTime] = useState(null)
     const [food, setFood] = useState('')
     const [foodOption, setFoodOption] = useState(null)
+    const [foodDetails, setFoodDetails] = useState(null)
+    const [quantity, setQuantity] = useState(null)
+    const [volume, setVolume] = useState(null)
     const [selectState, setSelectState] = useState(null)
     const [isActive, setIsActive] = useState(false)
     const [itemKey, setItemKey] = useState(null)
     const [modalMessage, setModalMessage] = useState(false)
     const [message, setMessage] = useState(null)
+    const [detailsInput, setDetailsInput] = useState(null)
     const [dialogState, setDialogState] = useState("closed")
     const [itemsList, updateItemsList] = useState({
         "sunday": {
@@ -106,6 +110,17 @@ export const Create = () => {
         }
     };
 
+    const optionsDetail = {
+        method: 'GET',
+        url: '',
+        params: {amount: '', unit: ''},
+        headers: {
+          'X-RapidAPI-Key': '893dfc6070msh83cc056cdf0781cp19e41ajsn0e3b1cf5f171',
+          'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+      };
+
+
     const requestToApi = (text) => {
         options.params.query = text;
         axios.request(options).then(function (response) {
@@ -116,10 +131,29 @@ export const Create = () => {
         });  
     }
 
-    const clearInput = (e) => {
+    const changeInputToSelected = (e) => {
         document.getElementById("food").value = e.target.innerText;
+        setDetailsInput(true);
     }
- 
+    
+
+    const getFoodDetails = (food) => {
+        const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/'+ food.id +'/information';
+        optionsDetail.url = url;
+        optionsDetail.params.amount = volume.toString();
+        optionsDetail.params.unit = quantity.toString();
+        console.log(quantity,volume)
+
+        axios.request(optionsDetail).then(function (response) {
+            setFoodDetails(response.data)
+        }).catch(function (error) {
+            console.error(error);
+        });  
+    }
+
+    console.log(foodDetails)
+
+
     const search = _.debounce((text) => {
         if(text && text.length > 3) {
             requestToApi(text)
@@ -161,7 +195,7 @@ export const Create = () => {
             setModalMessage(true)
             return false
         }
-        if (!food) {
+        if (!food.name) {
             e.preventDefault()
             setMessage(t('foodEmpty'))
             setModalMessage(true)
@@ -182,7 +216,7 @@ export const Create = () => {
                     items: [
                         {
                             id: v4(),
-                            timeAndFood: timeFood + ' - ' + food
+                            timeAndFood: timeFood + ' - ' + food.name
                         },
                         ...prev[key].items
                     ]
@@ -283,11 +317,53 @@ export const Create = () => {
                                                                                     <Label htmlFor="food"><Translator path="food"/></Label>
                                                                                     <Input id="food" placeholder={t('selFood')} onChange={(e) => search(e.target.value)} autoComplete="off"/>
                                                                                 </div>
+                                                                                <div>
+                                                                                    {detailsInput && (
+                                                                                        <>
+                                                                                            <input onChange={(e) => setVolume(e.target.value)} placeholder="gramas"></input>
+                                                                                            <input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder="quantidade"></input>                                                             
+                                                                                            <Dialog>
+                                                                                                <DialogTrigger asChild>
+                                                                                                    <StyledButton primary onClick={() => getFoodDetails(food)}>ver detalhes <PlusIcon/></StyledButton>
+                                                                                                </DialogTrigger>
+                                                                                                <DialogContent>
+                                                                                                    {foodDetails && (
+                                                                                                        <>
+                                                                                                            <div>{foodDetails.name}</div>
+                                                                                                            <div>{foodDetails.amount}</div>
+                                                                                                            <ul>
+                                                                                                                {foodDetails.nutrition.nutrients.map((data) => {
+                                                                                                                    return (
+                                                                                                                        <>
+                                                                                                                            <li>
+                                                                                                                                <div>{data.name}</div>
+                                                                                                                                <div>{data.amount}</div>
+                                                                                                                                <div>{data.unit}</div>
+                                                                                                                                <div>{data.percentOfDailyNeeds}</div>
+                                                                                                                            </li>
+                                                                                                                        </>
+                                                                                                                    )
+                                                                                                                })}
+                                                                                                            </ul>
+                                                                                                        </>
+                                                                                                    )}
+                                                                                                    
+                                                                                                    <DialogClose asChild>
+                                                                                                        <IconButton aria-label="Close">
+                                                                                                            <Cross2Icon />
+                                                                                                        </IconButton>
+                                                                                                    </DialogClose>
+                                                                                                </DialogContent>
+                                                                                                
+                                                                                            </Dialog>
+                                                                                        </>  
+                                                                                    )}
+                                                                                </div>
                                                                                 {selectState && (
                                                                                     <ul className='searchResult'>
                                                                                         {foodOption.results.map((data) => {
                                                                                             return (
-                                                                                                <li id={data.id} key={data.id} onClick={(e) => {setFood(data.name);setSelectState(false);clearInput(e)}}>{data.name}</li>
+                                                                                                <li id={data.id} key={data.id} onClick={(e) => {setFood(data);setSelectState(false);changeInputToSelected(e)}}>{data.name}</li>
                                                                                             )
                                                                                         })}      
                                                                                     </ul>    
@@ -298,7 +374,7 @@ export const Create = () => {
                                                                                     <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green"><Translator path="save"/></StyledButton>
                                                                                 </DialogClose>
                                                                             </Flex>
-                                                                            <DialogClose asChild>
+                                                                            <DialogClose onClick={() => setDetailsInput( !detailsInput ? detailsInput : !detailsInput)} asChild>
                                                                                 <IconButton aria-label="Close">
                                                                                     <Cross2Icon />
                                                                                 </IconButton>
