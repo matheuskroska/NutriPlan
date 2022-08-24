@@ -22,15 +22,6 @@ import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
     const { t } = useTranslation()
-    const [textList, setTextList] = useState({
-        sunday: '',
-        monday: '',
-        tuesday: '',
-        wednesday: '',
-        thursday: '',
-        friday: '',
-        saturday: '',
-    })
     const [time, setTime] = useState(null)
     const [food, setFood] = useState('')
     const [foodOption, setFoodOption] = useState(null)
@@ -46,31 +37,31 @@ export const Create = () => {
     const [dialogState, setDialogState] = useState("closed")
     const [itemsList, updateItemsList] = useState({
         "sunday": {
-            title: "Domingo",
+            title: t('sunday'),
             items: []
         },
         "monday": {
-            title: "Segunda",
+            title: t('monday'),
             items: []
         },
         "tuesday": {
-            title: "Terça",
+            title: t('tuesday'),
             items: []
         },
         "wednesday": {
-            title: "Quarta",
+            title: t('wednesday'),
             items: []
         },
         "thursday": {
-            title: "Quinta",
+            title: t('thursday'),
             items: []
         },
         "friday": {
-            title: "Sexta",
+            title: t('friday'),
             items: []
         },
         "saturday": {
-            title: "Sábado",
+            title: t('saturday'),
             items: []
         }
     })
@@ -230,8 +221,9 @@ export const Create = () => {
 
         setDetailsInput( !detailsInput ? detailsInput : !detailsInput)
 
-        const minutes = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
-        const timeFood = time.getHours() + ':' + minutes
+        const hour = (time.getHours() < 10 ? '0' : '') + time.getHours()
+        const minute = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
+        const timeFood = hour + ':' + minute
         const itemsInDay = itemsList[key].items.map(el => el.timeAndFood)
         if (!verifyExistsInTime(itemsInDay, timeFood)) {
             e.preventDefault()
@@ -245,6 +237,8 @@ export const Create = () => {
                     items: [
                         {
                             id: v4(),
+                            time: timeFood,
+                            food: food.name,
                             timeAndFood: timeFood + ' - ' + food.name
                         },
                         ...prev[key].items
@@ -252,13 +246,6 @@ export const Create = () => {
                 }
             }
         })
-        setTextList(prev => ({
-            ...prev,
-            [key]: {
-                title: title,
-                value: ''
-            }
-        }))
         setTime(null)
         setFood('')
         setIsActive(true)
@@ -283,7 +270,7 @@ export const Create = () => {
                     <ModalMessage func={pull_data} success={false}>{message}</ModalMessage>
                 </>
             )}
-            <Card cardTitle={<Translator path="createPlan"/>} maxWidth={"100%"} borderRadius={"0"}>
+            <Card cardTitle={<Translator path="createPlan"/>} maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={<Translator path="createPlan"/>}/>
                     <CardContent>
@@ -292,7 +279,7 @@ export const Create = () => {
                                 {_.map(itemsList, (data, key) => {
                                     return (
                                         <CardPlanColumn key={key}>
-                                            <CardPlanTitle>{data.title}</CardPlanTitle>
+                                            <CardPlanTitle><Translator path={key}/></CardPlanTitle>
                                             <Droppable droppableId={key}>
                                                 {(provided) => {
                                                     return (
@@ -332,8 +319,8 @@ export const Create = () => {
                                                                                         showTimeSelectOnly={true}
                                                                                         timeIntervals={30}
                                                                                         timeCaption={t('time')}
-                                                                                        minTime={setHours(setMinutes(addDays(new Date(), 1), 0), 8)}
-                                                                                        maxTime={setHours(setMinutes(addDays(new Date(), 1), 30), 17)}
+                                                                                        minTime={setHours(setMinutes(addDays(new Date(), 1), 0), 0)}
+                                                                                        maxTime={setHours(setMinutes(addDays(new Date(), 1), 30), 23)}
                                                                                         dateFormat="HH:mm"
                                                                                         timeFormat="HH:mm"
                                                                                         placeholderText={t('selTime')}
@@ -358,27 +345,27 @@ export const Create = () => {
                                                                             {detailsInput && (
                                                                                         <>
                                                                                             <Input onChange={(e) => setVolume(e.target.value)} placeholder="gr/ml"/>
-                                                                                            <Input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder="quantidade"/>                                                             
+                                                                                            <Input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder={t('quantity')}/>                                                             
                                                                                             <Dialog>
                                                                                                 <DialogTrigger asChild>
-                                                                                                    <StyledButton primary onClick={(e) => getFoodDetails(e, food)}>ver detalhes <IdCardIcon/></StyledButton>
+                                                                                                    <StyledButton primary onClick={(e) => getFoodDetails(e, food)}><Translator path="seeDetails"/> <IdCardIcon/></StyledButton>
                                                                                                 </DialogTrigger>
                                                                                                 <DialogContent className="nutriValues">
                                                                                                     {foodDetails && (
                                                                                                         <CardNutritionalValueContainer>
-                                                                                                            <CardNutritionalValueTitle>Nome - {foodDetails.name}</CardNutritionalValueTitle>
-                                                                                                            <CardNutritionalValueSubtitle>Quantidade - {foodDetails.amount}</CardNutritionalValueSubtitle>
+                                                                                                            <CardNutritionalValueTitle><Translator path="name"/> - {foodDetails.name}</CardNutritionalValueTitle>
+                                                                                                            <CardNutritionalValueSubtitle><Translator path="quantity"/> - {foodDetails.amount}</CardNutritionalValueSubtitle>
                                                                                                             <CardNutritionalValueList>
                                                                                                                 <CardNutritionalValueListItemHeader>
-                                                                                                                    <div>Nome</div>
-                                                                                                                    <div>Quantidade / Unidade </div>
-                                                                                                                    <div>Necessidades Diárias</div>
+                                                                                                                    <div><Translator path="name"/></div>
+                                                                                                                    <div><Translator path="quantity"/> / <Translator path="unit"/></div>
+                                                                                                                    <div><Translator path="dailyNecess"/></div>
                                                                                                                 </CardNutritionalValueListItemHeader>
                                                                                                                 {foodDetails.nutrition.nutrients.map((data) => {
                                                                                                                     return (
                                                                                                                         <>
                                                                                                                             <CardNutritionalValueListItem>
-                                                                                                                                <div>{data.name}</div>
+                                                                                                                                <div><Translator path={data.name}/></div>
                                                                                                                                 <div>{data.amount} {data.unit}</div>
                                                                                                                                 <div>{data.percentOfDailyNeeds}</div>
                                                                                                                             </CardNutritionalValueListItem>
@@ -414,7 +401,6 @@ export const Create = () => {
                                                                         </DialogContent>
                                                                     </Dialog>
                                                                 </CardPlanFlexItem>    
-                                                                {/* <StyledButton onClick={(e) => addItem(e)} name={key} primary><Translator path="add"/><PlusIcon/></StyledButton> */}
                                                             </CardPlanFlexWrapper>
                                                         </CardPlanDroppableColumn>
                                                     )
