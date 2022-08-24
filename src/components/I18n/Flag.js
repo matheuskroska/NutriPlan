@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Flag = ({ image, isSelected, ...props }) => (
-    <img alt="flag" src={image} className={isSelected ? 'flag selected' : 'flag'} {...props} />
+
+export const Flag = ({ image, isSelected, ...props }) => (
+    <img type="image" alt="flag" src={image} className={isSelected ? 'flag selected' : 'flag'} {...props} />
 )
 
-export const StyledFlag = styled(Flag)`
-    &:first-child {
+
+export const FlagContainer = styled.div`
+
+    img:first-child {
         margin-right: 10px;
+    }
+
+    img {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        border-radius: 10px;
+    }
+    
+    img:not(.selected) {
+        filter: opacity(0.4)
     }
 `

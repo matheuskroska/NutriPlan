@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { BRFlag, USFlag } from '../../assets'
-import { StyledFlag } from './Flag'
+import { Flag, FlagContainer, StyledFlag } from './Flag'
 
 const I18n = () => {
     const { i18n } = useTranslation()
@@ -13,22 +13,21 @@ const I18n = () => {
  
     const selectedLanguage = i18n.language // Idioma selecionado
     return (
-        <div className="flags-container">
-            <StyledFlag
-                image={BRFlag}
-                isSelected={selectedLanguage === 'pt-BR'} // Verifica o idioma escolhido
-                onClick={() => handleChangeLanguage('pt-BR')} // Troca o idioma para pt-BR
-                width="20"
-                height="20"
-            />
-            <StyledFlag
-                image={USFlag}
-                isSelected={selectedLanguage === 'en-US'} // Verifica o idioma escolhido
-                onClick={() => handleChangeLanguage('en-US')} // Troca o idioma para en-US
-                width="20"
-                height="20"
-            />
-        </div>
+        <FlagContainer>
+                    <Flag
+                    image={BRFlag}
+                    isSelected={selectedLanguage === 'pt-BR'} // Verifica o idioma escolhido
+                    onClick={() => handleChangeLanguage('pt-BR')} // Troca o idioma para pt-BR
+                    width="20"
+                    height="20"/>
+                
+                    <Flag
+                    image={USFlag}
+                    isSelected={selectedLanguage === 'en-US'} // Verifica o idioma escolhido
+                    onClick={() => handleChangeLanguage('en-US')} // Troca o idioma para en-US
+                    width="20"
+                    height="20"/>   
+        </FlagContainer>
     )
 }
 

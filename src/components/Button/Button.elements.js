@@ -45,6 +45,9 @@ export const StyledRadixButton = styled(ToggleGroupPrimitive.Item)`
     &[data-state=on] { background-color: var(--tertiary); color: var(--font-soft)}
     &:focus { position: relative}
 `
+export const StyledRadixFlag = styled(ToggleGroupPrimitive.Item)`
+    
+`
 
 export const StyledButton = styled.button`
     ${cssButon};
