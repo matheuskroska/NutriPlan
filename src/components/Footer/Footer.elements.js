@@ -34,6 +34,7 @@ export const FooterColTitle = styled.h3`
     color: var(--font-dark);
     font-weight: bold;
     margin-bottom: 10px;
+    text-align: left;
 `
 export const FooterColList = styled.ul`
 
@@ -53,6 +54,7 @@ export const FooterColItem = styled.li`
     margin-bottom: 10px;
     font-weight: 500;
     color: var(--font-dark);
+    text-align: left;
 `
 
 export const FooterLogo = styled.img`

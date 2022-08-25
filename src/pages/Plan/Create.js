@@ -190,6 +190,12 @@ export const Create = () => {
         return true
     }
 
+    const validateNumber = (e) => {
+        if(!/^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/.test(e.target.value)) {
+            e.target.value = "";
+        }
+    }
+
     const addItem = (e) => {
         const { name, title } = e.target
         const key = name
@@ -344,8 +350,8 @@ export const Create = () => {
                                                                             <Fieldset>
                                                                             {detailsInput && (
                                                                                         <>
-                                                                                            <Input onChange={(e) => setVolume(e.target.value)} placeholder="gr/ml"/>
-                                                                                            <Input onChange={(e) => setQuantity(e.target.value)} type="number" placeholder={t('quantity')}/>                                                             
+                                                                                            <Input onChange={(e) => {setVolume(e.target.value);validateNumber(e)}} placeholder="gr/ml"/>
+                                                                                            <Input onChange={(e) => {setQuantity(e.target.value);validateNumber(e)}} placeholder={t('quantity')}/>                                                             
                                                                                             <Dialog>
                                                                                                 <DialogTrigger asChild>
                                                                                                     <StyledButton primary onClick={(e) => getFoodDetails(e, food)}><Translator path="seeDetails"/> <IdCardIcon/></StyledButton>
