@@ -169,16 +169,21 @@ export const Create = () => {
         if (!destination) return //dropando fora das caixas
         if (destination.index === source.index && destination.droppableId === source.droppableId) return //dropando no mesmo lugar
 
+        const itemsInDay = itemsList[destination.droppableId].items.map(el => el.timeAndFood)
         //Cria cópia do item antes de remover do array
         const itemCopy = {...itemsList[source.droppableId].items[source.index]}
-        updateItemsList(prev => {
-            prev = {...prev}
-            prev[source.droppableId].items.splice(source.index, 1) //remove item do array de origem
-
-            prev[destination.droppableId].items.splice(destination.index, 0, itemCopy)  //adiciona item no array de destino
-            return prev
-        })
-        setIsActive(true)
+        if (!verifyExistsInTime(itemsInDay, itemCopy.time)) {
+            return false
+        } else {
+            updateItemsList(prev => {
+                prev = {...prev}
+                prev[source.droppableId].items.splice(source.index, 1) //remove item do array de origem
+    
+                prev[destination.droppableId].items.splice(destination.index, 0, itemCopy)  //adiciona item no array de destino
+                return prev
+            })
+            setIsActive(true)
+        }
     }
   
     const verifyExistsInTime = (itemsInDay, timeFood) => {
