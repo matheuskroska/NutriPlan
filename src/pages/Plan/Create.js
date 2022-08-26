@@ -96,7 +96,7 @@ export const Create = () => {
             query: ""
         },
         headers: {
-            'X-RapidAPI-Key': '893dfc6070msh83cc056cdf0781cp19e41ajsn0e3b1cf5f171',
+            'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
             'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
         }
     };
@@ -106,7 +106,7 @@ export const Create = () => {
         url: '',
         params: {amount: '', unit: ''},
         headers: {
-          'X-RapidAPI-Key': '893dfc6070msh83cc056cdf0781cp19e41ajsn0e3b1cf5f171',
+          'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
           'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
         }
       };
