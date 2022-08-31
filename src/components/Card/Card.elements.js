@@ -142,8 +142,8 @@ export const CardMessage = styled.h2`
 `
 
 export const CardMenuContainer = styled.div`
-    min-width: ${props => props.mState ? "0!important" : "255px!important"};
-    width: ${props => props.mState ?  "0!important" : "100%"};
+    min-width: ${props => props.mstate ? "0!important" : "255px!important"};
+    width: ${props => props.mstate ?  "0!important" : "100%"};
     position: relative;
     color: var(--font-dark);
     text-align: center;
@@ -167,7 +167,7 @@ export const CardCloseButton = styled.button`
 `
 
 export const CardMenuHeader = styled.div`
-    opacity: ${props => props.mState ? "1" : "0"};
+    opacity: ${props => props.mstate ? "1" : "0"};
     width: 100%;
     background-color: rgb(255 255 255 / 80%);
     color: var(--font-dark);

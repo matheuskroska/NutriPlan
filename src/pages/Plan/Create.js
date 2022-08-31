@@ -5,8 +5,8 @@ import { Navigate } from 'react-router-dom'
 import { v4 } from 'uuid'
 import { Card, InfoMenu } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { CardContainer, CardContent, CardContentCol, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper, CardNutritionalValue, CardNutritionalValueContainer, CardNutritionalValueTitle, CardNutritionalValueSubtitle, CardNutritionalValueList, CardNutritionalValueListItemHeader, CardNutritionalValueListItem } from '../../components/Card/Card.elements'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogRoot, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
+import { CardContainer, CardContent, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper, CardNutritionalValueContainer, CardNutritionalValueTitle, CardNutritionalValueSubtitle, CardNutritionalValueList, CardNutritionalValueListItemHeader, CardNutritionalValueListItem } from '../../components/Card/Card.elements'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
 import {Cross2Icon, IdCardIcon, PlusIcon} from '@radix-ui/react-icons'
 import './index.css'
@@ -18,6 +18,7 @@ import { addDays, setHours, setMinutes } from 'date-fns'
 import DatePicker from "react-datepicker"
 import axios from "axios"
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
+import PlanModel from '../../db/PlanModel'
 
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
@@ -34,8 +35,10 @@ export const Create = () => {
     const [modalMessage, setModalMessage] = useState(false)
     const [message, setMessage] = useState(null)
     const [detailsInput, setDetailsInput] = useState(null)
-    const [dialogState, setDialogState] = useState("closed")
-    const [itemsList, updateItemsList] = useState({
+    const [foodName, setFoodName] = useState(null)
+    const [edit, setEdit] = useState(false)
+    const [itemData, setItemData] = useState(false)
+    const [itemsList, setItemsList] = useState({
         "sunday": {
             title: t('sunday'),
             items: []
@@ -123,13 +126,12 @@ export const Create = () => {
     }
 
     const changeInputToSelected = (e) => {
+        setFoodName(e.target.innerText)
         document.getElementById("food").value = e.target.innerText;
         setDetailsInput(true);
     }
     
-
-    const getFoodDetails = (e, food) => {
-
+    const handleClickDetails = (e, food) => {
         if(!quantity) {
             e.preventDefault()
             setMessage(t('quantityEmpty'))
@@ -144,6 +146,10 @@ export const Create = () => {
             return false
         }
 
+        getFoodDetails(food)
+    }
+
+    const getFoodDetails = (food) => {
         const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/'+ food.id +'/information';
         optionsDetail.url = url;
         optionsDetail.params.amount = volume.toString();
@@ -153,7 +159,7 @@ export const Create = () => {
             setFoodDetails(response.data)
         }).catch(function (error) {
             console.error(error);
-        });  
+        });
     }
 
     const search = _.debounce((text) => {
@@ -162,8 +168,7 @@ export const Create = () => {
         } else {
             setDetailsInput(false)
         }
-      }, 1500);
-      
+    }, 1500);
 
     const handleDragEnd = ({destination, source}) => {
         if (!destination) return //dropando fora das caixas
@@ -175,7 +180,7 @@ export const Create = () => {
         if (!verifyExistsInTime(itemsInDay, itemCopy.time)) {
             return false
         } else {
-            updateItemsList(prev => {
+            setItemsList(prev => {
                 prev = {...prev}
                 prev[source.droppableId].items.splice(source.index, 1) //remove item do array de origem
     
@@ -201,16 +206,44 @@ export const Create = () => {
         }
     }
 
+    const editItem = (e, key, title) => {
+        const hour = (time.getHours() < 10 ? '0' : '') + time.getHours()
+        const minute = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
+        const timeFood = hour + ':' + minute
+
+        itemsList[key].items.map((item, index) => {
+            if (item.id === itemData.id) {
+                let newData = {
+                    id: v4(),
+                    time: timeFood,
+                    food: foodName,
+                    timeAndFood: timeFood + ' - ' + foodName,
+                    volume: volume,
+                    quantity: quantity
+                }
+                setItemsList(prev => {
+                    prev = {...prev}
+                    prev[key].items.splice(index, 1)
+                    prev[key].items.splice(index, 0, newData)  //adiciona item com as novas infos no array
+                    return prev
+                })
+            }
+        })
+        clearInfos(key)
+    }
+
     const addItem = (e) => {
-        const { name, title } = e.target
+        const { name, titleItem } = e.target
         const key = name
+        const title = titleItem
+        const fName = edit ? foodName : food.name
         if (!time) {
             e.preventDefault()
             setMessage(t('timeEmpty'))
             setModalMessage(true)
             return false
         }
-        if (!food.name) {
+        if (!fName) {
             e.preventDefault()
             setMessage(t('foodEmpty'))
             setModalMessage(true)
@@ -229,6 +262,10 @@ export const Create = () => {
             setModalMessage(true)
             return false
         }
+        if (edit) { //quando clicou no item, quer dizer que o mesmo quer edita-lo, redireciona para o método de edição
+            editItem(e, key, title)
+            return false
+        }
 
         setDetailsInput( !detailsInput ? detailsInput : !detailsInput)
 
@@ -240,28 +277,82 @@ export const Create = () => {
             e.preventDefault()
             return false
         }
-        updateItemsList(prev => {
+        let newData = {
+            id: v4(),
+            time: timeFood,
+            food: fName,
+            timeAndFood: timeFood + ' - ' + fName,
+            volume: volume,
+            quantity: quantity
+        }
+        updateItemsList(key, title, newData)
+        clearInfos(key)
+    }
+
+    const deleteItem = (e, itemData, key) => {
+        console.log(itemData)
+        itemsList[key].items.map((item, index) => {
+            if (item.id === itemData.id) {
+                setItemsList(prev => {
+                    prev = {...prev}
+                    prev[key].items.splice(index, 1)
+                    return prev
+                })
+            }
+        })
+    }
+
+    const clearInfos = (key) => {
+        setTime(null)
+        setFood(null)
+        setFoodName(null)
+        setVolume(null)
+        setQuantity(null)
+        setIsActive(true)
+        setItemKey(key)
+    }
+
+    const updateItemsList = (key, title, itemData) => {
+        setItemsList(prev => {
             return {
                 ...prev,
                 [key]: {
                     title: title,
                     items: [
-                        {
-                            id: v4(),
-                            time: timeFood,
-                            food: food.name,
-                            timeAndFood: timeFood + ' - ' + food.name
-                        },
+                        itemData,
                         ...prev[key].items
                     ]
                 }
             }
         })
-        setTime(null)
-        setFood('')
-        setIsActive(true)
-        setItemKey(key)
-        setDialogState("closed")
+    }
+
+    const handleClick = () => {
+        let cont = 0
+        _.map(itemsList, (data, key) => {
+            if (data.items.length === 0) {
+                cont++
+            }
+        })
+        if (cont === 7) {
+            return false
+        } else {
+            const planModel = new PlanModel()
+            planModel.add(itemsList)
+        }
+    }
+
+    const handleClickItem = (e, itemData) => {
+        const hoursMinutes = itemData.time.split(':')
+        let newTime = setHours(setMinutes(new Date(), hoursMinutes[1]), hoursMinutes[0])
+        setTime(newTime)
+        setFoodName(itemData.food)
+        setDetailsInput(true)
+        setEdit(true)
+        setVolume(itemData.volume)
+        setQuantity(itemData.quantity)
+        setItemData(itemData)
+        document.getElementById("btnAdd").click()
     }
 
     const pull_data = (data, propsSuccess) => {
@@ -274,6 +365,10 @@ export const Create = () => {
         return <Navigate to="/" replace />
     }
 
+    // window.onbeforeunload = function() {
+    //     return "Are you sure you want to leave?";
+    // }
+
     return (
         <>
             {modalMessage && (
@@ -285,6 +380,9 @@ export const Create = () => {
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={<Translator path="createPlan"/>}/>
                     <CardContent>
+                        {/* <CardContentRow gap={"0 10px"}>
+                            <StyledButton onClick={handleClick} primary>Salvar plano</StyledButton>
+                        </CardContentRow> */}
                         <CardContentRow gap={"0 10px"}>
                             <DragDropContext onDragEnd={handleDragEnd}>
                                 {_.map(itemsList, (data, key) => {
@@ -301,9 +399,12 @@ export const Create = () => {
                                                                     <Draggable key={el.id} index={index} draggableId={el.id}>
                                                                         {(provided, snapshot) => {
                                                                             return (
-                                                                                <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`}>
-                                                                                    {el.timeAndFood}
-                                                                                </CardPlanItem>
+                                                                                <>
+                                                                                    <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`} onClick={(e) => handleClickItem(e, el)}>
+                                                                                        {el.timeAndFood}
+                                                                                    </CardPlanItem>
+                                                                                    <Cross2Icon onClick={(e) => deleteItem(e, el, key)}></Cross2Icon>
+                                                                                </>
                                                                             )
                                                                         }}
                                                                     </Draggable>
@@ -315,7 +416,7 @@ export const Create = () => {
                                                                 <CardPlanFlexItem>
                                                                     <Dialog>
                                                                         <DialogTrigger asChild>
-                                                                            <StyledButton primary><Translator path="add"/><PlusIcon/></StyledButton>
+                                                                            <StyledButton id="btnAdd" primary><Translator path="add"/><PlusIcon/></StyledButton>
                                                                         </DialogTrigger>
                                                                         <DialogContent >
                                                                             <DialogTitle><Translator path="addInfo"/></DialogTitle>
@@ -341,7 +442,7 @@ export const Create = () => {
                                                                             </Fieldset>
                                                                             <Fieldset>
                                                                                     <Label htmlFor="food"><Translator path="food"/></Label>
-                                                                                    <Input id="food" placeholder={t('selFood')} onChange={(e) => search(e.target.value)} autoComplete="off"/>                                                                                
+                                                                                    <Input id="food" placeholder={t('selFood')} onChange={(e) => search(e.target.value)} defaultValue={foodName} autoComplete="off"/>                                                                                
                                                                                     {selectState && (
                                                                                         <ul className='searchResult'>
                                                                                             {foodOption.results.map((data) => {
@@ -355,11 +456,11 @@ export const Create = () => {
                                                                             <Fieldset>
                                                                             {detailsInput && (
                                                                                         <>
-                                                                                            <Input onChange={(e) => {setVolume(e.target.value);validateNumber(e)}} placeholder="gr/ml"/>
-                                                                                            <Input onChange={(e) => {setQuantity(e.target.value);validateNumber(e)}} placeholder={t('quantity')}/>                                                             
+                                                                                            <Input onChange={(e) => {setVolume(e.target.value);validateNumber(e)}} defaultValue={volume} placeholder="gr/ml"/>
+                                                                                            <Input onChange={(e) => {setQuantity(e.target.value);validateNumber(e)}} defaultValue={quantity} placeholder={t('quantity')}/>                                                             
                                                                                             <Dialog>
                                                                                                 <DialogTrigger asChild>
-                                                                                                    <StyledButton primary onClick={(e) => getFoodDetails(e, food)}><Translator path="seeDetails"/> <IdCardIcon/></StyledButton>
+                                                                                                    <StyledButton primary onClick={(e) => handleClickDetails(e, food)}><Translator path="seeDetails"/> <IdCardIcon/></StyledButton>
                                                                                                 </DialogTrigger>
                                                                                                 <DialogContent className="nutriValues">
                                                                                                     {foodDetails && (
@@ -401,7 +502,7 @@ export const Create = () => {
                                                                             </Fieldset>
                                                                             <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
                                                                                 <DialogClose asChild>
-                                                                                    <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green"><Translator path="save"/><PlusIcon/></StyledButton>
+                                                                                    <StyledButton onClick={(e) => addItem(e)} name={key} titleItem={data.title} primary variant="green">{edit ? <Translator path="update"/> : <Translator path="save"/>}</StyledButton>
                                                                                 </DialogClose>
                                                                             </Flex>
                                                                             <DialogClose onClick={() => setDetailsInput( !detailsInput ? detailsInput : !detailsInput)} asChild>

@@ -85,6 +85,7 @@ export default {
         quantity: 'Quantity',
         unit: 'Unit',
         seeDetails: 'See details',
+        update: 'Update',
 
         // infos alimentos
         'Copper': 'Copper',

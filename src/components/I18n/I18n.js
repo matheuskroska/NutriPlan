@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { BRFlag, USFlag } from '../../assets'
-import { Flag, FlagContainer, StyledFlag } from './Flag'
+import { Flag, FlagContainer } from './Flag'
 
 const I18n = () => {
     const { i18n } = useTranslation()

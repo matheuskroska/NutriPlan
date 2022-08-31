@@ -9,24 +9,24 @@ import { Translator } from '../I18n';
 
 export const InfoMenu = (props) => {
     const menuState = props.menuState
-    const [menu, setMenu] = useState(true);
+    const [menu, setMenu] = useState(1);
     const { currentUser } = useContext(AuthContext);
 
     const handleMenuState = () => {
-        menu ? setMenu(false) : setMenu(true);
+        menu ? setMenu(0) : setMenu(1);
     }
 
     return (
-        <CardMenuContainer mState={!menu}>
+        <CardMenuContainer mstate={!menu}>
             <CardCloseButton onClick={handleMenuState}>
                 {menu ? <DoubleArrowLeftIcon/> : <DoubleArrowRightIcon/>}
             </CardCloseButton>
-            <CardMenuHeader mState={menu}>
+            <CardMenuHeader mstate={menu}>
                 <CardParagraph>{currentUser.nome_completo}</CardParagraph>
                 <CardAvatar src={avatar} alt="avatar"></CardAvatar>
                 <StyledLink menu="true" to="/editar-perfil"><Translator path="editProfile"/></StyledLink>
             </CardMenuHeader>
-            <StyledRadixToggleGroup mState={menu} value={menuState} height="100%" flexdirection="column" type="single" aria-label="usuario" >
+            <StyledRadixToggleGroup mstate={menu} value={menuState} height="100%" flexdirection="column" type="single" aria-label="usuario" >
                 <CardMenuItem fontSize="inherit" width="100%">
                     {currentUser.isAdmin && <StyledRadixLink edituserbuttons="true" value={<Translator path="userList"/>} aria-label={<Translator path="userList"/>}><StyledLink menu="true" link="true" to="/lista-usuarios"><Translator path="userList"/></StyledLink></StyledRadixLink>}
                     {/* <StyledRadixLink edituserbuttons="true" value="Notificações" aria-label="Notificações"><StyledLink menu="true" link="true" to="/notificacoes">Notificações</StyledLink></StyledRadixLink> */}
