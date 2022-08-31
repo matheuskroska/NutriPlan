@@ -294,16 +294,17 @@ export const Create = () => {
         clearInfos()
     }
 
-    const deleteItem = (e, itemData, key) => {
-        console.log(itemData)
-        itemsList[key].items.map((item, index) => {
-            if (item.id === itemData.id) {
-                setItemsList(prev => {
-                    prev = {...prev}
-                    prev[key].items.splice(index, 1)
-                    return prev
-                })
-            }
+    const deleteItem = (e, itemData) => {
+        _.map(itemsList, (data, key) => {
+            data.items.map((item, index) => {
+                if (item.id === itemData.id) {
+                    setItemsList(prev => {
+                        prev = {...prev}
+                        prev[key].items.splice(index, 1)
+                        return prev
+                    })
+                }
+            })
         })
     }
 
@@ -410,7 +411,7 @@ export const Create = () => {
                                                                                                 {el.timeAndFood}
                                                                                         </CardPlanItem>
                                                                                         <StyledButton className="hideClose" primary width="initial">
-                                                                                            <Cross2Icon onClick={(e) => deleteItem(e, el, key)}></Cross2Icon>
+                                                                                            <Cross2Icon onClick={(e) => deleteItem(e, el)}></Cross2Icon>
                                                                                         </StyledButton>
                                                                                         
                                                                                     </CardPlanWrapper>    
