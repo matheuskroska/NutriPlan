@@ -380,6 +380,28 @@ export const CardPlanDroppableColumn = styled.div`
 	flex-direction: column;
     justify-content: space-between;
 `
+export const CardPlanWrapper = styled.div`
+    display: flex;
+    position: relative;
+
+    .hideClose {
+        position: absolute;
+        display: flex;
+        top: 0px;
+        left: -50px;
+        transition: 0.3s all ease-in-out;
+        opacity: 0;
+    }
+
+    &:hover {
+        .hideClose {
+            opacity: 1;
+            transition: 0.3s all ease-in-out;
+            
+        }
+    }
+`
+
 export const CardPlanItem = styled.div`
     margin-bottom: 5px;
 	color: white;
@@ -387,7 +409,7 @@ export const CardPlanItem = styled.div`
 	padding: 5px;
 	border-radius: 5px;
 	font-size: 1.3em;   
-    /* width: 100%; */
+    width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

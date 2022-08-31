@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import { v4 } from 'uuid'
 import { Card, InfoMenu } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
-import { CardContainer, CardContent, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper, CardNutritionalValueContainer, CardNutritionalValueTitle, CardNutritionalValueSubtitle, CardNutritionalValueList, CardNutritionalValueListItemHeader, CardNutritionalValueListItem } from '../../components/Card/Card.elements'
+import { CardContainer, CardContent, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper, CardNutritionalValueContainer, CardNutritionalValueTitle, CardNutritionalValueSubtitle, CardNutritionalValueList, CardNutritionalValueListItemHeader, CardNutritionalValueListItem, CardPlanWrapper } from '../../components/Card/Card.elements'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
 import {Cross2Icon, IdCardIcon, PlusIcon} from '@radix-ui/react-icons'
@@ -230,6 +230,7 @@ export const Create = () => {
             }
         })
         clearInfos(key)
+        setEdit(false)
     }
 
     const addItem = (e) => {
@@ -402,10 +403,15 @@ export const Create = () => {
                                                                         {(provided, snapshot) => {
                                                                             return (
                                                                                 <>
-                                                                                    <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`} onClick={(e) => handleClickItem(e, el)}>
-                                                                                        {el.timeAndFood}
-                                                                                    </CardPlanItem>
-                                                                                    <Cross2Icon onClick={(e) => deleteItem(e, el, key)}></Cross2Icon>
+                                                                                    <CardPlanWrapper>
+                                                                                        <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`} onClick={(e) => handleClickItem(e, el)}>
+                                                                                                {el.timeAndFood}
+                                                                                        </CardPlanItem>
+                                                                                        <StyledButton className="hideClose" primary width="initial">
+                                                                                            <Cross2Icon onClick={(e) => deleteItem(e, el, key)}></Cross2Icon>
+                                                                                        </StyledButton>
+                                                                                        
+                                                                                    </CardPlanWrapper>    
                                                                                 </>
                                                                             )
                                                                         }}
