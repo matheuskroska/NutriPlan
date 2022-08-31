@@ -206,30 +206,32 @@ export const Create = () => {
         }
     }
 
-    const editItem = (e, key, title) => {
+    const editItem = (e) => {
         const hour = (time.getHours() < 10 ? '0' : '') + time.getHours()
         const minute = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
         const timeFood = hour + ':' + minute
 
-        itemsList[key].items.map((item, index) => {
-            if (item.id === itemData.id) {
-                let newData = {
-                    id: v4(),
-                    time: timeFood,
-                    food: foodName,
-                    timeAndFood: timeFood + ' - ' + foodName,
-                    volume: volume,
-                    quantity: quantity
+        _.map(itemsList, (data, key) => {
+            data.items.map((item, index) => {
+                if (item.id === itemData.id) {
+                    let newData = {
+                        id: v4(),
+                        time: timeFood,
+                        food: foodName,
+                        timeAndFood: timeFood + ' - ' + foodName,
+                        volume: volume,
+                        quantity: quantity
+                    }
+                    setItemsList(prev => {
+                        prev = {...prev}
+                        prev[key].items.splice(index, 1)
+                        prev[key].items.splice(index, 0, newData)  //adiciona item com as novas infos no array
+                        return prev
+                    })
                 }
-                setItemsList(prev => {
-                    prev = {...prev}
-                    prev[key].items.splice(index, 1)
-                    prev[key].items.splice(index, 0, newData)  //adiciona item com as novas infos no array
-                    return prev
-                })
-            }
+            })
         })
-        clearInfos(key)
+        clearInfos()
         setEdit(false)
     }
 
@@ -264,7 +266,7 @@ export const Create = () => {
             return false
         }
         if (edit) { //quando clicou no item, quer dizer que o mesmo quer edita-lo, redireciona para o método de edição
-            editItem(e, key, title)
+            editItem(e)
             return false
         }
 
@@ -288,7 +290,8 @@ export const Create = () => {
             quantity: quantity
         }
         updateItemsList(key, title, newData)
-        clearInfos(key)
+        setItemKey(key)
+        clearInfos()
     }
 
     const deleteItem = (e, itemData, key) => {
@@ -304,14 +307,13 @@ export const Create = () => {
         })
     }
 
-    const clearInfos = (key) => {
+    const clearInfos = () => {
         setTime(null)
         setFood(null)
         setFoodName(null)
         setVolume(null)
         setQuantity(null)
         setIsActive(true)
-        setItemKey(key)
     }
 
     const updateItemsList = (key, title, itemData) => {
