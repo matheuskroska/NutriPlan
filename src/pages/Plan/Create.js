@@ -281,6 +281,7 @@ export const Create = () => {
             id: v4(),
             time: timeFood,
             food: fName,
+            foodInfo: food,
             timeAndFood: timeFood + ' - ' + fName,
             volume: volume,
             quantity: quantity
@@ -352,6 +353,7 @@ export const Create = () => {
         setVolume(itemData.volume)
         setQuantity(itemData.quantity)
         setItemData(itemData)
+        setFood(itemData.foodInfo)
         document.getElementById("btnAdd").click()
     }
 
