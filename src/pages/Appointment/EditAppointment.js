@@ -14,6 +14,7 @@ import NutritionistModel from '../../db/NutritionistModel'
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 import { Translator } from '../../components/I18n'
 import { useTranslation } from 'react-i18next'
+import { StyledDatePicker, StyledSelect } from '../../components/Select/Select.elements'
 
 registerLocale("pt-BR", pt)
 
@@ -204,18 +205,11 @@ export const EditAppointment = () => {
             <Card maxWidth={"100%"} cardTitle={<Translator path="editAppoint"/>}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={<Translator path="editAppoint"/>}/>
-                    <CardContent>
+                    <Card margin={"0 auto"} showTitle={"none"}>
                         <form>
-                            <CardContentRow>
-                                
-                                <select className="select-nutri" id="selectNutri"></select>
-                                {/* {!!nutritionists && nutritionists.forEach(nutri => {
-                                    return (
-                                        <option value="Teste">Teste - {nutri.nome_completo}</option>
-                                    )
-                                })} */}
-                            </CardContentRow>
-                            <CardContentRow>
+                            <CardContentRow fDirection={"column"}>
+                                <StyledSelect className="select-nutri" id="selectNutri"></StyledSelect>
+                                <StyledDatePicker>
                                 <DatePicker 
                                     // disabled
                                     selected={startDate}
@@ -234,12 +228,12 @@ export const EditAppointment = () => {
                                     onCalendarOpen={handleCalendarOpen}
                                     withPortal
                                 />
-                            </CardContentRow>
-                            <CardContentRow>
+                                </StyledDatePicker>
+
                                 <StyledButton primary hasIcon marginTop={"20px"} onClick={handleClick}><Translator path="editAppoint"/></StyledButton>
                             </CardContentRow>
                         </form>
-                    </CardContent>
+                    </Card>
                 </CardContainer>
             </Card>
         </>
