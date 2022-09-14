@@ -40,7 +40,7 @@ export const Header = () => {
             <NavContainer>
                 <NavWrapper justify={headerVisibility ? "space-between" : "center"}>
                     <NavItem>
-                        <StyledLink to="/"><NavLogo src={logo}></NavLogo><NavLogoTitle>NutriPlan</NavLogoTitle></StyledLink>
+                        <StyledLink to="/dashboard"><NavLogo src={logo}></NavLogo><NavLogoTitle>NutriPlan</NavLogoTitle></StyledLink>
                     </NavItem>
                     {headerVisibility && (
                             <>

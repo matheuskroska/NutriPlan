@@ -368,7 +368,7 @@ export const Create = () => {
     if (!!!currentUser) {
         return <Navigate to="/login" replace />
     } else if (!currentUser.isNutri) {
-        return <Navigate to="/" replace />
+        return <Navigate to="/dashboard" replace />
     }
 
     // window.onbeforeunload = function() {

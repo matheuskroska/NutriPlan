@@ -1,18 +1,9 @@
 import React  from 'react';
 import { GlobalStyle,Container} from './components/index';
-import {Home, Register, Login} from './pages/index'
+import {Home, Register, Login, ForgotPassword, ResetPassword, EditUser, EditProfile, ListUser, MakeAppointment, ListAppointment, EditAppointment, Create, Dashboard} from './pages/index'
 import {Header, Footer} from './components/index'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './firebase/Auth';
-import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
-import { ResetPassword } from './pages/ResetPassword/ResetPassword';
-import { EditUser } from './pages/InfoPanel/EditUser';
-import { MakeAppointment } from './pages/Appointment/MakeAppointment';
-import { EditProfile } from './pages/InfoPanel/EditProfile';
-import { ListUser } from './pages/InfoPanel/ListUser';
-import { ListAppointment } from './pages/InfoPanel/ListAppointment';
-import { EditAppointment } from './pages/Appointment/EditAppointment';
-import { Create } from './pages/Plan/Create';
 import './i18n'
 
 function App() {
@@ -26,6 +17,7 @@ function App() {
           <Container>
             <Routes>
                 <Route exact path="/" element={<Home/>} />
+                <Route exact path="/dashboard" element={<Dashboard/>} />
                 <Route exact path="/login" element={<Login/>} />
                 <Route exact path="/cadastro" element={<Register/>} />
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />
