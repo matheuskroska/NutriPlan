@@ -4,8 +4,8 @@ import { Card } from '../../components'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { Translator } from '../../components/I18n'
 import { AuthContext } from '../../firebase/Auth'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js'
-import { Bar, Line } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js'
+import { Bar, Line, Pie, PolarArea } from 'react-chartjs-2'
 import { faker } from '@faker-js/faker'
 import { Responsive, WidthProvider } from "react-grid-layout"
 
@@ -19,6 +19,8 @@ ChartJS.register(
     PointElement,
     LineElement,
     BarElement,
+    ArcElement,
+    RadialLinearScale,
     Title,
     Tooltip,
     Legend
@@ -101,15 +103,27 @@ export const Dashboard = () => {
         labels,
         datasets: [
             {
-            label: 'Dataset 1',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-            label: 'Dataset 2',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
+                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(127, 74, 145, 0.2)',
+                ],
+                borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(127, 74, 145, 1)',
+                ],
+                borderWidth: 1,
+            }
         ],
     }
 
@@ -117,15 +131,27 @@ export const Dashboard = () => {
         labels,
         datasets: [
             {
-            label: 'Dataset 1',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-            label: 'Dataset 2',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
+                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(127, 74, 145, 0.2)',
+                ],
+                borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(127, 74, 145, 1)',
+                ],
+                borderWidth: 1,
+            }
         ],
     }
 
@@ -178,10 +204,10 @@ export const Dashboard = () => {
                                     <Line options={options} data={data2} />
                                 </div>
                                 <div key="c">
-                                    <Bar options={options} data={data3} />
+                                    <Pie options={options} data={data3} />
                                 </div>
                                 <div key="d">
-                                    <Bar options={options} data={data4} />
+                                    <PolarArea options={options} data={data4} />
                                 </div>
                                 <div key="e">
                                     <Bar options={options} data={data5} />
