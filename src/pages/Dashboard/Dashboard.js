@@ -56,7 +56,7 @@ export const Dashboard = () => {
             },
             title: {
                 display: true,
-                text: 'Chart.js Bar Chart',
+                text: 'Gráfico',
             },
         },
     }
@@ -156,18 +156,6 @@ export const Dashboard = () => {
         localStorage.setItem("grid-layout", JSON.stringify(layouts))
     }
 
-    const handleResize = (layout, oldLayoutItem, layoutItem, placeholder) => {
-        if (layoutItem.h < 3 && layoutItem.w > 2) {
-            layoutItem.w = 2
-            placeholder.w = 2
-        }
-
-        if (layoutItem.h >= 3 && layoutItem.w < 2) {
-            layoutItem.w = 2
-            placeholder.w = 2
-        }
-    }
-
     return (
         <>
             <Card cardTitle="Dashboard" maxWidth={"100%"}>
@@ -182,7 +170,6 @@ export const Dashboard = () => {
                                 // rowHeight={300}
                                 width={1200}
                                 onLayoutChange={handleLayoutChange}
-                                onResize={handleResize}
                             >
                                 <div key="a">
                                     <Bar options={options} data={data1} style={{maxHeight: 'calc(100% - 60px)'}}/>
