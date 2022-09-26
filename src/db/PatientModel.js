@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { setDoc, doc, getDoc } from 'firebase/firestore'
+import { setDoc, doc, getDoc, query, collection, getDocs, where } from 'firebase/firestore'
 import UserModel from './UserModel'
 
 class PatientModel extends UserModel {
@@ -39,6 +39,57 @@ class PatientModel extends UserModel {
         } else {
             return false
         }
+    }
+
+    async getPatients() {
+        const q = query(collection(db, this.table))
+
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+
+        let result = {}
+        dataResult.forEach((value) => {
+            result[value.usuario_uuid] = value
+        })
+
+        return result
+    }
+
+    async getAllPatients() {
+        const q = query(collection(db, this.table))
+
+        const docsPatient = await getDocs(q)
+        const dataPatient = docsPatient.docs.map((docPatient) => ({
+            ...docPatient.data(),
+            id: doc.id
+        }))
+
+        let result = []
+        let uuids = []
+        dataPatient.forEach((value) => {
+            result[value.usuario_uuid] = value
+            uuids.push(value.usuario_uuid)
+        })
+        
+        const queryUser = query(collection(db, "usuario"), where('uuid', 'in', uuids))
+        const docsUser = await getDocs(queryUser)
+        const dataUser = docsUser.docs.map((docUser) => ({
+            ...docUser.data()
+        }))
+        
+        let dataTemp = []
+        let merge = null
+        let fullData = []
+        dataUser.forEach((valueResultUser) => {
+            dataTemp[valueResultUser.uuid] = valueResultUser
+            merge = Object.assign(dataTemp[valueResultUser.uuid], result[valueResultUser.uuid])
+            fullData.push(merge)
+        })
+
+        return fullData
     }
  
 }

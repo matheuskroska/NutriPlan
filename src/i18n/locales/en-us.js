@@ -86,6 +86,7 @@ export default {
         unit: 'Unit',
         seeDetails: 'See details',
         update: 'Update',
+        patientList: 'Patient list',
 
         // infos alimentos
         'Copper': 'Copper',

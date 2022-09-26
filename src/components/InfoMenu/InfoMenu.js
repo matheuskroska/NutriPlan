@@ -30,7 +30,7 @@ export const InfoMenu = (props) => {
                 <CardMenuItem fontSize="inherit" width="100%">
                     {currentUser.isAdmin && <StyledRadixLink edituserbuttons="true" value={<Translator path="userList"/>} aria-label={<Translator path="userList"/>}><StyledLink menu="true" link="true" to="/lista-usuarios"><Translator path="userList"/></StyledLink></StyledRadixLink>}
                     {/* <StyledRadixLink edituserbuttons="true" value="Notificações" aria-label="Notificações"><StyledLink menu="true" link="true" to="/notificacoes">Notificações</StyledLink></StyledRadixLink> */}
-                    {currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value={<Translator path="createPlan"/>} aria-label={<Translator path="createPlan"/>}><StyledLink menu="true" link="true" to="/criar-plano"><Translator path="createPlan"/></StyledLink></StyledRadixLink>}
+                    {currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value={<Translator path="createPlan"/>} aria-label={<Translator path="createPlan"/>}><StyledLink menu="true" link="true" to="/lista-pacientes"><Translator path="createPlan"/></StyledLink></StyledRadixLink>}
                     {!currentUser.isNutri && <StyledRadixLink edituserbuttons="true" value={<Translator path="makeAppoint"/>} aria-label={<Translator path="makeAppoint"/>}><StyledLink menu="true" link="true" to="/agendar-consulta"><Translator path="makeAppoint"/></StyledLink></StyledRadixLink>}
                     <StyledRadixLink edituserbuttons="true" value={<Translator path="myAppoint"/>} aria-label={<Translator path="myAppoint"/>}><StyledLink menu="true" link="true" to="/minhas-consultas"><Translator path="myAppoint"/></StyledLink></StyledRadixLink>
                 </CardMenuItem>
