@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://unform.dev">
-    <img src="[https://i.imgur.com/24KfayE.png](https://imgur.com/a/QJ9WhSP)" height="auto" width="300" alt="Unform" />
+    <img src="https://i.imgur.com/24KfayE.png" height="auto" width="300" alt="Unform" />
   </a>
 </p>
 
