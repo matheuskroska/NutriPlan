@@ -6,7 +6,7 @@
 
 
 
-<p align="center">GroupGator é uma rede social para conectar e encontrar pessoas que buscam praticar alguma atividade em grupo!. 🐊</p>
+<p align="center">Nutriplan é um agendador de consultas e um criador de planos nutricionais! 🥗</p>
 
 <div align="center">
   <img alt "React Project" src="https://badges.aleen42.com/src/react.svg"/>
@@ -31,7 +31,6 @@ As seguintes bibliotecas foram usadas na construção do projeto:
 - [React Hooks](https://pt-br.reactjs.org/docs/hooks-intro.html)
 - [Firebase Firestore](https://console.firebase.google.com/)
 - [Styled Components](https://styled-components.com/)
-- [React Select](https://react-select.com/home)
 - [React Slick](https://react-slick.neostack.com/)
 - [React Icons](https://react-icons.github.io/react-icons/)
 - [React DatePicker](https://reactdatepicker.com/)
