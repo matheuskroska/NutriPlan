@@ -1,16 +1,18 @@
 <p align="center">
   <a href="https://unform.dev">
-    <img src="https://i.imgur.com/24KfayE.png" height="auto" width="300" alt="Unform" />
+    <img src="[https://i.imgur.com/24KfayE.png](https://imgur.com/a/QJ9WhSP)" height="auto" width="300" alt="Unform" />
   </a>
 </p>
+
+
 
 <p align="center">GroupGator é uma rede social para conectar e encontrar pessoas que buscam praticar alguma atividade em grupo!. 🐊</p>
 
 <div align="center">
   <img alt "React Project" src="https://badges.aleen42.com/src/react.svg"/>
-  <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/matheuskroska/groupgator" />
-  <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/matheuskroska/groupgator" />
-  <img alt="Github License" src="https://img.shields.io/github/license/matheuskroska/groupgator" />
+  <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/jose-balbinotti/nutriplan" />
+  <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/jose-balbinotti/nutriplan" />
+  <img alt="Github License" src="https://img.shields.io/github/license/jose-balbinotti/nutriplan" />
 </div>
 
 ## Overview
@@ -43,6 +45,6 @@ As seguintes bibliotecas foram usadas na construção do projeto:
  
 ## Contributors
 
-<a href="https://github.com/matheuskroska/groupgator/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=matheuskroska/groupgator" />
+<a href="https://github.com/jose-balbinotti/nutriplan/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jose-balbinotti/nutriplan" />
 </a>
