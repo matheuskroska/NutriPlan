@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc, where , onSnapshot} from 'firebase/firestore'
 
 class AppointmentModel {
 
@@ -18,6 +18,16 @@ class AppointmentModel {
 
     async getByPatientUuid(uuid) {
         const q = query(collection(db, this.table), where("paciente_uuid", "==", uuid), orderBy("data"), orderBy("horario"))
+        const data = await getDocs(q)
+        const dataResult = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+        return dataResult
+    }
+
+    async getNotificationByPatientUuid(uuid) {
+        const q = query(collection(db, this.table), where("paciente_uuid", "==", uuid), where('alterar', '!=', false))
         const data = await getDocs(q)
         const dataResult = data.docs.map((doc) => ({
             ...doc.data(),
@@ -58,7 +68,8 @@ class AppointmentModel {
             nutricionista_uuid: appoint.nutricionista_uuid,
             paciente_uuid: appoint.paciente_uuid,
             data: appoint.data,
-            horario: appoint.horario
+            horario: appoint.horario,
+            alterar: appoint.alterar
         })
     }
  

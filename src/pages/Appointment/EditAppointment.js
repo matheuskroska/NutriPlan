@@ -142,12 +142,18 @@ export const EditAppointment = () => {
         let time = hours + ':' + minutes
         
         appoint.data = date
-        appoint.horario = time
+        appoint.horario = time 
+        appoint.alterar = true
+
         await appointmentModel.update(docId, appoint)
         setMessage(t('dataChanged'));
         setModalMessage(true)
         setLoader(false)
     }
+
+    
+  
+
 
     const displayNutritionists = () => {
         var sel = document.getElementById('selectNutri')
