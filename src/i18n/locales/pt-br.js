@@ -27,7 +27,7 @@ export default {
         editProfile: 'Editar perfil',
         save: 'Salvar',
         userList: 'Lista de usuários',
-        createPlan: 'Criar plano nutricional',
+        createPlanNutri: 'Criar plano nutricional',
         makeAppoint: 'Agendar consulta',
         myAppoint: 'Minhas consultas',
         cpfFullName: 'CPF - Nome completo',
@@ -87,6 +87,8 @@ export default {
         seeDetails: 'Ver detalhes',
         update: 'Atualizar',
         patientList: 'Lista de pacientes',
+        createPlan: 'Criar plano',
+        deletePlan: 'Deletar plano',
 
         //infos alimentos
         'Copper': 'Cobre',

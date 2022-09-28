@@ -7,8 +7,13 @@ class PlanModel {
     }
 
     async add(plan) {
-        // const docRef = await addDoc(collection(db, "plano"), plan)
-        await addDoc(collection(db, "plano"), plan)
+        const docRef = await addDoc(collection(db, "plano"), plan)
+        return docRef.id
+    }
+
+    async get(plan) {
+        const docRef = await addDoc(collection(db, "plano"), plan)
+        return docRef.id
     }
 }
 

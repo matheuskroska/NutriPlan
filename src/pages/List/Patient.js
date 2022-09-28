@@ -9,6 +9,8 @@ import { StyledLink } from '../../components/Link/Link.elements'
 import PatientModel from '../../db/PatientModel'
 import { Navigate } from 'react-router-dom'
 import UserModel from '../../db/UserModel'
+import ReactTooltip from 'react-tooltip'
+import _ from 'lodash'
 
 export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
@@ -25,8 +27,11 @@ export const Patient = () => {
         let patients = await patientModel.getAllPatients()
         // let patients = await patientModel.getPatients()
         let usersNameTmp = await userModel.getUsersName()
-        console.log(patients)
-        console.log(usersNameTmp['HhxloGJblNXD54ZU7j1uKuf1FqE2'])
+        _.map(patients, (data, key) => {
+            if (data.plano_id) {
+                console.log(data.plano_id)
+            }
+        })
         setUsersName(usersNameTmp)
         setPatientsList(patients)
     }
@@ -69,8 +74,9 @@ export const Patient = () => {
                                     <CardContentCol><strong>{data.cpf}</strong> - {data.nome_completo}</CardContentCol>
                                 </CardCol>
                                 <CardCol width="25%" display="flex">
-                                    <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/criar-plano/`+data.uuid}><PlusIcon/></StyledLink></CardContentCol>
-                                    <CardContentCol maxWidth={"25px"}><StyledLink edit="true" header="true" to={"#"}><TrashIcon/></StyledLink></CardContentCol>
+                                    {!data.plano_id && <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/criar-plano/`+data.uuid} data-tip={t('createPlan')}><PlusIcon/></StyledLink></CardContentCol>}
+                                    <CardContentCol maxWidth={"25px"}><StyledLink edit="true" header="true" to={"#"} data-tip={t('deletePlan')}><TrashIcon/></StyledLink></CardContentCol>
+                                    <ReactTooltip />
                                 </CardCol>
                             </CardContentRow>
                         )

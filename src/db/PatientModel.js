@@ -1,5 +1,5 @@
 import { createUser, db } from '../firebase'
-import { setDoc, doc, getDoc, query, collection, getDocs, where } from 'firebase/firestore'
+import { setDoc, doc, getDoc, query, collection, getDocs, where, updateDoc } from 'firebase/firestore'
 import UserModel from './UserModel'
 
 class PatientModel extends UserModel {
@@ -19,7 +19,7 @@ class PatientModel extends UserModel {
                 await this.addUser(patient, retUser.uid)
                 await setDoc(doc(db, this.table, retUser.uid), {
                     usuario_uuid: retUser.uid,
-                    nutritionist_uuid: '',
+                    nutricionista_uuid: '',
                 })
                 return retUser.uid
             } else {
@@ -90,6 +90,14 @@ class PatientModel extends UserModel {
         })
 
         return fullData
+    }
+
+    async addPlan(plan_id, uuid, nutritionist_uuid) {
+        await setDoc(doc(db, this.table, uuid), {
+            usuario_uuid: uuid,
+            nutricionista_uuid: nutritionist_uuid,
+            plano_id: plan_id
+        })
     }
  
 }

@@ -1,15 +1,14 @@
 import _ from 'lodash'
 import React, { useContext, useState, useEffect } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { v4 } from 'uuid'
-import { Card, InfoMenu } from '../../components'
+import { Card, InfoMenu, Loader } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
 import { CardContainer, CardContent, CardContentRow, CardPlanDroppableColumn, CardPlanColumn, CardPlanTitle, CardPlanItem, CardPlanFlexItem, CardPlanFlexWrapper, CardNutritionalValueContainer, CardNutritionalValueTitle, CardNutritionalValueSubtitle, CardNutritionalValueList, CardNutritionalValueListItemHeader, CardNutritionalValueListItem, CardPlanWrapper } from '../../components/Card/Card.elements'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../../components/Dialog/Dialog'
 import { AuthContext } from '../../firebase/Auth'
 import {Cross2Icon, IdCardIcon, PlusIcon} from '@radix-ui/react-icons'
-import './index.css'
 import { Translator } from '../../components/I18n'
 import { useTranslation } from 'react-i18next'
 import { Fieldset, Flex, IconButton, Input, Label } from '../../components/Dialog/Dialog.elements'
@@ -19,6 +18,8 @@ import DatePicker from "react-datepicker"
 import axios from "axios"
 import { ModalMessage } from '../../components/ModalMessage/ModalMessage'
 import PlanModel from '../../db/PlanModel'
+import PatientModel from '../../db/PatientModel'
+import './index.css'
 
 export const Create = () => {
     const { currentUser } = useContext(AuthContext)
@@ -32,12 +33,14 @@ export const Create = () => {
     const [selectState, setSelectState] = useState(null)
     const [isActive, setIsActive] = useState(false)
     const [itemKey, setItemKey] = useState(null)
+    const [loader, setLoader] = useState(false)
     const [modalMessage, setModalMessage] = useState(false)
     const [message, setMessage] = useState(null)
     const [detailsInput, setDetailsInput] = useState(null)
     const [foodName, setFoodName] = useState(null)
     const [edit, setEdit] = useState(false)
     const [itemData, setItemData] = useState(false)
+    const { uuid } = useParams()
     const [itemsList, setItemsList] = useState({
         "sunday": {
             title: t('sunday'),
@@ -68,6 +71,8 @@ export const Create = () => {
             items: []
         }
     })
+    const planModel = new PlanModel()
+    const patientModel = new PatientModel()
 
     const orderItems = (a, b) => {
         if (a.timeAndFood.toLowerCase() < b.timeAndFood.toLowerCase()){
@@ -236,9 +241,8 @@ export const Create = () => {
     }
 
     const addItem = (e) => {
-        const { name, titleItem } = e.target
+        const { name, title } = e.target
         const key = name
-        const title = titleItem
         const fName = edit ? foodName : food.name
         if (!time) {
             e.preventDefault()
@@ -332,7 +336,8 @@ export const Create = () => {
         })
     }
 
-    const handleClick = () => {
+    const handleClick = async () => {
+        setLoader(true)
         let cont = 0
         _.map(itemsList, (data, key) => {
             if (data.items.length === 0) {
@@ -342,8 +347,11 @@ export const Create = () => {
         if (cont === 7) {
             return false
         } else {
-            const planModel = new PlanModel()
-            planModel.add(itemsList)
+            let planId = await planModel.add(itemsList)
+            await patientModel.addPlan(planId, uuid, currentUser.uuid)
+            setMessage(t('dataSaved'))
+            setModalMessage(true)
+            setLoader(false)
         }
     }
 
@@ -377,18 +385,23 @@ export const Create = () => {
 
     return (
         <>
+            {!!loader && (
+                <>
+                    <Loader/>
+                </>
+            )}
             {modalMessage && (
                 <>
                     <ModalMessage func={pull_data} success={false}>{message}</ModalMessage>
                 </>
             )}
-            <Card cardTitle={<Translator path="createPlan"/>} maxWidth={"100%"}>
+            <Card cardTitle={<Translator path="createPlanNutri"/>} maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={<Translator path="createPlan"/>}/>
+                    <InfoMenu menuState={<Translator path="createPlanNutri"/>}/>
                     <CardContent>
-                        {/* <CardContentRow gap={"0 10px"}>
+                        <CardContentRow gap={"0 10px"}>
                             <StyledButton onClick={handleClick} primary>Salvar plano</StyledButton>
-                        </CardContentRow> */}
+                        </CardContentRow>
                         <CardContentRow gap={"0 10px"}>
                             <DragDropContext onDragEnd={handleDragEnd}>
                                 {_.map(itemsList, (data, key) => {
@@ -513,7 +526,7 @@ export const Create = () => {
                                                                             </Fieldset>
                                                                             <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
                                                                                 <DialogClose asChild>
-                                                                                    <StyledButton onClick={(e) => addItem(e)} name={key} titleItem={data.title} primary variant="green">{edit ? <Translator path="update"/> : <Translator path="save"/>}</StyledButton>
+                                                                                    <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green">{edit ? <Translator path="update"/> : <Translator path="save"/>}</StyledButton>
                                                                                 </DialogClose>
                                                                             </Flex>
                                                                             <DialogClose onClick={() => setDetailsInput( !detailsInput ? detailsInput : !detailsInput)} asChild>

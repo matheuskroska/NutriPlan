@@ -29,7 +29,7 @@ function App() {
                 <Route exact path="/minhas-consultas" element={<ListAppointment/>} />
                 <Route exact path="/editar-consulta/:docId" element={<EditAppointment/>} />
                 <Route exact path="/lista-pacientes" element={<Patient/>} />
-                <Route exact path="/criar-plano" element={<Create/>} />
+                <Route exact path="/criar-plano/:uuid" element={<Create/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>
