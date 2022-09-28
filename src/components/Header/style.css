@@ -1,0 +1,70 @@
+.notificacoes {
+  cursor: pointer;
+  position: relative;
+  width: fit-content;
+}
+
+.notificacoes svg {
+  color: var(--font-dark);
+}
+
+.itemCount {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  background-color: rgb(111 140 67 / 90%);
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: white;
+  font-weight: 500;
+}
+
+.notificacaoContainer {
+  position: relative;
+}
+
+.notificacoesList {
+  display: none;
+  position: absolute;
+  background-color: rgb(255 255 255 / 80%);
+  padding: 10px;
+  z-index: 9999;
+  border-radius: 5px;
+  width: 100%;
+  left: 0;
+  min-width: 275px;
+}
+
+.notificacoesList p {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.notificacoesList ul li + li {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid gray;
+}
+
+.notificacoesList ul li {
+  font-size: 1.4em;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--font-dark);
+}
+
+.notificacaoContainer:hover .notificacoesList {
+  display: block;
+}
+
+.notificacaoContainer .notificacoesList li:hover {
+  background-color: var(--primary);
+}
