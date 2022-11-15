@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components/macro";
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 const overlayShow = keyframes`
