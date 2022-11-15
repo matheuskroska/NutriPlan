@@ -3,7 +3,6 @@ import { AuthContext } from "../../firebase/Auth";
 import { Navigate, useParams } from "react-router-dom";
 import {
   CardContainer,
-  CardContent,
   CardContentRow,
 } from "../../components/Card/Card.elements";
 import { StyledButton } from "../../components/Button/Button.elements";

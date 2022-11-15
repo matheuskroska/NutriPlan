@@ -22,7 +22,6 @@ import UserModel from "../../db/UserModel";
 import I18n from "../I18n/I18n";
 import { Translator } from "../I18n";
 import AppointmentModel from "../../db/AppointmentModel";
-import NutritionistModel from "../../db/NutritionistModel";
 import "./style.css";
 
 export const Header = () => {
@@ -55,7 +54,7 @@ export const Header = () => {
     if (
       window.confirm(
         "Você aceita essa alteração na data da sua consulta? Não aceitar cancela a consulta"
-      ) == true
+      ) === true
     ) {
       appointment.alterar = false;
       updateAppointment(id, appointment);
