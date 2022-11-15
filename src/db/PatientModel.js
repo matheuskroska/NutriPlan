@@ -99,6 +99,17 @@ class PatientModel extends UserModel {
             plano_id: plan_id
         })
     }
+
+    async getPlanId(uuid) {
+        const docRef = doc(db, this.table, uuid);
+        const docSnap = await getDoc(docRef);
+ 
+        if (docSnap.exists()) {
+            return docSnap.data().plano_id
+        } else {
+            return false
+        }
+    }
  
 }
 
