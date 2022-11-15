@@ -13,7 +13,7 @@ export const ResetPassword = () => {
     const [showBtnLogin, setShowBtnLogin] = useState(false)
     const [showNewPwd, setShowNewPwd] = useState(false)
     const [newPassword, setNewPassword] = useState(null)
-    const [confNewPassword, setConfNewPassword] = useState(null)
+    const [setConfNewPassword] = useState(null)
     const [message, setMessage] = useState(null)
     const navigate = useNavigate()
     const { t } = useTranslation()

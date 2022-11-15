@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext} from 'react'
 import { Navigate } from 'react-router-dom'
 import { Card } from '../../components'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
-import { Translator } from '../../components/I18n'
 import { AuthContext } from '../../firebase/Auth'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js'
 import { Bar, Line, Pie, PolarArea } from 'react-chartjs-2'
@@ -30,27 +29,14 @@ ChartJS.register(
 
 export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
-    const { layouts, setLayouts } = useState([
-        { i: "a", x: 0, y: 0, w: 2, h: 1 },
-        { i: "b", x: 4, y: 0, w: 4, h: 1 },
-        { i: "c", x: 8, y: 0, w: 4, h: 1 },
-        { i: "d", x: 0, y: 0, w: 4, h: 1 },
-        { i: "e", x: 4, y: 1, w: 4, h: 1 },
-        { i: "f", x: 8, y: 1, w: 4, h: 1 },
-    ])
-    const [ hasPlan, setHasPlan ] = useState(false)
-    const patientModel = new PatientModel()
-    const planModel = new PlanModel()
-
-    const getFoodDetails = async () => {
-        let planId = await patientModel.getPlanId(currentUser.uuid)
-        if (!planId) {
-            setHasPlan(false)
-            return false
-        }
-        let plan = await planModel.get(planId)
-        console.log(plan)
-    }
+    // const { layouts, setLayouts } = useState([
+    //     { i: "a", x: 0, y: 0, w: 2, h: 1 },
+    //     { i: "b", x: 4, y: 0, w: 4, h: 1 },
+    //     { i: "c", x: 8, y: 0, w: 4, h: 1 },
+    //     { i: "d", x: 0, y: 0, w: 4, h: 1 },
+    //     { i: "e", x: 4, y: 1, w: 4, h: 1 },
+    //     { i: "f", x: 8, y: 1, w: 4, h: 1 },
+    // ])
 
     if (!currentUser) {
         return <Navigate to="/login" replace />

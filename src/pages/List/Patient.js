@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon, Pencil2Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
-import React, { useContext, useState, useEffect } from 'react'
+import { MagnifyingGlassIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
+import React, { useContext, useState} from 'react'
 import { AuthContext } from '../../firebase/Auth'
 import { useTranslation } from 'react-i18next'
 import { Card, InfoMenu } from '../../components'
@@ -16,7 +16,7 @@ export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
     const { t } = useTranslation()
     const [patientsList, setPatientsList] = useState(null)
-    const [usersName, setUsersName] = useState([])
+    const [setUsersName] = useState([])
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
 

@@ -10,7 +10,6 @@ import {
   query,
   updateDoc,
   where,
-  onSnapshot,
 } from "firebase/firestore";
 
 class AppointmentModel {
