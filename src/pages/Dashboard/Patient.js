@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import React, { useContext, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { Card } from '../../components'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
@@ -11,6 +11,7 @@ import { Responsive, WidthProvider } from "react-grid-layout"
 import "./index.css"
 import PatientModel from '../../db/PatientModel'
 import PlanModel from '../../db/PlanModel'
+import _ from 'lodash'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -29,18 +30,44 @@ ChartJS.register(
 
 export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
-    // const { layouts, setLayouts } = useState([
-    //     { i: "a", x: 0, y: 0, w: 2, h: 1 },
-    //     { i: "b", x: 4, y: 0, w: 4, h: 1 },
-    //     { i: "c", x: 8, y: 0, w: 4, h: 1 },
-    //     { i: "d", x: 0, y: 0, w: 4, h: 1 },
-    //     { i: "e", x: 4, y: 1, w: 4, h: 1 },
-    //     { i: "f", x: 8, y: 1, w: 4, h: 1 },
-    // ])
+    const [ hasPlan, setHasPlan ] = useState(false)
+    const [ macroNutri, setMacroNutri ] = useState([])
+    const patientModel = new PatientModel()
+    const planModel = new PlanModel()
+
+    const getFoodDetails = async () => {
+        let planId = await patientModel.getPlanId(currentUser.uuid)
+        if (!planId) {
+            setHasPlan(false)
+            return false
+        }
+        let plan = await planModel.get(planId)
+        // let plan = await planModel.getMacroNutri(planId)
+        let carbs = 0
+        let fat = 0
+        let protein = 0
+        let numItems = 0
+        _.map(plan, (data, key) => {
+            _.map(data.items, (dataItem, keyItem) => {
+                let caloricBreakdown = dataItem.foodDetails.nutrition.caloricBreakdown
+                carbs += caloricBreakdown.percentCarbs
+                fat += caloricBreakdown.percentFat
+                protein += caloricBreakdown.percentProtein
+                numItems++
+                console.log('caloricBreakdown', caloricBreakdown)
+            })
+            console.log('key', key)
+        })
+        carbs = Math.round((carbs/numItems) * 100) / 100
+        fat = Math.round((fat/numItems) * 100) / 100
+        protein = Math.round((protein/numItems) * 100) / 100
+        let macroNutri = [carbs, fat, protein]
+        setMacroNutri(macroNutri)
+    }
 
     if (!currentUser) {
         return <Navigate to="/login" replace />
-    } else {
+    } else if (macroNutri.length == 0) {
         getFoodDetails()
     }
 
@@ -102,28 +129,21 @@ export const Patient = () => {
         ],
     }
 
+    const labelsNutri = ['Carboidratos', 'Gordura', 'Proteína'];
     const data3 = {
-        labels,
+        labelsNutri,
         datasets: [
             {
-                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+                data: macroNutri,
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
                   'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                  'rgba(127, 74, 145, 0.2)',
                 ],
                 borderColor: [
                   'rgba(255, 99, 132, 1)',
                   'rgba(54, 162, 235, 1)',
                   'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                  'rgba(127, 74, 145, 1)',
                 ],
                 borderWidth: 1,
             }
