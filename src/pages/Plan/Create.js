@@ -154,17 +154,16 @@ export const Create = () => {
         getFoodDetails(food)
     }
 
-    const getFoodDetails = (food) => {
+    const getFoodDetails = async (food) => {
         const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/'+ food.id +'/information';
         optionsDetail.url = url;
+        console.log(food)
         optionsDetail.params.amount = volume.toString();
         optionsDetail.params.unit = quantity.toString();
 
-        axios.request(optionsDetail).then(function (response) {
-            setFoodDetails(response.data)
-        }).catch(function (error) {
-            console.error(error);
-        });
+        const response = await axios.request(optionsDetail)
+        setFoodDetails(response.data)
+        return response.data
     }
 
     const search = _.debounce((text) => {
@@ -211,10 +210,12 @@ export const Create = () => {
         }
     }
 
-    const editItem = (e) => {
+    const editItem = async (e) => {
         const hour = (time.getHours() < 10 ? '0' : '') + time.getHours()
         const minute = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
         const timeFood = hour + ':' + minute
+
+        let foodDetails = await getFoodDetails(food)
 
         _.map(itemsList, (data, key) => {
             data.items.map((item, index) => {
@@ -223,6 +224,8 @@ export const Create = () => {
                         id: v4(),
                         time: timeFood,
                         food: foodName,
+                        foodInfo: food,
+                        foodDetails: foodDetails,
                         timeAndFood: timeFood + ' - ' + foodName,
                         volume: volume,
                         quantity: quantity
@@ -236,11 +239,11 @@ export const Create = () => {
                 }
             })
         })
-        clearInfos()
         setEdit(false)
+        clearInfos()
     }
 
-    const addItem = (e) => {
+    const addItem = async (e) => {
         const { name, title } = e.target
         const key = name
         const fName = edit ? foodName : food.name
@@ -284,11 +287,15 @@ export const Create = () => {
             e.preventDefault()
             return false
         }
+
+        let foodDetails = await getFoodDetails(food)
+
         let newData = {
             id: v4(),
             time: timeFood,
             food: fName,
             foodInfo: food,
+            foodDetails: foodDetails,
             timeAndFood: timeFood + ' - ' + fName,
             volume: volume,
             quantity: quantity
@@ -319,6 +326,7 @@ export const Create = () => {
         setVolume(null)
         setQuantity(null)
         setIsActive(true)
+        setDetailsInput(false)
     }
 
     const updateItemsList = (key, title, itemData) => {
@@ -362,11 +370,19 @@ export const Create = () => {
         setFoodName(itemData.food)
         setDetailsInput(true)
         setEdit(true)
+        console.log('itemData', itemData, itemData.volume)
         setVolume(itemData.volume)
         setQuantity(itemData.quantity)
         setItemData(itemData)
         setFood(itemData.foodInfo)
+        // getFoodDetails(itemData.foodInfo)
         document.getElementById("btnAdd").click()
+    }
+
+    const handleClickClose = () => {
+        setDetailsInput( !detailsInput ? detailsInput : !detailsInput)
+        clearInfos()
+        setEdit(false)
     }
 
     const pull_data = (data, propsSuccess) => {
@@ -408,10 +424,10 @@ export const Create = () => {
                                     return (
                                         <CardPlanColumn key={key}>
                                             <CardPlanTitle><Translator path={key}/></CardPlanTitle>
-                                            <Droppable droppableId={key}>
+                                            <Droppable key={key} droppableId={key}>
                                                 {(provided) => {
                                                     return (
-                                                        <CardPlanDroppableColumn ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
+                                                        <CardPlanDroppableColumn key={key} ref={provided.innerRef} {...provided.droppableProps} className={`droppable-col ${key}`}>
                                                             <CardPlanFlexWrapper>
                                                             {data.items.map((el, index) => {
                                                                 return (
@@ -529,7 +545,7 @@ export const Create = () => {
                                                                                     <StyledButton onClick={(e) => addItem(e)} name={key} title={data.title} primary variant="green">{edit ? <Translator path="update"/> : <Translator path="save"/>}</StyledButton>
                                                                                 </DialogClose>
                                                                             </Flex>
-                                                                            <DialogClose onClick={() => setDetailsInput( !detailsInput ? detailsInput : !detailsInput)} asChild>
+                                                                            <DialogClose onClick={handleClickClose} asChild>
                                                                                 <IconButton aria-label="Close">
                                                                                     <Cross2Icon />
                                                                                 </IconButton>

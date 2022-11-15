@@ -9,6 +9,8 @@ import { faker } from '@faker-js/faker'
 import { Responsive, WidthProvider } from "react-grid-layout"
 
 import "./index.css"
+import PatientModel from '../../db/PatientModel'
+import PlanModel from '../../db/PlanModel'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -23,9 +25,9 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend
-)
+)   
 
-export const Dashboard = () => {
+export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
     // const { layouts, setLayouts } = useState([
     //     { i: "a", x: 0, y: 0, w: 2, h: 1 },
@@ -38,6 +40,8 @@ export const Dashboard = () => {
 
     if (!currentUser) {
         return <Navigate to="/login" replace />
+    } else {
+        getFoodDetails()
     }
 
     const layout = [

@@ -1,10 +1,11 @@
 import React  from 'react';
 import { GlobalStyle,Container} from './components/index';
-import {Home, Register, Login, ForgotPassword, ResetPassword, EditUser, EditProfile, ListUser, MakeAppointment, ListAppointment, EditAppointment, Create, Dashboard, Patient} from './pages/index'
+import {Home, Register, Login, ForgotPassword, ResetPassword, EditUser, EditProfile, ListUser, MakeAppointment, ListAppointment, EditAppointment, Create, PatientDashboard, Patient} from './pages/index'
 import {Header, Footer} from './components/index'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './firebase/Auth';
 import './i18n'
+import { Chat } from './components/Chat/Chat';
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
           <Container>
             <Routes>
                 <Route exact path="/" element={<Home/>} />
-                <Route exact path="/dashboard" element={<Dashboard/>} />
+                <Route exact path="/dashboard" element={<PatientDashboard/>} />
                 <Route exact path="/login" element={<Login/>} />
                 <Route exact path="/cadastro" element={<Register/>} />
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />
@@ -35,6 +36,7 @@ function App() {
           </Container>
           <Footer/>
         </Router>
+        <Chat />
       </AuthProvider>
     </>
   );
