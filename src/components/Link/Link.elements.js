@@ -1,4 +1,4 @@
-import styled, {css} from 'styled-components'
+import styled, {css} from 'styled-components/macro'
 import { Link } from 'react-router-dom';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 

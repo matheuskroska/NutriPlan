@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { css } from "styled-components";
 
 export const StyledError = styled.span`

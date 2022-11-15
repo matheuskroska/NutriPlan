@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, {css} from "styled-components/macro";
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 const cssButon = css`

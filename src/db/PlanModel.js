@@ -23,6 +23,10 @@ class PlanModel {
             return false
         }
     }
+
+    // async getMacroNutri(data) {
+    //     data.
+    // }
 }
 
 export default PlanModel
