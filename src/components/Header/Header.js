@@ -115,7 +115,7 @@ export const Header = () => {
               ) : (
                 <>
                   {notifications && (
-                    <div class="notificacaoContainer">
+                    <div className="notificacaoContainer">
                       <div className="notificacoes">
                         <span className="itemCount">
                           {notifications.length}

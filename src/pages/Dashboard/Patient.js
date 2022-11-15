@@ -4,7 +4,7 @@ import { Card, InfoMenu } from '../../components'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { AuthContext } from '../../firebase/Auth'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js'
-import { Bar, Line, Pie, PolarArea } from 'react-chartjs-2'
+import { Bar, Line } from 'react-chartjs-2'
 import { faker } from '@faker-js/faker'
 import { Responsive, WidthProvider } from "react-grid-layout"
 
@@ -12,6 +12,7 @@ import "./index.css"
 import PatientModel from '../../db/PatientModel'
 import PlanModel from '../../db/PlanModel'
 import _ from 'lodash'
+import { MacroNutriChart, MacroNutriPerFoodChart } from '../../components/Chart'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -32,6 +33,7 @@ export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
     const [ hasPlan, setHasPlan ] = useState(false)
     const [ macroNutri, setMacroNutri ] = useState([])
+    const [ macroNutriPerFood, setMacroNutriPerFood ] = useState([])
     const patientModel = new PatientModel()
     const planModel = new PlanModel()
 
@@ -41,28 +43,14 @@ export const Patient = () => {
             setHasPlan(false)
             return false
         }
-        let plan = await planModel.get(planId)
-        // let plan = await planModel.getMacroNutri(planId)
-        let carbs = 0
-        let fat = 0
-        let protein = 0
-        let numItems = 0
-        _.map(plan, (data, key) => {
-            _.map(data.items, (dataItem, keyItem) => {
-                let caloricBreakdown = dataItem.foodDetails.nutrition.caloricBreakdown
-                carbs += caloricBreakdown.percentCarbs
-                fat += caloricBreakdown.percentFat
-                protein += caloricBreakdown.percentProtein
-                numItems++
-                console.log('caloricBreakdown', caloricBreakdown)
-            })
-            console.log('key', key)
-        })
-        carbs = Math.round((carbs/numItems) * 100) / 100
-        fat = Math.round((fat/numItems) * 100) / 100
-        protein = Math.round((protein/numItems) * 100) / 100
-        let macroNutri = [carbs, fat, protein]
+        let macroNutri = await planModel.getMacroNutri(planId)
         setMacroNutri(macroNutri)
+        let macroNutriFood = await planModel.getMacroNutriPerFood(planId)
+        console.log(macroNutriFood.data)
+        _.map(macroNutriFood.data, (data, key) => {
+            console.log(data.carbs)
+        })
+        setMacroNutriPerFood(macroNutriFood)
     }
 
     if (!currentUser) {
@@ -129,70 +117,29 @@ export const Patient = () => {
         ],
     }
 
-    const labelsNutri = ['Carboidratos', 'Gordura', 'Proteína'];
-    const data3 = {
-        labelsNutri,
-        datasets: [
-            {
-                data: macroNutri,
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                ],
-                borderWidth: 1,
-            }
-        ],
-    }
-
-    const data4 = {
-        labels,
-        datasets: [
-            {
-                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                  'rgba(127, 74, 145, 0.2)',
-                ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                  'rgba(127, 74, 145, 1)',
-                ],
-                borderWidth: 1,
-            }
-        ],
-    }
-
     const data5 = {
         labels,
         datasets: [
-            {
+          {
             label: 'Dataset 1',
             data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
+            backgroundColor: 'rgb(255, 99, 132)',
+            stack: 'Stack 0',
+          },
+          {
             label: 'Dataset 2',
             data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
+            backgroundColor: 'rgb(75, 192, 192)',
+            stack: 'Stack 1',
+          },
+          {
+            label: 'Dataset 3',
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+            backgroundColor: 'rgb(53, 162, 235)',
+            stack: 'Stack 2',
+          },
         ],
-    }
+    };
 
     const getLayouts = () => {
         const savedLayouts = localStorage.getItem("grid-layout")
@@ -221,20 +168,11 @@ export const Patient = () => {
                                 width={1200}
                                 onLayoutChange={handleLayoutChange}
                             >
-                                <div key="a">
-                                    <Bar options={options} data={data1} style={{maxHeight: 'calc(100% - 60px)'}}/>
-                                </div>
-                                <div key="b">
-                                    <Line options={options} data={data2} />
-                                </div>
                                 <div key="c">
-                                    <Pie options={options} data={data3} />
-                                </div>
-                                <div key="d">
-                                    <PolarArea options={options} data={data4} />
+                                    <MacroNutriChart macroNutri={macroNutri} />
                                 </div>
                                 <div key="e">
-                                    <Bar options={options} data={data5} />
+                                    <MacroNutriPerFoodChart macroNutri={macroNutriPerFood} />
                                 </div>
                             </ResponsiveGridLayout>
                         </CardContentRow>

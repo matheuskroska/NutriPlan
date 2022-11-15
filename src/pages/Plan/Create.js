@@ -157,7 +157,6 @@ export const Create = () => {
     const getFoodDetails = async (food) => {
         const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/'+ food.id +'/information';
         optionsDetail.url = url;
-        console.log(food)
         optionsDetail.params.amount = volume.toString();
         optionsDetail.params.unit = quantity.toString();
 
@@ -370,7 +369,6 @@ export const Create = () => {
         setFoodName(itemData.food)
         setDetailsInput(true)
         setEdit(true)
-        console.log('itemData', itemData, itemData.volume)
         setVolume(itemData.volume)
         setQuantity(itemData.quantity)
         setItemData(itemData)

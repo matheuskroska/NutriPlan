@@ -9,10 +9,8 @@ import { Translator } from '../I18n';
 
 export const InfoMenu = (props) => {
     const menuState = props.menuState
-    const menuStateActive = props.name
     const [menu, setMenu] = useState(1);
     const { currentUser } = useContext(AuthContext);
-        
 
     const handleMenuState = () => {
         menu ? setMenu(0) : setMenu(1);
@@ -36,8 +34,6 @@ export const InfoMenu = (props) => {
     useEffect(() => {
         checkActive();
     }, []);
-
-
 
     return (
         <CardMenuContainer mstate={!menu}>
