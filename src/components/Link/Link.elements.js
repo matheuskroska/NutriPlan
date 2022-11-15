@@ -57,6 +57,9 @@ export const StyledRadixLink = styled(ToggleGroupPrimitive.Item)`
     &[data-state=on] a {color: var(--font-soft)}
     &:focus { position: relative}
 
+    &.active {  background-color: var(--secondary)}
+    &.active a {color: var(--font-soft)}
+
 
     ${props =>
     props.edituserbuttons &&
@@ -73,4 +76,6 @@ export const StyledRadixLink = styled(ToggleGroupPrimitive.Item)`
       &:focus { position: relative}
 
     `};
+
+    
 `
