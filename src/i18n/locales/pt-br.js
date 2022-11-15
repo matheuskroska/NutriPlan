@@ -89,6 +89,7 @@ export default {
         patientList: 'Lista de pacientes',
         createPlan: 'Criar plano',
         deletePlan: 'Deletar plano',
+        dashboard: "Meu Painel",
 
         //infos alimentos
         'Copper': 'Cobre',

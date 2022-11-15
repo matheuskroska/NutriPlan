@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import { Card } from '../../components'
+import { Card, InfoMenu } from '../../components'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { AuthContext } from '../../firebase/Auth'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js'
@@ -209,6 +209,7 @@ export const Patient = () => {
         <>
             <Card cardTitle="Dashboard" maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
+                    <InfoMenu name="dashboard"/>
                     <CardContent>
                         <CardContentRow gap={"0 10px"}>
                             <ResponsiveGridLayout

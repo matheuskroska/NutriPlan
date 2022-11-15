@@ -89,6 +89,7 @@ export default {
         patientList: 'Patient list',
         createPlan: 'Create plan',
         deletePlan: 'Delete plan',
+        dashboard: "My Dashboard",
 
         // infos alimentos
         'Copper': 'Copper',

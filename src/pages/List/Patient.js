@@ -16,7 +16,7 @@ export const Patient = () => {
     const { currentUser } = useContext(AuthContext)
     const { t } = useTranslation()
     const [patientsList, setPatientsList] = useState(null)
-    const [setUsersName] = useState([])
+    const [usersName, setUsersName] = useState([])
     const [querySearch, setQuerySearch] = useState("");
     const [searchParam] = useState(["nome_completo", "cpf"]); //colunas da base para realizar busca
 
