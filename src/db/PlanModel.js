@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import _ from "lodash";
 import { db } from "../firebase";
 
@@ -11,6 +11,11 @@ class PlanModel {
     async add(plan) {
         const docRef = await addDoc(collection(db, this.table), plan)
         return docRef.id
+    }
+    
+    async update(planId, plan) {
+        const docRef = doc(db, this.table, planId)
+        await setDoc(docRef, plan)
     }
 
     async get(planId) {
