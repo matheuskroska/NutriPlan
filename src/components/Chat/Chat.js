@@ -46,13 +46,6 @@ export const Chat = () => {
     
     const handleNewUserMessage = (newMessage) => {
         console.log(`New message incoming! ${newMessage}`, new Date());
-
-        const mensagem = {
-            de: currentUser.uuid,
-            para: nutritionist.uuid,
-            mensagem: newMessage,
-            data: new Date()
-        }
         
         setChat(prev => ({
             ...prev,
