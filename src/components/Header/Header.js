@@ -22,6 +22,7 @@ import UserModel from "../../db/UserModel";
 import I18n from "../I18n/I18n";
 import { Translator } from "../I18n";
 import AppointmentModel from "../../db/AppointmentModel";
+import NutritionistModel from "../../db/NutritionistModel";
 import "./style.css";
 
 export const Header = () => {
@@ -54,7 +55,7 @@ export const Header = () => {
     if (
       window.confirm(
         "Você aceita essa alteração na data da sua consulta? Não aceitar cancela a consulta"
-      ) === true
+      ) == true
     ) {
       appointment.alterar = false;
       updateAppointment(id, appointment);
@@ -72,7 +73,7 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    notificationList();
+    currentUser && notificationList();
   }, [updateNotification]);
 
   const [headerVisibility, setHeaderVisibility] = useState(false);
@@ -122,27 +123,34 @@ export const Header = () => {
                         </span>
                         <EnvelopeClosedIcon />
                       </div>
-                      <div className="notificacoesList">
-                        <p>Uma de suas consultas sofreu alteração</p>
-                        <p>clique para confirmar ou cancelar essa consulta!</p>
-                        <ul>
-                          {notifications.map((notification) => {
-                            return (
-                              <>
-                                {notification.alterar && (
-                                  <li onClick={getDocByID} id={notification.id}>
-                                    <span>{notification.previousDate}</span>
-                                    <ArrowRightIcon />
-                                    <span>
-                                      {notification.data} {notification.horario}{" "}
-                                    </span>
-                                  </li>
-                                )}
-                              </>
-                            );
-                          })}
-                        </ul>
-                      </div>
+                          {notifications.length ? <>
+                             <div className="notificacoesList">
+                                <p>Uma de suas consultas sofreu alteração</p>
+                                <p>clique para confirmar ou cancelar essa consulta!</p>
+                                <ul>
+                                  {notifications.map((notification) => {
+                                    return (
+                                      <>
+                                        {notification.alterar && (
+                                          <li onClick={getDocByID} id={notification.id}>
+                                            <span>{notification.previousDate}</span>
+                                            <ArrowRightIcon />
+                                            <span>
+                                              {notification.data} {notification.horario}{" "}
+                                            </span>
+                                          </li>
+                                        )}
+                                      </>
+                                    );
+                                  })}
+                              </ul>
+                            </div>
+                        </> : (<>
+                            <div className="notificacoesList">
+                                <p>Não há notificações</p>
+                            </div>
+                            
+                        </>)}
                     </div>
                   )}
 
