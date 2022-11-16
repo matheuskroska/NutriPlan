@@ -91,8 +91,8 @@ export const EditProfile = () => {
                             <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                         </CardItem>
                         <CardItem>
-                            <CardInputMask onChange={handleChange} defaultValue={currentUser.ddd} mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" ></CardInputMask>
-                            <CardInputMask onChange={handleChange} defaultValue={currentUser.telefone} mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder={`${t('phone')}`} inputWidth="calc(82% - 46px)" name="phone" ></CardInputMask>
+                                    <CardInputMask onChange={handleChange} defaultValue={currentUser.ddd} mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="initial" maxWidth="60px" name="ddd" ></CardInputMask>
+                            <CardInputMask onChange={handleChange} defaultValue={currentUser.telefone} mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder={`${t('phone')}`} inputWidth="initial" name="phone" ></CardInputMask>
                             <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                         </CardItem>
                         <CardItem>

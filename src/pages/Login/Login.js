@@ -38,7 +38,7 @@ export const Login = () => {
     }
 
     const pull_data = (data) => {
-        setModalError(data);
+        setModalError(!data);
     }
 
     return (

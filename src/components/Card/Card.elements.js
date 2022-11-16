@@ -30,12 +30,14 @@ export const CardInput = styled.input`
     ::placeholder {
         color: rgb(74 77 38 / 50%);
     }
+    flex: 1
 `
 
 export const CardInputMask = styled(InputMask)`
     border-radius: 5px;
     border: 1px solid #66A571;
     color: var(--font-dark);
+    max-width: ${props => props.maxWidth || "100%"};
     width: ${props => props.inputWidth || "100%"};
     height: 31px;
     font-size: 1.3em;
@@ -43,6 +45,7 @@ export const CardInputMask = styled(InputMask)`
     outline: 0;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     padding: 0 20px;
+    flex: 1;
     ::placeholder {
         color: rgb(74 77 38 / 50%);
     }
