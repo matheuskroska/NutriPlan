@@ -93,6 +93,12 @@ export default {
         dashboard: "Meu Painel",
         editPlanNutri: 'Editar plano nutricional',
         planNutri: 'Plano nutricional',
+        userActivated: 'Ativar acesso do usuario?',
+        userDesactivated: 'Desativar acesso do usuario?',
+        confirmDelete: 'Tem certeza que deseja deletar esse usuário?',
+        confirmApprove: 'Tem certeza que deseja aprovar esse usuário?',
+        confirmReprove: 'Tem certeza que deseja reprovar esse usuário?',
+        confirmDeleteAppointment: 'Tem certeza que deseja deletar essa consulta?',
 
         //infos alimentos
         'Copper': 'Cobre',

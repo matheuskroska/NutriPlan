@@ -5,11 +5,12 @@ import { Navigate } from 'react-router-dom';
 import { StyledLink} from '../../components/Link/Link.elements';
 import UserModel from '../../db/UserModel';
 import { AuthContext } from '../../firebase/Auth';
-import { Card, InfoMenu } from '../../components';
+import { Card, InfoMenu, Loader } from '../../components';
 import AppointmentModel from '../../db/AppointmentModel';
 import ScheduleModel from '../../db/ScheduleModel';
 import { Translator } from '../../components/I18n';
 import { useTranslation } from 'react-i18next';
+import { ModalMessage } from '../../components/ModalMessage/ModalMessage';
 
 export const ListAppointment = () => {
     const [usersList, setUsersList] = useState(null)
@@ -19,6 +20,12 @@ export const ListAppointment = () => {
     const [usersName, setUsersName] = useState([]);
     const [scheduleList, setScheduleList] = useState(null)
     const { t } = useTranslation()
+    const [loader, setLoader] = useState(false)
+    const [message, setMessage] = useState()
+    const [confirmation, setConfirmation] = useState(false);
+    const [modalMessage, setModalMessage] = useState(false);
+    const [type, setType] = useState()
+    const [docID, setDocID] = useState()
     
     const userModel = new UserModel()
     const appointmentModel = new AppointmentModel()
@@ -62,20 +69,46 @@ export const ListAppointment = () => {
         });
     }
     
-    const handleDelete = async(e, docId) => {
-        if (window.confirm('Deseja deletar essa consulta?')) {
-            if (window.confirm('Tem certeza que deseja deletar essa consulta?')) {
-                let dataDoc = await appointmentModel.getByDocId(docId)
-                await scheduleModel.removeDateTime(dataDoc.data, dataDoc.horario, dataDoc.nutricionista_uuid)
-                await appointmentModel.delete(docId)
-                // let appointments = appointmentModel.getAllSnapshot(currentUser.uuid) //recupera lista atualizada
-                // console.log(appointments)
-                // setScheduleList(appointments)
-            }
+    const handleDelete = async (e, docId) => {
+        
+        setDocID(docId)
+        setType('delete')
+        setMessage(t('confirmDeleteAppointment'))
+        setModalMessage(true)
+        setLoader(false)
+
+    }
+
+    const pull_data = (data, propsSuccess) => {
+         setModalMessage(data)
+         if (!!propsSuccess) {
         }
     }
 
-  return (
+    const handleConfirmation = (option, type) => {
+        if (option === true) {
+            handleActivity()
+        }
+    }
+
+    const handleActivity = async () => { 
+        let dataDoc = await appointmentModel.getByDocId(docID)
+        await scheduleModel.removeDateTime(dataDoc.data, dataDoc.horario, dataDoc.nutricionista_uuid)
+        await appointmentModel.delete(docID)
+    }
+
+    return (
+    <>
+    {!!loader && (
+        <>
+            <Loader/>
+        </>
+    )}
+    {modalMessage && (
+        <>
+                <ModalMessage type={type} setConfirmation={handleConfirmation} func={pull_data} confirm={true}>{message}</ModalMessage>
+        </>
+    )}
     <Card cardTitle={<Translator path="myAppoint"/>} maxWidth={"100%"} borderRadius={"0"}>
         <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
             <InfoMenu menuState={<Translator path="myAppoint"/>}/>
@@ -107,5 +140,6 @@ export const ListAppointment = () => {
             </CardContent>
         </CardContainer>
     </Card>
+    </>
   )
 }
