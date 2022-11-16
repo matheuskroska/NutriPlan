@@ -53,7 +53,7 @@ export const EditProfile = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-        setModalMessage(data)
+        setModalMessage(!data)
         if (!!propsSuccess) {
             window.location.reload()
         }

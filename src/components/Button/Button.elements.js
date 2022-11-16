@@ -72,4 +72,11 @@ export const StyledButton = styled.button`
         }
     `};
 
+    &.hideClose {
+        @media screen and (max-width: 768px) {
+            opacity: 1;
+        }
+        
+    }
+
 `
