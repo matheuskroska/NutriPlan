@@ -50,3 +50,11 @@ export const ModalContent = styled.p`
     text-align: center;
     margin-bottom: 20px;
 `
+export const ModalButtonsWrapper = styled.div`
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 10px;
+
+`

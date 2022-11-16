@@ -34,7 +34,7 @@ export default {
         actions: 'Actions',
         approve: 'Approve',
         reprove: 'Reprove',
-        disable: 'Disbale',
+        disable: 'Disable',
         activate: 'Activate',
         selNutri: 'Select a nutritionist',
         bMakeAppoint: 'Make appointment',
@@ -93,6 +93,13 @@ export default {
         dashboard: "My Dashboard",
         editPlanNutri: 'Edit nutritional plan',
         planNutri: 'Nutritional plan',
+        userActivated: 'Activate user access ?',
+        userDeactivated: 'Deactivate user access ?',
+        confirmDelete: 'You are about to delete this user. Are you sure?',
+        confirmApprove: 'You are about to approve this user. Are you sure?',
+        confirmReprove: 'You are about to disapprove this user. Are you sure?',
+        confirmDeleteAppointment: 'You are about to delete this appointment. Are you sure?',
+        
 
         // infos alimentos
         'Copper': 'Copper',

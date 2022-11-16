@@ -27,6 +27,7 @@ export const ListUser = () => {
     const navigate = useNavigate()
     const [active, setActive] = useState()
     const [uuid, setUuid] = useState()
+    const [type, setType] = useState()
     
     const userModel = new UserModel()
     const patientModel = new PatientModel()
@@ -61,61 +62,41 @@ export const ListUser = () => {
         });
     }
 
-    const handleApprove = async(e, uuid) => {
-        if (window.confirm('Aprovar acesso do usuário no sistema?')) {
-            await userModel.approveLoginUser(uuid)
-            let users = userModel.getUsersSnapshot() //recupera lista atualizada
-            setUsersList(users)
-        }
+    const handleApprove = async (e, uuid) => {
+        setUuid(uuid)
+        setType('approve')
+        setMessage(t('confirmApprove'))
+        setModalMessage(true)
+        setLoader(false)
     }
 
-    const handleReprove = async(e, uuid) => {
-        if (window.confirm('Reprovar acesso do usuário no sistema?\nEsse usuário sera deletado do sistema.')) {
-            await patientModel.delete(uuid)
-            await nutritionistModel.delete(uuid)
-            let users = userModel.getUsersSnapshot() //recupera lista atualizada
-            setUsersList(users)
-        }
+    const handleReprove = async (e, uuid) => {
+        setUuid(uuid)
+        setType('reprove')
+        setMessage(t('confirmReprove'))
+        setModalMessage(true)
+        setLoader(false)
     }
 
 
     const handleActiveDesactive = async (e, uuid, action) => {
         e.preventDefault()
-        let question = null
-        let active = null
-        switch (action) {
-            case 'desactive':
-                question = 'Deseja desativar login desse usuário?'
-                active = false
-                break
-            case 'active':
-                question = 'Deseja ativar login desse usuário?'
-                active = true
-                break
-            default:
-                console.log('Erro na action')
-                break
-        }
+        let active = action === 'active' ? true : false
+        let message = action === 'active' ? 'userActivated' : 'userDesactivated'
         setActive(active)
         setUuid(uuid)
-
-        setMessage(t('dataSaved'))
+        setType('activateDesactivate')
+        setMessage(t(message))
         setModalMessage(true)
-        setLoader(false)
-
-        
+        setLoader(false)  
     }
     
     const handleDelete = async (e, uuid) => {
-
-        if (window.confirm('Deseja deletar esse usuário do sistema?')) {
-            if (window.confirm('Tem certeza que deseja deletar esse usuário do sistema?')) {
-                await patientModel.delete(uuid)
-                await nutritionistModel.delete(uuid)
-                let users = userModel.getUsersSnapshot() //recupera lista atualizada
-                setUsersList(users)
-            }
-        }
+        setUuid(uuid)
+        setType('delete')
+        setMessage(t('confirmDelete'))
+        setModalMessage(true)
+        setLoader(false)
     }
 
      const pull_data = (data, propsSuccess) => {
@@ -124,18 +105,36 @@ export const ListUser = () => {
         }
     }
 
-    const handleConfirmation = (option) => {
+    const handleConfirmation = (option, type) => {
         if (option === true) {
-            handleActivity()
+            handleActivity(type)
         }
     }
 
-    const handleActivity = async () => { 
+    const handleActivity = async (type) => { 
 
-        await userModel.activeDesactiveLoginUser(uuid, active)
-        let users = userModel.getUsersSnapshot() 
-        setUsersList(users)
-       
+        switch (type) {
+            case 'activateDesactivate':
+                await userModel.activeDesactiveLoginUser(uuid, active)
+                setUsersList(userModel.getUsersSnapshot())
+                break
+            case 'delete':
+                await patientModel.delete(uuid)
+                await nutritionistModel.delete(uuid)
+                setUsersList(userModel.getUsersSnapshot())
+                break
+            case 'approve':
+                await userModel.approveLoginUser(uuid)
+                setUsersList(userModel.getUsersSnapshot())
+                break
+            case 'reprove':
+                await patientModel.delete(uuid)
+                await nutritionistModel.delete(uuid)
+                setUsersList(userModel.getUsersSnapshot())
+            default:
+                console.log('Erro na action')
+                break
+        }
     }
 
     return (
@@ -147,7 +146,7 @@ export const ListUser = () => {
         )}
         {modalMessage && (
             <>
-                    <ModalMessage setConfirmation={handleConfirmation} func={pull_data} confirm={true}>{message}</ModalMessage>
+                    <ModalMessage type={type} setConfirmation={handleConfirmation} func={pull_data} confirm={true}>{message}</ModalMessage>
             </>
         )}
             <Card cardTitle={<Translator path="userList"/>} maxWidth={"100%"} borderRadius={"0"}>
