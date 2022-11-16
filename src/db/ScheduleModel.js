@@ -74,6 +74,10 @@ class ScheduleModel {
             await updateDoc(doc(db, this.table, docId), data);
         }
     }
+
+    async delete(data) {
+        console.log(data)
+    }
 }
 
 export default ScheduleModel

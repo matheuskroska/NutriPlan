@@ -42,12 +42,7 @@ class AppointmentModel {
   }
 
   async getByNutritionistUuid(uuid) {
-    const q = query(
-      collection(db, this.table),
-      where("paciente_uuid", "==", uuid),
-      orderBy("data"),
-      orderBy("horario")
-    );
+    const q = query(collection(db, this.table), where("nutricionista_uuid", "==", uuid), orderBy("data"), orderBy("horario"));
     const data = await getDocs(q);
     const dataResult = data.docs.map((doc) => ({
       ...doc.data(),
@@ -70,20 +65,6 @@ class AppointmentModel {
     return dataResult;
   }
 
-  // // Listener para recuperar as consultas
-  // getAllSnapshot(uuid) {
-  //     const q = query(collection(db, this.table), where("paciente_uuid", "==", uuid), orderBy("horario"))
-  //     const schedulesList = onSnapshot(q, (data) => {
-  //         const dataResult = data.docs.map((doc) => ({
-  //             ...doc.data(),
-  //             id: doc.id
-  //         }))
-  //         return dataResult
-  //     })
-  //     console.log(schedulesList)
-  //     return schedulesList
-  // }
-
   async getByDocId(docId) {
     const docRef = doc(db, this.table, docId);
     const docSnap = await getDoc(docRef);
@@ -94,7 +75,9 @@ class AppointmentModel {
   }
 
   async delete(docId) {
+    let data = await this.getByDocId(docId)
     await deleteDoc(doc(db, this.table, docId));
+    return data
   }
 
   async update(docId, appoint) {

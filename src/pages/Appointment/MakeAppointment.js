@@ -222,8 +222,8 @@ export const MakeAppointment = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-        setModalMessage(!data)
-        if (!!propsSuccess) {
+        setModalMessage(data);
+        if (!data) {
             navigate("/minhas-consultas", { replace: true });
         }
     }

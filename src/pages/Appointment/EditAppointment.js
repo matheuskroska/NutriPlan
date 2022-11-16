@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../firebase/Auth";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   CardContainer,
   CardContentRow,
@@ -41,6 +41,7 @@ export const EditAppointment = () => {
   const [loader, setLoader] = useState(false);
   const [message, setMessage] = useState();
   const { t } = useTranslation();
+  const navigate = useNavigate()
 
   const nutritionistModel = new NutritionistModel();
   const scheduleModel = new ScheduleModel();
@@ -227,9 +228,9 @@ export const EditAppointment = () => {
   };
 
   const pull_data = (data, propsSuccess) => {
-    setModalMessage(!data);
-    if (!!propsSuccess) {
-      window.location.reload();
+    setModalMessage(data);
+    if (!data) {
+        navigate("/minhas-consultas", { replace: true });
     }
   };
 
