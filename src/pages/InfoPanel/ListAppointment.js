@@ -26,7 +26,7 @@ export const ListAppointment = () => {
     const [modalMessage, setModalMessage] = useState(false);
     const [type, setType] = useState()
     const [docID, setDocID] = useState()
-    
+
     const userModel = new UserModel()
     const appointmentModel = new AppointmentModel()
     const scheduleModel = new ScheduleModel()
@@ -39,8 +39,8 @@ export const ListAppointment = () => {
     }
 
     const getSchedules = async () => {
-        if (!currentUser.isNutri) {
-            let schedules = await appointmentModel.getByPatientUuid(currentUser.uuid)
+        if (currentUser.isNutri) {
+            let schedules = await appointmentModel.getByNutritionistUuid(currentUser.uuid)
             setScheduleList(schedules);
         } else {
             let schedules = await appointmentModel.getByPatientUuid(currentUser.uuid)
@@ -51,7 +51,7 @@ export const ListAppointment = () => {
 
     if (!!currentUser && !!!usersList) {
         getUsers()
-        !currentUser.isNutri && getSchedules();
+        getSchedules();
     } else if (!!!currentUser) {
         return <Navigate to="/login" replace />
     }
@@ -80,9 +80,7 @@ export const ListAppointment = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-         setModalMessage(!data)
-         if (!!propsSuccess) {
-        }
+        setModalMessage(!data)
     }
 
     const handleConfirmation = (option, type) => {
@@ -95,6 +93,7 @@ export const ListAppointment = () => {
         let dataDoc = await appointmentModel.getByDocId(docID)
         await scheduleModel.removeDateTime(dataDoc.data, dataDoc.horario, dataDoc.nutricionista_uuid)
         await appointmentModel.delete(docID)
+        window.location.reload()
     }
 
     return (
@@ -118,7 +117,7 @@ export const ListAppointment = () => {
                 </CardContentRow>
                 <CardContentRow>
                     <CardColHeader txAlign="left" width="33.3%"><Translator path="dateTime"/></CardColHeader>
-                    <CardColHeader width="33.3%"><Translator path="nutritionist"/></CardColHeader>
+                    <CardColHeader width="33.3%">{currentUser.isNutri ? (<Translator path="patient"/>) : (<Translator path="nutritionist"/>)}</CardColHeader>
                     <CardColHeader width="33.3%"><Translator path="actions"/></CardColHeader>
                 </CardContentRow>
                 {!!scheduleList && search(scheduleList).map(data => {
@@ -128,7 +127,7 @@ export const ListAppointment = () => {
                                 <CardContentCol justify={"start"}><strong>{data.data}</strong> - {data.horario}</CardContentCol>
                             </CardCol>
                             <CardCol width="33.3%">
-                                <CardContentCol><strong>{usersName[data.nutricionista_uuid]}</strong></CardContentCol>
+                                <CardContentCol><strong>{currentUser.isNutri ? (usersName[data.paciente_uuid]) : (usersName[data.nutricionista_uuid])}</strong></CardContentCol>
                             </CardCol>
                             <CardCol width="33.3%" display="flex">
                                 <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.id} edit="true" header="true" to={`/editar-consulta/`+data.id}><Pencil2Icon/></StyledLink></CardContentCol>
