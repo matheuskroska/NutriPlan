@@ -56,6 +56,40 @@ export const CardInputMask = styled(InputMask)`
     }
 `;
 
+export const CardContentRow = styled.div`
+    padding: 1.5em;
+    background-color: rgb(255 255 255 / 80%);
+    display: flex;
+    flex-direction: ${props => props.fDirection || "initial"};
+    gap: ${props => props.gap};
+    justify-content: space-between;
+    :first-child {
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    :nth-child(2) {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+
+    :last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    :not(:first-child):nth-child(odd) {
+        background-color: #f8f8f8;
+    }
+   
+`
+
+export const CardPlanColumn = styled.div`
+    width: 14.2%;
+	background-color: #d7d7d7;
+	padding: 10px 10px 35px 10px;
+	border-radius: 10px;
+`
 
 export const CardWrapper = styled.div`
     margin: ${props => props.margin2 || "0"};
@@ -66,11 +100,45 @@ export const CardWrapper = styled.div`
     border-radius: ${props => props.borderRadius || "0 0 5px 5px"};
 
 
+    &.nutriPlan {
+        ${CardContentRow} {
+            @media (max-width: 768px) {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        ${CardPlanColumn} {
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+        }
+    }
+
     @media (max-width: 768px) {
         padding: 10px;
     }
+    
+    &.patientList {
+        @media (max-width: 768px) { 
+            ${CardContainer} { 
+            padding: 0;
+           
+            }
+        }
 
-    &.makeAppointment, &.editUser {
+        @media (max-width: 768px) {
+            overflow: auto;
+        }
+
+        ${CardContainer} {
+            @media (max-width: 768px) {
+                min-width: 450px;
+            }
+        }
+    }
+
+    &.makeAppointment, &.editUser{
         @media (max-width: 768px) { 
             ${CardContainer} { 
             padding: 0;
@@ -82,7 +150,7 @@ export const CardWrapper = styled.div`
         
     }
 
-    &.listUser, &.myAppointments {
+    &.listUser, &.myAppointments{
         @media (max-width: 768px) {
             overflow: auto;
         }
@@ -93,6 +161,7 @@ export const CardWrapper = styled.div`
             }
         }
     }
+
 
     &.listUser::-webkit-scrollbar {
         width: 10px;
@@ -299,35 +368,7 @@ export const CardContent = styled.div`
     width: 100%;
 `
 
-export const CardContentRow = styled.div`
-    padding: 1.5em;
-    background-color: rgb(255 255 255 / 80%);
-    display: flex;
-    flex-direction: ${props => props.fDirection || "initial"};
-    gap: ${props => props.gap};
-    justify-content: space-between;
-    :first-child {
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
 
-    :nth-child(2) {
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-    }
-
-    :last-child {
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
-
-    :not(:first-child):nth-child(odd) {
-        background-color: #f8f8f8;
-    }
-
-    
-   
-`
 
 export const CardContentHeader = styled.div`
     padding: 0.5em;
@@ -462,12 +503,7 @@ export const CardSlider = styled.div`
 `
 
 
-export const CardPlanColumn = styled.div`
-    width: 14.2%;
-	background-color: #d7d7d7;
-	padding: 10px 10px 35px 10px;
-	border-radius: 10px;
-`
+
 
 export const CardPlanTitle = styled.h3`
     font-weight: 500;

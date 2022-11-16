@@ -62,7 +62,7 @@ export const EditUser = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-        setModalMessage(data)
+        setModalMessage(!data)
     }
 
     if (!!!currentUser) {

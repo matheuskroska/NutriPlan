@@ -425,7 +425,7 @@ export const Plan = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-        setModalMessage(data)
+        setModalMessage(!data)
     }
 
     if (!!!currentUser) {
@@ -458,7 +458,7 @@ export const Plan = () => {
                     <ModalMessage func={pull_data} success={false}>{message}</ModalMessage>
                 </>
             )}
-        <Card cardTitle={uuid ? (<Translator path="createPlanNutri"/>) : (<Translator path="editPlanNutri"/>)} maxWidth={"100%"}>
+        <Card className="nutriPlan" cardTitle={uuid ? (<Translator path="createPlanNutri"/>) : (<Translator path="editPlanNutri"/>)} maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={uuid ? (<Translator path="createPlanNutri"/>) : (<Translator path="editPlanNutri"/>)}/>
                     <CardContent>

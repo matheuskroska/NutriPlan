@@ -39,7 +39,7 @@ export const ForgotPassword = () => {
     }
 
     const pull_data = (data) => {
-        setModalError(data);
+        setModalError(!data);
     }
 
     if (!!loader) {
