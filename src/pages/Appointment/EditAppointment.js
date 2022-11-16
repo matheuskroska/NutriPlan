@@ -21,6 +21,7 @@ import {
   StyledDatePicker,
   StyledSelect,
 } from "../../components/Select/Select.elements";
+import ScheduleModel from "../../db/ScheduleModel";
 
 registerLocale("pt-BR", pt);
 
@@ -42,6 +43,7 @@ export const EditAppointment = () => {
   const { t } = useTranslation();
 
   const nutritionistModel = new NutritionistModel();
+  const scheduleModel = new ScheduleModel();
   const appointmentModel = new AppointmentModel();
 
   const selectDateAndNutri = async () => {
@@ -185,18 +187,16 @@ export const EditAppointment = () => {
     appoint.data = date;
     appoint.horario = time;
     appoint.alterar = true;
-    appoint.previousDate =
-      previousDate.getDate() +
-      "/" +
-      previousDate.getMonth() +
-      "/" +
-      previousDate.getFullYear() +
-      " " +
-      previousDate.getHours() +
-      ":" +
-      previousDate.getMinutes();
+    let previousDay = (previousDate.getDate() < 10 ? "0" + previousDate.getDate() : previousDate.getDate())
+    let previousMonth = (previousDate.getMonth() < 10 ? "0" + (previousDate.getMonth()+1) : previousDate.getMonth()+1)
+    let previousHours = (previousDate.getHours() < 10 ? "0" + previousDate.getHours() : previousDate.getHours())
+    let previousMinutes = (previousDate.getMinutes() < 10 ? "0" + previousDate.getMinutes() : previousDate.getMinutes())
+    let previousFullDate = previousDay + "/" + previousMonth + "/" + previousDate.getFullYear();
+    let previousTime = previousHours + ":" + previousMinutes;
+    appoint.previousDate = previousFullDate + " " + previousTime;
 
     await appointmentModel.update(docId, appoint);
+    await scheduleModel.update(nutritionist, previousFullDate, previousTime, date, time);
     setMessage(t("dataChanged"));
     setModalMessage(true);
     setLoader(false);

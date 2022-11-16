@@ -4,8 +4,6 @@ import { Card, InfoMenu } from '../../components'
 import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { AuthContext } from '../../firebase/Auth'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js'
-import { Bar, Line } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
 import { Responsive, WidthProvider } from "react-grid-layout"
 
 import "./index.css"
@@ -46,10 +44,6 @@ export const Patient = () => {
         let macroNutri = await planModel.getMacroNutri(planId)
         setMacroNutri(macroNutri)
         let macroNutriFood = await planModel.getMacroNutriPerFood(planId)
-        console.log(macroNutriFood.data)
-        _.map(macroNutriFood.data, (data, key) => {
-            console.log(data.carbs)
-        })
         setMacroNutriPerFood(macroNutriFood)
     }
 
@@ -68,83 +62,9 @@ export const Patient = () => {
         { i: "f", x: 8, y: Infinity, w: 4, h: 1 },
     ]
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Gráfico',
-            },
-        },
-    }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-
-    const data1 = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-            label: 'Dataset 2',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    }
-
-    const data2 = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    }
-
-    const data5 = {
-        labels,
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgb(255, 99, 132)',
-            stack: 'Stack 0',
-          },
-          {
-            label: 'Dataset 2',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgb(75, 192, 192)',
-            stack: 'Stack 1',
-          },
-          {
-            label: 'Dataset 3',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgb(53, 162, 235)',
-            stack: 'Stack 2',
-          },
-        ],
-    };
-
     const getLayouts = () => {
         const savedLayouts = localStorage.getItem("grid-layout")
         let _savedLayouts = savedLayouts ? JSON.parse(savedLayouts) : { lg: layout }
-        // setLayouts(_savedLayouts)
         return _savedLayouts
     }
 

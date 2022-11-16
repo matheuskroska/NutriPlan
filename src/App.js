@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './firebase/Auth';
 import './i18n'
 import { Chat } from './components/Chat/Chat';
+import { Dashboard } from './pages/Dashboard';
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
           <Container>
             <Routes>
                 <Route exact path="/" element={<Home/>} />
-                <Route exact path="/dashboard" element={<PatientDashboard/>} />
+                <Route exact path="/dashboard" element={<Dashboard/>} />
                 <Route exact path="/login" element={<Login/>} />
                 <Route exact path="/cadastro" element={<Register/>} />
                 <Route exact path="/alterar-senha" element={<ForgotPassword/>} />

@@ -41,6 +41,21 @@ class AppointmentModel {
     return dataResult;
   }
 
+  async getByNutritionistUuid(uuid) {
+    const q = query(
+      collection(db, this.table),
+      where("paciente_uuid", "==", uuid),
+      orderBy("data"),
+      orderBy("horario")
+    );
+    const data = await getDocs(q);
+    const dataResult = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    return dataResult;
+  }
+
   async getNotificationByPatientUuid(uuid) {
     const q = query(
       collection(db, this.table),
