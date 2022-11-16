@@ -59,10 +59,10 @@ export const Chat = () => {
             nutricionista_uuid: nutritionist.uuid,
             paciente_uuid: currentUser.uuid,
             mensagens: {
-                [key]: {
-                    mensagem
-                },
-                ...prev[key].mensagens
+                de: currentUser.uuid,
+                para: nutritionist.uuid,
+                mensagem: newMessage,
+                data: new Date()
             }
         }))
 
