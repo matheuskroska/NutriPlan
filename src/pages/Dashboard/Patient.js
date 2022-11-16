@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { Card, InfoMenu } from '../../components'
-import { CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
+import { CardCanvas, CardCanvasWrapper, CardContainer, CardContent, CardContentRow } from '../../components/Card/Card.elements'
 import { AuthContext } from '../../firebase/Auth'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js'
 import { Responsive, WidthProvider } from "react-grid-layout"
@@ -78,8 +78,8 @@ export const Patient = () => {
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu name="dashboard"/>
                     <CardContent>
-                        <CardContentRow gap={"0 10px"}>
-                            <ResponsiveGridLayout
+                        <CardCanvasWrapper>
+                            {/* <ResponsiveGridLayout
                                 layouts={getLayouts()}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
@@ -88,14 +88,15 @@ export const Patient = () => {
                                 width={1200}
                                 onLayoutChange={handleLayoutChange}
                             >
-                                <div key="c">
+                                
+                            </ResponsiveGridLayout> */}
+                            <CardCanvas>
                                     <MacroNutriChart macroNutri={macroNutri} />
-                                </div>
-                                <div key="e">
-                                    <MacroNutriPerFoodChart macroNutri={macroNutriPerFood} />
-                                </div>
-                            </ResponsiveGridLayout>
-                        </CardContentRow>
+                            </CardCanvas>
+                            <CardCanvas>
+                                <MacroNutriPerFoodChart macroNutri={macroNutriPerFood} />
+                            </CardCanvas>
+                        </CardCanvasWrapper>
                     </CardContent>
                     </CardContainer>
             </Card>

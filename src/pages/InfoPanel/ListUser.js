@@ -100,7 +100,7 @@ export const ListUser = () => {
     }
 
      const pull_data = (data, propsSuccess) => {
-         setModalMessage(!data)
+         setModalMessage(data)
          if (!!propsSuccess) {
         }
     }
@@ -150,8 +150,8 @@ export const ListUser = () => {
             </>
         )}
             <Card className="listUser" cardTitle={<Translator path="userList"/>} maxWidth={"100%"} borderRadius={"0"}>
-                <CardContainer  justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={<Translator path="userList" />} />
+                <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
+                    <InfoMenu menuState={<Translator path="userList"/>}/>
                     <CardContent>
                         <CardContentRow>
                             <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder={`${t('search')}`} value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
