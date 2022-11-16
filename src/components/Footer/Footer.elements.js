@@ -23,6 +23,10 @@ export const FooterItem = styled.div`
     width: 100%;
     justify-content: space-around;
     background-color: ${props => props.bgColor || "initial"};
+
+    @media screen and (max-width: 768px) { 
+        flex-direction: column;
+    }
 `
 
 export const FooterCol = styled.div`
@@ -46,6 +50,10 @@ export const FooterColSocial = styled.ul`
     svg {
         width: 20px;
         height: 20px;
+    }
+
+    @media screen and (max-width: 768px) { 
+        justify-content: center;
     }
 `
 
