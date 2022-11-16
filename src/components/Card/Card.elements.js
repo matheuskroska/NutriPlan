@@ -101,7 +101,9 @@ export const CardContentRow = styled.div`
 export const CardCanvas = styled.div`
     > * {
             margin: 0 auto;
-            height: 250px;
+            max-height: 350px;
+            max-width: 350px;
+            height: 100vh;
     }
 
     @media (max-width: 768px) {
