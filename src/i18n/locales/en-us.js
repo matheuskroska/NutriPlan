@@ -89,7 +89,10 @@ export default {
         patientList: 'Patient list',
         createPlan: 'Create plan',
         deletePlan: 'Delete plan',
+        editPlan: 'Edit plan',
         dashboard: "My Dashboard",
+        editPlanNutri: 'Edit nutritional plan',
+        planNutri: 'Nutritional plan',
 
         // infos alimentos
         'Copper': 'Copper',

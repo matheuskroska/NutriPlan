@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
+import { MagnifyingGlassIcon, Pencil2Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
 import React, { useContext, useState} from 'react'
 import { AuthContext } from '../../firebase/Auth'
 import { useTranslation } from 'react-i18next'
@@ -74,7 +74,12 @@ export const Patient = () => {
                                     <CardContentCol><strong>{data.cpf}</strong> - {data.nome_completo}</CardContentCol>
                                 </CardCol>
                                 <CardCol width="25%" display="flex">
-                                    {!data.plano_id && <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/criar-plano/`+data.uuid} data-tip={t('createPlan')}><PlusIcon/></StyledLink></CardContentCol>}
+                                    {!data.plano_id ? (
+                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/criar-plano/`+data.uuid} data-tip={t('createPlan')}><PlusIcon/></StyledLink></CardContentCol>
+                                    ) : (
+                                        <CardContentCol maxWidth={"25px"}><StyledLink uuid={data.uuid} edit="true" header="true" to={`/editar-plano/`+data.plano_id} data-tip={t('editPlan')}><Pencil2Icon/></StyledLink></CardContentCol>
+                                    )
+                                    }
                                     <CardContentCol maxWidth={"25px"}><StyledLink edit="true" header="true" to={"#"} data-tip={t('deletePlan')}><TrashIcon/></StyledLink></CardContentCol>
                                     <ReactTooltip />
                                 </CardCol>

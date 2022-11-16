@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { useContext, useState, useEffect } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { v4 } from 'uuid'
 import { Card, InfoMenu, Loader } from '../../components'
 import { StyledButton } from '../../components/Button/Button.elements'
@@ -21,10 +21,11 @@ import PlanModel from '../../db/PlanModel'
 import PatientModel from '../../db/PatientModel'
 import './index.css'
 
-export const Create = () => {
+export const Plan = () => {
     const { currentUser } = useContext(AuthContext)
     const { t } = useTranslation()
     const [time, setTime] = useState(null)
+    const [oldTime, setOldTime] = useState(null)
     const [food, setFood] = useState('')
     const [foodOption, setFoodOption] = useState(null)
     const [foodDetails, setFoodDetails] = useState(null)
@@ -40,7 +41,8 @@ export const Create = () => {
     const [foodName, setFoodName] = useState(null)
     const [edit, setEdit] = useState(false)
     const [itemData, setItemData] = useState(false)
-    const { uuid } = useParams()
+    const { uuid, planId } = useParams()
+    const navigate = useNavigate()
     const [itemsList, setItemsList] = useState({
         "sunday": {
             title: t('sunday'),
@@ -74,6 +76,17 @@ export const Create = () => {
     const planModel = new PlanModel()
     const patientModel = new PatientModel()
 
+    const getItemsList = async () => {
+        let plan = await planModel.get(planId)
+        _.map(plan, (data, key) => {
+            if (data.items.length > 0) {
+                _.map(data.items, (dataItem, keyItem) => {
+                    updateItemsList(key, data.title, dataItem)
+                })
+            }
+        })
+    }
+
     const orderItems = (a, b) => {
         if (a.timeAndFood.toLowerCase() < b.timeAndFood.toLowerCase()){
             return -1;
@@ -88,8 +101,10 @@ export const Create = () => {
         let interval = null;
         if (isActive) {
             interval = setInterval(() => {
-                itemsList[itemKey].items.sort(orderItems)
-                setIsActive(false)
+                if (itemsList[itemKey]) {
+                    itemsList[itemKey].items.sort(orderItems)
+                    setIsActive(false)    
+                }
             }, 1000);
         } else {
             clearInterval(interval);
@@ -157,7 +172,6 @@ export const Create = () => {
     const getFoodDetails = async (food) => {
         const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/'+ food.id +'/information';
         optionsDetail.url = url;
-        console.log(food)
         optionsDetail.params.amount = volume.toString();
         optionsDetail.params.unit = quantity.toString();
 
@@ -167,7 +181,7 @@ export const Create = () => {
     }
 
     const search = _.debounce((text) => {
-        if(text && text.length > 3) {
+        if(text && text.length > 2) {
             requestToApi(text)
         } else {
             setDetailsInput(false)
@@ -178,6 +192,7 @@ export const Create = () => {
         if (!destination) return //dropando fora das caixas
         if (destination.index === source.index && destination.droppableId === source.droppableId) return //dropando no mesmo lugar
 
+        console.log(destination, source)
         const itemsInDay = itemsList[destination.droppableId].items.map(el => el.timeAndFood)
         //Cria cópia do item antes de remover do array
         const itemCopy = {...itemsList[source.droppableId].items[source.index]}
@@ -214,6 +229,16 @@ export const Create = () => {
         const hour = (time.getHours() < 10 ? '0' : '') + time.getHours()
         const minute = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes()
         const timeFood = hour + ':' + minute
+
+        const oldHour = (oldTime.getHours() < 10 ? '0' : '') + oldTime.getHours()
+        const oldMinute = (oldTime.getMinutes() < 10 ? '0' : '') + oldTime.getMinutes()
+        const oldTimeFood = oldHour + ':' + oldMinute
+
+        const itemsInDay = itemsList[itemKey].items.map(el => el.timeAndFood)	
+        if (itemsInDay.length > 1 && oldTimeFood !== timeFood && !verifyExistsInTime(itemsInDay, timeFood)) {	
+            e.preventDefault()	
+            return false	
+        }
 
         let foodDetails = await getFoodDetails(food)
 
@@ -342,6 +367,10 @@ export const Create = () => {
                 }
             }
         })
+        if (planId) {
+            setIsActive(true)	
+            setItemKey(key)
+        }
     }
 
     const handleClick = async () => {
@@ -355,26 +384,36 @@ export const Create = () => {
         if (cont === 7) {
             return false
         } else {
-            let planId = await planModel.add(itemsList)
-            await patientModel.addPlan(planId, uuid, currentUser.uuid)
+            let redirect = false
+            let url = null
+            if (uuid) {
+                let planId = await planModel.add(itemsList)
+                await patientModel.addPlan(planId, uuid, currentUser.uuid)
+                redirect = true
+                url = "/editar-plano/"+planId
+            } else {
+                await planModel.update(planId, itemsList)
+            }
             setMessage(t('dataSaved'))
             setModalMessage(true)
             setLoader(false)
+            redirect && navigate(url, { replace: true })
         }
     }
 
-    const handleClickItem = (e, itemData) => {
+    const handleClickItem = (e, itemData, key) => {
         const hoursMinutes = itemData.time.split(':')
         let newTime = setHours(setMinutes(new Date(), hoursMinutes[1]), hoursMinutes[0])
         setTime(newTime)
+        setOldTime(newTime)
         setFoodName(itemData.food)
         setDetailsInput(true)
         setEdit(true)
-        console.log('itemData', itemData, itemData.volume)
         setVolume(itemData.volume)
         setQuantity(itemData.quantity)
         setItemData(itemData)
         setFood(itemData.foodInfo)
+        setItemKey(key)
         // getFoodDetails(itemData.foodInfo)
         document.getElementById("btnAdd").click()
     }
@@ -393,11 +432,19 @@ export const Create = () => {
         return <Navigate to="/login" replace />
     } else if (!currentUser.isNutri) {
         return <Navigate to="/dashboard" replace />
+    } else {
+        if (planId) {
+            let numItemsEmpty = 0
+            _.map(itemsList, (data, key) => {
+                if (data.items.length == 0) {
+                    numItemsEmpty++
+                }
+            })
+            if (numItemsEmpty == 7) {
+                getItemsList()
+            }
+        }
     }
-
-    // window.onbeforeunload = function() {
-    //     return "Are you sure you want to leave?";
-    // }
 
     return (
         <>
@@ -411,9 +458,9 @@ export const Create = () => {
                     <ModalMessage func={pull_data} success={false}>{message}</ModalMessage>
                 </>
             )}
-            <Card cardTitle={<Translator path="createPlanNutri"/>} maxWidth={"100%"}>
+        <Card cardTitle={uuid ? (<Translator path="createPlanNutri"/>) : (<Translator path="editPlanNutri"/>)} maxWidth={"100%"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={<Translator path="createPlanNutri"/>}/>
+                    <InfoMenu menuState={uuid ? (<Translator path="createPlanNutri"/>) : (<Translator path="editPlanNutri"/>)}/>
                     <CardContent>
                         <CardContentRow gap={"0 10px"}>
                             <StyledButton onClick={handleClick} primary>Salvar plano</StyledButton>
@@ -436,7 +483,7 @@ export const Create = () => {
                                                                             return (
                                                                                 <>
                                                                                     <CardPlanWrapper>
-                                                                                        <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`} onClick={(e) => handleClickItem(e, el)}>
+                                                                                        <CardPlanItem ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`item ${snapshot.isDragging && "dragging"}`} onClick={(e) => handleClickItem(e, el, key)}>
                                                                                                 {el.timeAndFood}
                                                                                         </CardPlanItem>
                                                                                         <StyledButton className="hideClose" primary width="initial">

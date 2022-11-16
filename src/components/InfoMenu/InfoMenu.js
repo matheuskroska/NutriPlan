@@ -9,10 +9,8 @@ import { Translator } from '../I18n';
 
 export const InfoMenu = (props) => {
     const menuState = props.menuState
-    const menuStateActive = props.name
     const [menu, setMenu] = useState(1);
     const { currentUser } = useContext(AuthContext);
-        
 
     const handleMenuState = () => {
         menu ? setMenu(0) : setMenu(1);
@@ -37,8 +35,6 @@ export const InfoMenu = (props) => {
         checkActive();
     }, []);
 
-
-
     return (
         <CardMenuContainer mstate={!menu}>
             <CardCloseButton onClick={handleMenuState}>
@@ -51,7 +47,7 @@ export const InfoMenu = (props) => {
             </CardMenuHeader>
             <StyledRadixToggleGroup mstate={menu} value={menuState} height="100%" flexdirection="column" type="single" aria-label="usuario" >
                     {currentUser.isAdmin && <StyledRadixLink className="menuButton" name="lista-usuarios" edituserbuttons="true" value={<Translator path="userList"/>} aria-label={<Translator path="userList"/>}><StyledLink menu="true" link="true" to="/lista-usuarios"><Translator path="userList"/></StyledLink></StyledRadixLink>}
-                    {currentUser.isNutri && <StyledRadixLink className="menuButton" name="lista-pacientes" edituserbuttons="true" value={<Translator path="createPlanNutri" />} aria-label={<Translator path="createPlanNutri" />}><StyledLink menu="true" link="true" to="/lista-pacientes"><Translator path="createPlanNutri" /></StyledLink></StyledRadixLink>}
+                    {currentUser.isNutri && <StyledRadixLink className="menuButton" name="lista-pacientes" edituserbuttons="true" value={<Translator path="planNutri" />} aria-label={<Translator path="planNutri" />}><StyledLink menu="true" link="true" to="/lista-pacientes"><Translator path="planNutri" /></StyledLink></StyledRadixLink>}
                     {!currentUser.isNutri && <StyledRadixLink className="menuButton" name="dashboard" edituserbuttons="true" value={<Translator path="dashboard"/>} aria-label={<Translator path="dashboard"/>}><StyledLink menu="true" link="true" to="/dashboard"><Translator path="dashboard"/></StyledLink></StyledRadixLink>}
                     {!currentUser.isNutri && <StyledRadixLink className="menuButton" name="agendar-consulta" edituserbuttons="true" value={<Translator path="makeAppoint"/>} aria-label={<Translator path="makeAppoint"/>}><StyledLink menu="true" link="true" to="/agendar-consulta"><Translator path="makeAppoint"/></StyledLink></StyledRadixLink>}
                     <StyledRadixLink className="menuButton" name="minhas-consultas" edituserbuttons="true" value={<Translator path="myAppoint"/>} aria-label={<Translator path="myAppoint"/>}><StyledLink menu="true" link="true" to="/minhas-consultas"><Translator path="myAppoint"/></StyledLink></StyledRadixLink>
