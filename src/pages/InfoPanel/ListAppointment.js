@@ -80,7 +80,7 @@ export const ListAppointment = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-        setModalMessage(!data)
+        setModalMessage(data)
     }
 
     const handleConfirmation = (option, type) => {

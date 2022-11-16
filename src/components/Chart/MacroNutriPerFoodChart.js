@@ -15,6 +15,9 @@ export const MacroNutriPerFoodChart = (props) => {
                 text: 'Macronutrientes por comida (%)',
             },
         },
+        responsive: true,
+        maintainAspectRatio: false,
+        
     }
     
     const dataMacroNutri = {

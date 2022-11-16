@@ -56,6 +56,19 @@ export const CardInputMask = styled(InputMask)`
     }
 `;
 
+export const CardCanvasWrapper = styled.div`
+    display: flex;
+    background-color: rgb(255 255 255 / 80%);
+    padding: 1.5em;
+    display: flex;
+    gap: 0 10px;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+`
+
 export const CardContentRow = styled.div`
     padding: 1.5em;
     background-color: rgb(255 255 255 / 80%);
@@ -80,8 +93,24 @@ export const CardContentRow = styled.div`
 
     :not(:first-child):nth-child(odd) {
         background-color: #f8f8f8;
+        width: 100%;
     }
    
+`
+
+export const CardCanvas = styled.div`
+    > * {
+            margin: 0 auto;
+            height: 250px;
+    }
+
+    @media (max-width: 768px) {
+        > * {
+            margin: 0 auto;
+            height: 250px;
+            width: 100%;
+        }
+    }
 `
 
 export const CardPlanColumn = styled.div`
