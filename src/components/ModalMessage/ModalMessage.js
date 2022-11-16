@@ -7,8 +7,11 @@ import { ModalContainer, ModalContent, ModalTitle, ModalWrapper } from './ModalM
 export const ModalMessage = ({success, children, confirm, func, setConfirmation}) => {
     
     const handleClick = (opt) => {  
-        func(success);
-        setConfirmation(opt);
+        func(!success);
+        if (confirm) {
+            func(success);
+            setConfirmation(opt);
+        }
     } 
 
   return (
