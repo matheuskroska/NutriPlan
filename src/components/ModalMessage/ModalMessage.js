@@ -1,21 +1,23 @@
 import { CheckCircledIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import React, { useState } from 'react'
 import { StyledButton } from '../Button/Button.elements'
 import { Translator } from '../I18n'
 import { ModalContainer, ModalContent, ModalTitle, ModalWrapper } from './ModalMessage.elements'
 
-export const ModalMessage = (props) => {
+export const ModalMessage = ({success, children, confirm, func, setConfirmation}) => {
     
-    const handleClick = () => {
-        props.func(!props, props.success);
+    const handleClick = (opt) => {  
+        func(success);
+        setConfirmation(opt);
     } 
 
   return (
       <>
         <ModalContainer onClick={handleClick}>
-            <ModalWrapper>
+              <ModalWrapper>
+                  
                 <ModalTitle>
-                    {!!props.success ? (
+                    {!!success ? (
                         <>
                             <CheckCircledIcon/> <Translator path="msgSuccess"/>
                         </>
@@ -25,8 +27,22 @@ export const ModalMessage = (props) => {
                         </>
                     )}
                 </ModalTitle>
-                <ModalContent>{props.children}</ModalContent>
-                <StyledButton onClick={handleClick} primary><Translator path="ok"/></StyledButton>
+                  <ModalContent>{children}</ModalContent>
+                  {!!confirm ? (
+                    <>
+                        <StyledButton onClick={() => handleClick(true)} primary><Translator path="Sim" /></StyledButton>  
+                        <StyledButton onClick={() => handleClick(false)} primary><Translator path="Não" /></StyledButton> 
+                    </>
+                     
+                  ) : (
+                    <>
+                        <StyledButton onClick={handleClick} primary><Translator path="ok" /></StyledButton> 
+                    </>
+                  )
+                  }
+                          
+                  
+                  
             </ModalWrapper>
         </ModalContainer>
       </>
