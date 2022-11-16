@@ -1,6 +1,10 @@
 {
   "name": "nutriplan",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
   "private": true,
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.0",
