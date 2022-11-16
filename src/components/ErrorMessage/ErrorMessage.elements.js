@@ -8,6 +8,8 @@ export const StyledError = styled.span`
     font-size: 1.3em;
     font-weight: 600;
     gap: 0 10px;
+    width: 100%;
+
     ${props => props.visibility ?
     css`
         visibility: visible;

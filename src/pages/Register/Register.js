@@ -153,7 +153,7 @@ export const Register = () => {
     }
 
     const pull_data = (data, propsSuccess) => {
-        setModalMessage(data)
+        setModalMessage(!data)
         if (!!propsSuccess) {
             navigate("/login", { replace: true });
         }
@@ -218,7 +218,7 @@ export const Register = () => {
                                 <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                             </CardItem>
                             <CardItem>
-                                <CardInputMask mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="calc(18% - 46px)" name="ddd" onChange={handleChange} defaultValue={user.ddd}></CardInputMask>
+                                <CardInputMask mask='99' pattern={"[0-9]{2}"} required placeholder="DDD" inputWidth="calc(18% - 46px)" maxWidth="80px" name="ddd" onChange={handleChange} defaultValue={user.ddd}></CardInputMask>
                                 <CardInputMask mask='9999-9999' pattern={"[0-9]{4}-[0-9]{4}"} required placeholder={`${t('phone')}`} inputWidth="calc(82% - 46px)" name="phone" onChange={handleChange} defaultValue={user.phone}></CardInputMask>
                                 <ErrorMessage><ExclamationTriangleIcon/><Translator path="invalidFormat"/></ErrorMessage>
                             </CardItem>
