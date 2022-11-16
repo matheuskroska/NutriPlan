@@ -110,6 +110,17 @@ class PatientModel extends UserModel {
             return false
         }
     }
+
+    async getNutritionistUuId(uuid) {
+        const docRef = doc(db, this.table, uuid);
+        const docSnap = await getDoc(docRef);
+ 
+        if (docSnap.exists()) {
+            return docSnap.data().nutricionista_uuid
+        } else {
+            return false
+        }
+    }
  
 }
 
