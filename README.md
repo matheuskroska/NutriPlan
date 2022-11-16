@@ -19,8 +19,9 @@
 
 Nutriplan 
 
-- **[Getting started]()**
 - **[Installation]()**
+
+```npm install``` & ```npm run start```
 
 ## Tech
 
@@ -38,9 +39,11 @@ As seguintes bibliotecas foram usadas na construção do projeto:
 
 ## Features
 
-- [x] Faz alguma coisa
-- [x] Faz alguma coisa
-- [x] Faz alguma coisa
+- [x] Agendamento de Planos
+- [x] Reagendamento de consultas
+- [x] Cadastro de planos nutricionais via API ( Sponocular )
+- [x] Dashboard para visualização de macronutrientes
+
  
 ## Contributors
 
