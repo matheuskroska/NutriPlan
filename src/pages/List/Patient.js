@@ -58,7 +58,8 @@ export const Patient = () => {
     return (
         <Card cardTitle={<Translator path="patientList"/>} maxWidth={"100%"} borderRadius={"0"}>
             <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                <InfoMenu menuState={<Translator path="patientList"/>}/>
+                <InfoMenu menuState={<Translator path="patientList" />} />
+
                 <CardContent>
                     <CardContentRow>
                         <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder={`${t('search')}`} value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>

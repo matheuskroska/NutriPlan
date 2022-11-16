@@ -15,6 +15,11 @@ export const CardContainer = styled.div`
         opacity: 1!important;
     }
 
+    @media (max-width: 768px) {
+       padding: 10px 10px;
+       position: initial;
+    }
+
 `
 export const CardInput = styled.input`
     border-radius: 5px;
@@ -30,7 +35,7 @@ export const CardInput = styled.input`
     ::placeholder {
         color: rgb(74 77 38 / 50%);
     }
-    flex: 1
+    flex: 1;
 `
 
 export const CardInputMask = styled(InputMask)`
@@ -59,6 +64,70 @@ export const CardWrapper = styled.div`
     box-shadow: ${props => props.boxShadow || "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"};
     background-color: ${props => props.bgColor || "rgb(111 140 67 / 90%)"}; 
     border-radius: ${props => props.borderRadius || "0 0 5px 5px"};
+
+
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
+
+    &.makeAppointment, &.editUser {
+        @media (max-width: 768px) { 
+            ${CardContainer} { 
+            padding: 0;
+           
+            }
+            padding: 0;
+
+        }
+        
+    }
+
+    &.listUser, &.myAppointments {
+        @media (max-width: 768px) {
+            overflow: auto;
+        }
+
+        ${CardContainer} {
+            @media (max-width: 768px) {
+                min-width: 920px;
+            }
+        }
+    }
+
+    &.listUser::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    &.listUser::-webkit-scrollbar-track {
+        background: rgb(170 215 108 / 90%);
+    }
+
+    &.listUser::-webkit-scrollbar-thumb {
+        background: #81a84d;
+    }
+
+    &.listUser::-webkit-scrollbar-thumb:hover {
+        background: #81a84d;
+    }
+
+    &.listUser::-webkit-scrollbar-thumb:active {
+        background: #81a84d;
+    }
+
+    &.listUser::-webkit-scrollbar-thumb:horizontal {
+        height: 10px;
+    }
+
+
+    
+
+/* 
+    &.listUser {
+         @media (max-width: 768px) {
+            min-width: 920px;
+        }
+    } */
+    
 `
 
 export const CardImg = styled.img`
@@ -156,6 +225,15 @@ export const CardMenuContainer = styled.div`
     margin-right: 32px;
     max-height: max-content;
     transition: 0.5s;
+
+    @media (max-width: 768px) {
+        position: absolute;
+        left: 0;
+    z-index: 2;
+    background-color: var(--primary);
+    min-width: 100%;
+    max-width: 100%;
+    }
 `
 
 export const CardCloseButton = styled.button`
@@ -167,6 +245,15 @@ export const CardCloseButton = styled.button`
     border-radius: 5px;
     border: 1px solid var(--secondary-color);
     cursor: pointer;
+
+    @media (max-width: 768px) {
+        background-color: rgb(238 247 226);
+        padding: 10px;
+            height: 65px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    z-index: 1;
+    }
 `
 
 export const CardMenuHeader = styled.div`
@@ -237,6 +324,9 @@ export const CardContentRow = styled.div`
     :not(:first-child):nth-child(odd) {
         background-color: #f8f8f8;
     }
+
+    
+   
 `
 
 export const CardContentHeader = styled.div`
@@ -258,6 +348,10 @@ export const CardColHeader = styled.div`
 
     + div {
         border-left: 1px solid var(--tertiary);
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.2em;
     }
 
 `
@@ -300,6 +394,10 @@ export const CardContentCol = styled.div`
         color: var(--font-dark);
     }
 
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+
     ${props => props.wSearchIcon &&
     css`    
         width: 33.3%;
@@ -320,6 +418,8 @@ export const CardContentCol = styled.div`
             padding: 0 15px;
         }
     `
+
+        
     };
 
     ${props => props.confirmTheme &&

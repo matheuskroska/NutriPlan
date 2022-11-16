@@ -109,7 +109,7 @@ export const ListAppointment = () => {
                 <ModalMessage type={type} setConfirmation={handleConfirmation} func={pull_data} confirm={true}>{message}</ModalMessage>
         </>
     )}
-    <Card cardTitle={<Translator path="myAppoint"/>} maxWidth={"100%"} borderRadius={"0"}>
+            <Card className="myAppointments" cardTitle={<Translator path="myAppoint"/>} maxWidth={"100%"} borderRadius={"0"}>
         <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
             <InfoMenu menuState={<Translator path="myAppoint"/>}/>
             <CardContent>

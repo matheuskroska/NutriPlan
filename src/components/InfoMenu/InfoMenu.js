@@ -6,11 +6,13 @@ import avatar from '../../assets/images/user-test.png';
 import { AuthContext } from '../../firebase/Auth'
 import {DoubleArrowRightIcon, DoubleArrowLeftIcon} from '@radix-ui/react-icons'
 import { Translator } from '../I18n';
+import { InfoMenuBG } from './InfoMenu.elements';
 
 export const InfoMenu = (props) => {
     const menuState = props.menuState
     const [menu, setMenu] = useState(1);
     const { currentUser } = useContext(AuthContext);
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     const handleMenuState = () => {
         menu ? setMenu(0) : setMenu(1);
@@ -33,9 +35,11 @@ export const InfoMenu = (props) => {
 
     useEffect(() => {
         checkActive();
+        screenWidth > 768 ? setMenu(1) : setMenu(0);
     }, []);
 
     return (
+        <>
         <CardMenuContainer mstate={!menu}>
             <CardCloseButton onClick={handleMenuState}>
                 {menu ? <DoubleArrowLeftIcon/> : <DoubleArrowRightIcon/>}
@@ -52,7 +56,9 @@ export const InfoMenu = (props) => {
                     {!currentUser.isNutri && <StyledRadixLink className="menuButton" name="agendar-consulta" edituserbuttons="true" value={<Translator path="makeAppoint"/>} aria-label={<Translator path="makeAppoint"/>}><StyledLink menu="true" link="true" to="/agendar-consulta"><Translator path="makeAppoint"/></StyledLink></StyledRadixLink>}
                     <StyledRadixLink className="menuButton" name="minhas-consultas" edituserbuttons="true" value={<Translator path="myAppoint"/>} aria-label={<Translator path="myAppoint"/>}><StyledLink menu="true" link="true" to="/minhas-consultas"><Translator path="myAppoint"/></StyledLink></StyledRadixLink>
             </StyledRadixToggleGroup>
-        </CardMenuContainer>
+            </CardMenuContainer>
+            {menu && screenWidth < 768 ? <InfoMenuBG onClick={handleMenuState}></InfoMenuBG> : null}
+        </>
     )
     
 }

@@ -149,9 +149,9 @@ export const ListUser = () => {
                     <ModalMessage type={type} setConfirmation={handleConfirmation} func={pull_data} confirm={true}>{message}</ModalMessage>
             </>
         )}
-            <Card cardTitle={<Translator path="userList"/>} maxWidth={"100%"} borderRadius={"0"}>
-                <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
-                    <InfoMenu menuState={<Translator path="userList"/>}/>
+            <Card className="listUser" cardTitle={<Translator path="userList"/>} maxWidth={"100%"} borderRadius={"0"}>
+                <CardContainer  justify={"space-between"} maxWidth={"100%"} display={"flex"}>
+                    <InfoMenu menuState={<Translator path="userList" />} />
                     <CardContent>
                         <CardContentRow>
                             <CardContentCol wSearchIcon justify={"start"}><input type="text" name="search-form" id="search-form" placeholder={`${t('search')}`} value={querySearch} onChange={(e) => setQuerySearch(e.target.value)} autoComplete="off"/><MagnifyingGlassIcon/></CardContentCol>
