@@ -37,6 +37,7 @@ export const InfoMenu = (props) => {
         checkActive();
         screenWidth > 768 ? setMenu(1) : setMenu(0);
     }, []);
+    
 
     return (
         <>
