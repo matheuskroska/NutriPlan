@@ -75,7 +75,7 @@ export const EditProfile = () => {
                 <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
             </>
         )}
-            <Card cardTitle={<Translator path="editProfile"/>} maxWidth={"100%"} borderRadius={"0"}>
+            <Card className="editUser" cardTitle={<Translator path="editProfile"/>} maxWidth={"100%"} borderRadius={"0"}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu/>
                     <Card margin={"0 auto"} showTitle={"none"} >

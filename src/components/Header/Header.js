@@ -14,6 +14,7 @@ import {
   EnterIcon,
   EnvelopeClosedIcon,
   ExitIcon,
+  PersonIcon,
 } from "@radix-ui/react-icons";
 import { StyledLink } from "../Link/Link.elements";
 import { useContext } from "react";
@@ -31,6 +32,7 @@ export const Header = () => {
   const appointmentModel = new AppointmentModel();
   const [updateNotification, setUpdateNotification] = useState(false);
   const navigate = useNavigate();
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const [notifications, setNotifications] = useState(false);
 
@@ -86,6 +88,7 @@ export const Header = () => {
     }, [location]);
   };
 
+
   currentPage();
 
   return (
@@ -94,7 +97,10 @@ export const Header = () => {
         <NavItem>
           <StyledLink to="/dashboard">
             <NavLogo src={logo}></NavLogo>
-            <NavLogoTitle>NutriPlan</NavLogoTitle>
+            {screenWidth > 768 && (
+              <NavLogoTitle>NutriPlan</NavLogoTitle>
+            )}
+            
           </StyledLink>
         </NavItem>
         {headerVisibility && (
@@ -105,13 +111,30 @@ export const Header = () => {
                   <NavItem>
                     <I18n />
                   </NavItem>
-                  <StyledLink header="true" to="/login">
-                    Login
-                  </StyledLink>
-                  <StyledLink header="true" to="/cadastro">
-                    <Translator path="headerRegister" />
-                    <EnterIcon />
-                  </StyledLink>
+
+                  {screenWidth > 768 ? (
+                    <>
+                      <StyledLink header="true" to="/login">
+                        Login
+                      </StyledLink>
+                      <StyledLink header="true" to="/cadastro">
+                        <Translator path="headerRegister" />
+                        <EnterIcon />
+                      </StyledLink>
+                    </>
+                  ) : (
+                      <>
+                        <StyledLink header="true" to="/login">
+                          <PersonIcon />
+                        </StyledLink>
+                        <StyledLink header="true" to="/cadastro">
+                          <EnterIcon />
+                        </StyledLink>
+                      </>
+                    )}
+
+
+                  
                 </>
               ) : (
                 <>
@@ -157,14 +180,30 @@ export const Header = () => {
                   <NavItem>
                     <I18n />
                   </NavItem>
-                  <NavItem>
+                    <NavItem>
+                      {screenWidth > 768 ? (
+                  <>
                     <StyledLink header="true" to="/editar-perfil">
                       {currentUser.nome_completo}
                     </StyledLink>
-                    <StyledLink onClick={handleLogout} header="true" to="/">
-                      <Translator path="logout" />
-                      <ExitIcon />
-                    </StyledLink>
+                    
+                        <StyledLink onClick={handleLogout} header="true" to="/">
+                            <Translator path="logout" />
+                          <ExitIcon />
+                        </StyledLink>
+                      </>
+                    ) : (
+                          <>
+                            <StyledLink header="true" to="/editar-perfil">
+                            <PersonIcon />
+                          </StyledLink>
+                          <StyledLink onClick={handleLogout} header="true" to="/">
+                          <ExitIcon />
+                        </StyledLink>
+                      </>
+                    ) 
+                      }
+                    
                   </NavItem>
                 </>
               )}

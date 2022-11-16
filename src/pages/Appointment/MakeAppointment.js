@@ -249,7 +249,7 @@ export const MakeAppointment = () => {
                 <ModalMessage func={pull_data} success={true}>{message}</ModalMessage>
             </>
         )}
-            <Card maxWidth={"100%"} cardTitle={<Translator path="makeAppoint"/>}>
+            <Card className="makeAppointment" maxWidth={"100%"} cardTitle={<Translator path="makeAppoint"/>}>
                 <CardContainer justify={"space-between"} maxWidth={"100%"} display={"flex"}>
                     <InfoMenu menuState={<Translator path="makeAppoint"/>}/>
                     <Card margin={"0 auto"} showTitle={"none"}>
