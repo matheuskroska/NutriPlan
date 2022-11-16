@@ -1,6 +1,6 @@
 import React  from 'react';
 import { GlobalStyle,Container} from './components/index';
-import {Home, Register, Login, ForgotPassword, ResetPassword, EditUser, EditProfile, ListUser, MakeAppointment, ListAppointment, EditAppointment, Create, PatientDashboard, Patient} from './pages/index'
+import {Home, Register, Login, ForgotPassword, ResetPassword, EditUser, EditProfile, ListUser, MakeAppointment, ListAppointment, EditAppointment, PatientDashboard, Patient, Plan} from './pages/index'
 import {Header, Footer} from './components/index'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './firebase/Auth';
@@ -30,7 +30,8 @@ function App() {
                 <Route exact path="/minhas-consultas" element={<ListAppointment/>} />
                 <Route exact path="/editar-consulta/:docId" element={<EditAppointment/>} />
                 <Route exact path="/lista-pacientes" element={<Patient/>} />
-                <Route exact path="/criar-plano/:uuid" element={<Create/>} />
+                <Route exact path="/criar-plano/:uuid" element={<Plan/>} />
+                <Route exact path="/editar-plano/:planId" element={<Plan/>} />
                 <Route element={() => <h1>NOT FOUND</h1>} />
             </Routes>
           </Container>
