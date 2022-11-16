@@ -99,6 +99,11 @@ export default {
         confirmApprove: 'You are about to approve this user. Are you sure?',
         confirmReprove: 'You are about to disapprove this user. Are you sure?',
         confirmDeleteAppointment: 'You are about to delete this appointment. Are you sure?',
+        carbs: 'Carbs',
+        fat: 'Fat',
+        protein: 'Protein',
+        macroNutri: 'Macronutrients',
+        macroNutriPerFood: 'Macronutrients per food',
         
 
         // infos alimentos
