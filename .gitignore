@@ -24,6 +24,4 @@ yarn-error.log*
 
 *.log
 
-src/firebase/index.js
-
 .env
