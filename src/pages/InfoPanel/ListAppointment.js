@@ -32,8 +32,13 @@ export const ListAppointment = () => {
     }
 
     const getSchedules = async () => {
-        let schedules = await appointmentModel.getByPatientUuid(currentUser.uuid)
-        setScheduleList(schedules);
+        if (!currentUser.isNutri) {
+            let schedules = await appointmentModel.getByPatientUuid(currentUser.uuid)
+            setScheduleList(schedules);
+        } else {
+            let schedules = await appointmentModel.getByPatientUuid(currentUser.uuid)
+            setScheduleList(schedules);
+        }
     }
 
 
