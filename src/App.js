@@ -5,7 +5,6 @@ import {Header, Footer} from './components/index'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './firebase/Auth';
 import './i18n'
-import { Chat } from './components/Chat/Chat';
 import { Dashboard } from './pages/Dashboard';
 
 function App() {
@@ -37,7 +36,6 @@ function App() {
             </Routes>
           </Container>
           <Footer/>
-          <Chat />
         </Router>
       </AuthProvider>
     </>
