@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React  from 'react'
 import { Pie } from 'react-chartjs-2'
 
@@ -11,12 +12,12 @@ export const MacroNutriChart = (props) => {
             },
             title: {
                 display: true,
-                text: 'Macronutrientes (%)',
+                text: t('macroNutri') + ' (%)',
             },
         },
     }
     const dataMacroNutri = {
-        labels: ['Carboidratos', 'Gordura', 'Proteína'],
+        labels: [t('carbs'), t('fat'), t('protein')],
         datasets: [
             {
                 data: props.macroNutri,

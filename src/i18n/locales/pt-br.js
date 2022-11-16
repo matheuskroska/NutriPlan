@@ -99,6 +99,11 @@ export default {
         confirmApprove: 'Tem certeza que deseja aprovar esse usuário?',
         confirmReprove: 'Tem certeza que deseja reprovar esse usuário?',
         confirmDeleteAppointment: 'Tem certeza que deseja deletar essa consulta?',
+        carbs: 'Carboidratos',
+        fat: 'Gordura',
+        protein: 'Proteína',
+        macroNutri: 'Macronutrientes',
+        macroNutriPerFood: 'Macronutrientes por comida',
 
         //infos alimentos
         'Copper': 'Cobre',
