@@ -103,13 +103,6 @@ export const ListUser = () => {
         setModalMessage(true)
         setLoader(false)
 
-
-        // if (window.confirm(question)) {
-        //     await userModel.activeDesactiveLoginUser(uuid, active)
-        //     let users = userModel.getUsersSnapshot() //recupera lista atualizada
-        //     setUsersList(users)
-        // }
-
         
     }
     
@@ -144,7 +137,6 @@ export const ListUser = () => {
         setUsersList(users)
        
     }
-
 
     return (
         <>
