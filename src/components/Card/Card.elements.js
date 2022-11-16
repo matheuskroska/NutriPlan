@@ -163,27 +163,27 @@ export const CardWrapper = styled.div`
     }
 
 
-    &.listUser::-webkit-scrollbar {
+    &.listUser::-webkit-scrollbar, &.myAppointments::-webkit-scrollbar, &.patientList::-webkit-scrollbar {
         width: 10px;
     }
     
-    &.listUser::-webkit-scrollbar-track {
+    &.listUser::-webkit-scrollbar-track, &.myAppointments::-webkit-scrollbar-track, &.patientList::-webkit-scrollbar-track {
         background: rgb(170 215 108 / 90%);
     }
 
-    &.listUser::-webkit-scrollbar-thumb {
+    &.listUser::-webkit-scrollbar-thumb, &.myAppointments::-webkit-scrollbar-thumb, &.patientList::-webkit-scrollbar-thumb {
         background: #81a84d;
     }
 
-    &.listUser::-webkit-scrollbar-thumb:hover {
+    &.listUser::-webkit-scrollbar-thumb:hover, &.myAppointments::-webkit-scrollbar-thumb:hover, &.patientList::-webkit-scrollbar-thumb:hover {
         background: #81a84d;
     }
 
-    &.listUser::-webkit-scrollbar-thumb:active {
+    &.listUser::-webkit-scrollbar-thumb:active, &.myAppointments::-webkit-scrollbar-thumb:active, &.patientList::-webkit-scrollbar-thumb:active {
         background: #81a84d;
     }
 
-    &.listUser::-webkit-scrollbar-thumb:horizontal {
+    &.listUser::-webkit-scrollbar-thumb:horizontal, &.myAppointments::-webkit-scrollbar-thumb:horizontal, $.patientList::-webkit-scrollbar-thumb:horizontal {
         height: 10px;
     }
 
