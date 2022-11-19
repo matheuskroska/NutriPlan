@@ -19,6 +19,8 @@
 
 Nutriplan 
 
+Trabalho de conclusão de curso BSI - PUCPR 2022
+
 - **[Installation]()**
 
 ```npm install``` & ```npm run start```
