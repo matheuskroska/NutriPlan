@@ -8,6 +8,8 @@
 
 <p align="center">Nutriplan é um agendador de consultas e um criador de planos nutricionais! 🥗</p>
 
+Este projeto é uma aplicação web construída com React que permite agendar consultas com um nutricionista. Ele possui um chat em tempo real, funcionalidades de cadastro, gerenciamento de consultas e pacientes. Além disso, consulta uma API externa com mais de 600 mil produtos, permitindo ao nutricionista ter uma visão detalhada dos hábitos alimentares de seus pacientes. E também, um dashboard que sumariza todas as informações de macronutrientes vindas da API.
+
 <div align="center">
   <img alt "React Project" src="https://badges.aleen42.com/src/react.svg"/>
   <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/jose-balbinotti/nutriplan" />
