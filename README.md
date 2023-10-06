@@ -20,8 +20,10 @@ This project is a web application built with React that allows users to schedule
 </div>
 
 <p align="center">
-   <img src="https://i.imgur.com/75ajDiY.png" height="auto" width="auto" alt="NutriPlan"/>
+   <img src="https://raw.githubusercontent.com/matheuskroska/NutriPlan/master/Untitled.png" height="auto" width="auto" alt="NutriPlan"/>
 </p>
+
+
 
 
 
