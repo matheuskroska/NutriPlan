@@ -23,7 +23,7 @@ This project is a web application built with React that allows users to schedule
 
 Nutriplan 
 
-Trabalho de conclusão de curso BSI - PUCPR 2022
+Bachelor's Thesis in BSI - PUCPR 2022
 
 - **[Installation]()**
 
@@ -31,7 +31,7 @@ Trabalho de conclusão de curso BSI - PUCPR 2022
 
 ## Tech
 
-As seguintes bibliotecas foram usadas na construção do projeto:
+The following libraries were used in the construction of the project:
 
 - [React](https://pt-br.reactjs.org/)
 - [React Router](https://reactrouter.com/)
@@ -45,10 +45,13 @@ As seguintes bibliotecas foram usadas na construção do projeto:
 
 ## Features
 
-- [x] Agendamento de Planos
-- [x] Reagendamento de consultas
-- [x] Cadastro de planos nutricionais via API ( Sponocular )
-- [x] Dashboard para visualização de macronutrientes
+- [x] Scheduling of Plans
+- [x] Rescheduling of Appointments
+- [x] Registration of nutrition plans via API (Sponocular)
+- [x] Dashboard for viewing macronutrients
+
+
+
 
  
 ## Contributors
