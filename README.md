@@ -19,6 +19,8 @@ This project is a web application built with React that allows users to schedule
   <img alt="Github License" src="https://img.shields.io/github/license/jose-balbinotti/nutriplan" />
 </div>
 
+<br>
+
 <p align="center">
    <img src="https://raw.githubusercontent.com/matheuskroska/NutriPlan/master/Untitled.png" height="auto" width="auto" alt="NutriPlan"/>
 </p>
